@@ -18,7 +18,7 @@ require_once "database.php";
 
 // Twilio credentials
 $accountSid = 'ACed50809afda0163369b2505abc4354f7'; // Your Twilio Account SID
-$authToken = 'e2da96226efadb15d09d2dee1b81836b'; // Your Twilio Auth Token
+$authToken = 'd0e8b9cc24d2cf1830e3e630fe0f056a'; // Your Twilio Auth Token
 $twilioPhoneNumber = '+12182616825'; // Your Twilio phone number
 
 if (isset($_POST["select_method"])) {
