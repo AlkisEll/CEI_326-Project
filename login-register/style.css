@@ -141,7 +141,7 @@ input[type="submit"]:hover {
     display: block;
     width: 100%;
     height: 70px;
-    background: url('tepak-logo.png') no-repeat center center;
+    background: url('Tepak-logo.png') no-repeat center center;
     background-size: contain;
     margin: 0 auto 20px auto;
     text-decoration: none;
