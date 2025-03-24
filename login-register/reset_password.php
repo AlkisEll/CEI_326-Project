@@ -25,7 +25,7 @@ if (isset($_GET["token"])) {
 
                 // Validate that the new password and confirm password match
                 if ($newPassword !== $confirmPassword) {
-                    $error = "Οι κωδικοί δεν αντιστοιχούν!";
+                    $error = "Passwords do not match!";
                 } else {
                     // Hash the new password
                     $newPasswordHash = password_hash($newPassword, PASSWORD_DEFAULT);
@@ -36,27 +36,27 @@ if (isset($_GET["token"])) {
                     if (mysqli_stmt_prepare($stmt, $sql)) {
                         mysqli_stmt_bind_param($stmt, "ss", $newPasswordHash, $token);
                         mysqli_stmt_execute($stmt);
-                        $success = "Ο κωδικός σας έχει αλλάξει επιτυχώς. Μπορείτε τώρα να <a href='login.php'>συνδεθείτε εδώ</a> με τον νέο σας κωδικό.";
+                        $success = "Your password has been successfully changed. You can now <a href='login.php'>log in here</a> with your new password.";
                     } else {
-                        $error = "Κάτι πήγε στραβά. Δοκιμάστε ξανά αργότερα.";
+                        $error = "Something went wrong. Please try again later.";
                     }
                 }
             }
         } else {
-            $error = "Ο σύνδεσμος έχει πιθανότητα λήξει. Δοκιμάστε να ξαναστείλετε νέο αίτημα για αλλαγή του κωδικού σας.";
+            $error = "The link has possibly expired. Please request a new password reset link.";
         }
     } else {
-        $error = "Κάτι πήγε στραβά. Δοκιμάστε ξανά αργότερα.";
+        $error = "Something went wrong. Please try again later.";
     }
 } else {
-    $error = "Δεν έχει δοθεί σύνδεσμος";
+    $error = "No reset link was provided.";
 }
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Επαναφορά Κωδικού - ΤΕΠΑΚ</title>
+    <title>Password Reset - CUT</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap -->
@@ -72,8 +72,8 @@ if (isset($_GET["token"])) {
 </head>
 <body>
     <div class="container">
-        <a href="https://www.cut.ac.cy" class="logo-link" target="_blank" title="Μετάβαση στην ιστοσελίδα του ΤΕΠΑΚ"></a>
-        <h2>Επαναφορά Κωδικού Πρόσβασης</h2>
+        <a href="https://www.cut.ac.cy" class="logo-link" target="_blank" title="Go to the CUT website"></a>
+        <h2>Password Reset</h2>
 
         <?php if (isset($error)): ?>
             <div class='alert alert-danger'><?= $error ?></div>
@@ -84,19 +84,19 @@ if (isset($_GET["token"])) {
         <?php else: ?>
             <form action="reset_password.php?token=<?= htmlspecialchars($token) ?>" method="post" id="reset-password-form">
                 <div class="form-group">
-                    <label for="new_password">Νέος Κωδικός</label>
-                    <input type="password" placeholder="Εισάγετε νέο κωδικό" name="new_password" id="new_password" class="form-control" required>
+                    <label for="new_password">New Password</label>
+                    <input type="password" placeholder="Enter new password" name="new_password" id="new_password" class="form-control" required>
                     <div class="password-strength-meter">
                         <div class="strength-bar" id="strength-bar"></div>
                     </div>
                     <div class="password-strength-text" id="strength-text"></div>
                 </div>
                 <div class="form-group">
-                    <label for="confirm_password">Επαλήθευση Κωδικού</label>
-                    <input type="password" placeholder="Επιβεβαιώστε τον νέο κωδικό" name="confirm_password" class="form-control" required>
+                    <label for="confirm_password">Confirm Password</label>
+                    <input type="password" placeholder="Confirm new password" name="confirm_password" class="form-control" required>
                 </div>
                 <div class="form-btn">
-                    <input type="submit" value="Επαναφορά Κωδικού" name="submit" class="btn btn-primary">
+                    <input type="submit" value="Reset Password" name="submit" class="btn btn-primary">
                 </div>
             </form>
         <?php endif; ?>
@@ -126,23 +126,23 @@ if (isset($_GET["token"])) {
                 switch (strength) {
                     case 0:
                         strengthClass = "weak";
-                        strengthLabel = "Αδύναμος";
+                        strengthLabel = "Weak";
                         break;
                     case 1:
                         strengthClass = "fair";
-                        strengthLabel = "Μέτριος";
+                        strengthLabel = "Fair";
                         break;
                     case 2:
                         strengthClass = "good";
-                        strengthLabel = "Καλός";
+                        strengthLabel = "Good";
                         break;
                     case 3:
                         strengthClass = "very-good";
-                        strengthLabel = "Πολύ Καλός";
+                        strengthLabel = "Very Good";
                         break;
                     case 4:
                         strengthClass = "strong";
-                        strengthLabel = "Δυνατός";
+                        strengthLabel = "Strong";
                         break;
                 }
 
@@ -152,7 +152,7 @@ if (isset($_GET["token"])) {
 
                 // Update strength text and color
                 strengthText.removeClass().addClass("password-strength-text " + strengthClass);
-                strengthText.text("Ισχύς Κωδικού: " + strengthLabel);
+                strengthText.text("Password Strength: " + strengthLabel);
             });
 
             // Form submission validation
@@ -163,7 +163,7 @@ if (isset($_GET["token"])) {
 
                 if (strength < 1) { // Block submission if password is "Weak"
                     e.preventDefault();
-                    toastr.error('Ο κωδικός σας είναι πολύ αδύναμος. Παρακαλώ επιλέξτε έναν ισχυρότερο κωδικό');
+                    toastr.error('Your password is too weak. Please choose a stronger one');
                 }
             });
         });
