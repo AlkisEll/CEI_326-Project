@@ -55,18 +55,18 @@ if (isset($_POST["select_method"])) {
                 // Content
                 $mail->isHTML(true);
                 $mail->Subject = 'Verify your email';
-                $mail->Body = "<p>Ο κωδικός επαλήθευσης είναι: <b>$verification_code</b></p>"; // Email body with verification code
+                $mail->Body = "<p>Your verification code is: <b>$verification_code</b></p>"; // Email body with verification code
                 $mail->send();
-                echo "<div class='alert alert-success'>Ο κωδικός επαλήθευσης έχει σταλεί στο Email σας. <a href='verify.php'>Πατήστε εδώ για να εισάγετε των κωδικό επαλήθευσης.</a></div>";
+                echo "<div class='alert alert-success'>The verification code has been sent to your email. <a href='verify.php'>Click here to enter your verification code.</a></div>";
             } catch (Exception $e) {
-                echo "<div class='alert alert-danger'>Αποτυχία αποστολής κωδικού επαλήθευσης. Δοκιμάστε ξανά αργότερα.</div>";
+                echo "<div class='alert alert-danger'>Failed to send verification code. Please try again later.</div>";
             }
         } else {
-            die("Κάτι πήγε στραβά. Δοκιμάστε ξανά αργότερα.");
+            die("Something went wrong. Please try again later.");
         }
     } elseif ($verificationMethod === 'phone') {
         if (empty($phone)) {
-            echo "<div class='alert alert-danger'>Ένα νούμερο τηλεφώνου απαιτείται για επαλήθευση τηλεφώνου!</div>";
+            echo "<div class='alert alert-danger'>A phone number is required for phone verification!</div>";
         } else {
             // Update user data with phone and verification code
             $sql = "UPDATE users SET phone = ?, verification_code = ? WHERE id = ?";
@@ -80,7 +80,7 @@ if (isset($_POST["select_method"])) {
                 $_SESSION["verification_code"] = $verification_code;
 
                 // Prepare the SMS message
-                $body = "Ο κωδικός επαλήθευσης είναι: $verification_code";
+                $body = "Your verification code is: $verification_code";
 
                 // Prepare the POST data for Twilio
                 $postData = http_build_query([
@@ -106,8 +106,8 @@ if (isset($_POST["select_method"])) {
                         'Content-Type: application/x-www-form-urlencoded',
                         'Authorization: Basic ' . base64_encode("$accountSid:$authToken"),
                     ],
-                    CURLOPT_SSL_VERIFYPEER => false, // Disable SSL verification (not recommended)
-                    CURLOPT_SSL_VERIFYHOST => false, // Disable SSL host verification (not recommended)
+                    CURLOPT_SSL_VERIFYPEER => false,
+                    CURLOPT_SSL_VERIFYHOST => false,
                 ]);
 
                 // Execute the request
@@ -119,21 +119,19 @@ if (isset($_POST["select_method"])) {
                 } else {
                     $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
                     if ($httpCode === 201) {
-                        // Redirect to verify_phone.php after successful SMS sending
                         header("Location: verify_phone.php");
                         exit();
                     } else {
                         header("Location: verify_phone.php");
                         $responseData = json_decode($response, true);
-                        $errorMessage = $responseData['message'] ?? 'Αποτυχία αποστολής SMS.';
-                        //echo "<div class='alert alert-danger'>$errorMessage</div>";
+                        $errorMessage = $responseData['message'] ?? 'Failed to send SMS.';
                     }
                 }
 
                 // Close cURL
                 curl_close($curl);
             } else {
-                die("Κάτι πήγε στραβά. Δοκιμάστε ξανά αργότερα.");
+                die("Something went wrong. Please try again later.");
             }
         }
     }
@@ -156,26 +154,26 @@ if (isset($_POST["select_method"])) {
 </head>
 <body>
     <div class="container">
-        <a href="https://www.cut.ac.cy" class="logo-link" target="_blank" title="Μετάβαση στην ιστοσελίδα του ΤΕΠΑΚ"></a>
-        <h2>Επιλέξτε μέθοδο επαλήθευσης</h2>
+        <a href="https://www.cut.ac.cy" class="logo-link" target="_blank" title="Go to the CUT website"></a>
+        <h2>Select Verification Method</h2>
         <form method="post" action="select_verification_method.php" id="verification-form">
             <!-- Hidden input fields for session data -->
             <input type="hidden" id="fullname" name="fullname" value="<?php echo htmlspecialchars($_SESSION['full_name']); ?>">
             <input type="hidden" id="email" name="email" value="<?php echo htmlspecialchars($_SESSION['email']); ?>">
 
             <div class="form-group">
-                <label for="verification_method">Μέθοδος Επαλήθευσης</label>
+                <label for="verification_method">Verification Method</label>
                 <select class="form-control" name="verification_method" id="verification_method" required>
-                    <option value="email">Επαλήθευση με Email</option>
-                    <option value="phone">Επαλήθευση με Τηλέφωνο</option>
+                    <option value="email">Email Verification</option>
+                    <option value="phone">Phone Verification</option>
                 </select>
             </div>
             <div class="form-group phone_row" id="phone-field" style="display: none;">
-                <input style="width: 441px;" type="tel" class="form-control" id="phone" name="phone" placeholder="Εισαγωγή αρ. τηλεφώνου">
-                <div id="phone-error" class="error-message alert alert-danger" style="display: none;">Λανθασμένο νούμερο τηλεφώνου για την συγκεκριμένη χώρα.</div>
+                <input style="width: 441px;" type="tel" class="form-control" id="phone" name="phone" placeholder="Enter phone number">
+                <div id="phone-error" class="error-message alert alert-danger" style="display: none;">Invalid phone number for the selected country.</div>
             </div>
             <div class="form-btn">
-                <input type="submit" class="btn btn-primary" value="Συνέχεια" name="select_method">
+                <input type="submit" class="btn btn-primary" value="Continue" name="select_method">
             </div>
         </form>
     </div>
@@ -188,7 +186,7 @@ if (isset($_POST["select_method"])) {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script>
     $(document).ready(function () {
-        let iti; // Global variable to store the intlTelInput instance
+        let iti;
 
         // Show/hide phone field based on verification method
         $('#verification_method').change(function () {
@@ -206,8 +204,8 @@ if (isset($_POST["select_method"])) {
             iti = window.intlTelInput(phoneInput, {
                 utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
                 separateDialCode: true,
-                preferredCountries: ['us', 'gb', 'gr'], // Default preferred countries
-                initialCountry: "auto", // Auto-detect user's country
+                preferredCountries: ['us', 'gb', 'gr'],
+                initialCountry: "auto",
             });
         }
 
@@ -219,19 +217,16 @@ if (isset($_POST["select_method"])) {
                 const phoneInput = $('#phone');
                 const phoneError = $('#phone-error');
 
-                // Validate phone number
                 if (!iti.isValidNumber()) {
-                    e.preventDefault(); // Prevent form submission if number is invalid
-                    toastr.error('Λανθασμένο νούμερο τηλεφώνου για την συγκεκριμένη χώρα.'); // Show toastr error
-                    return; // Stop execution
+                    e.preventDefault();
+                    toastr.error('Invalid phone number for the selected country.');
+                    return;
                 } else {
-                    phoneError.hide(); // Hide error message if number is valid
+                    phoneError.hide();
                 }
 
-                // Get full phone number with country code
                 const fullPhoneNumber = iti.getNumber();
 
-                // Add the full phone number to a hidden input field
                 $('<input>').attr({
                     type: 'hidden',
                     name: 'phone',
@@ -245,7 +240,7 @@ if (isset($_POST["select_method"])) {
         <script>
             toastr.error("<?php echo $_SESSION['error']; ?>");
         </script>
-        <?php unset($_SESSION['error']); // Clear the error message after displaying ?>
+        <?php unset($_SESSION['error']); ?>
     <?php endif; ?>
 </body>
 </html>
