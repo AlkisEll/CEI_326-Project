@@ -35,13 +35,13 @@ if (isset($_POST["verify"])) {
                     exit();
                 }
             } else {
-                echo "<div class='alert alert-danger'>Λανθασμένος κωδικός επαλήθευσης.</div>";
+                echo "<div class='alert alert-danger'>Incorrect verification code.</div>";
             }
         } else {
-            echo "<div class='alert alert-danger'>Το Email δεν βρέθηκε.</div>";
+            echo "<div class='alert alert-danger'>Email not found.</div>";
         }
     } else {
-        echo "<div class='alert alert-danger'>Κάτι πήγε στραβά. Δοκιμάστε ξανά αργότερα.</div>";
+        echo "<div class='alert alert-danger'>Something went wrong. Please try again later.</div>";
     }
 }
 ?>
@@ -56,17 +56,17 @@ if (isset($_POST["verify"])) {
 </head>
 <body>
 <div class="container mt-5">
-    <a href="https://www.cut.ac.cy" class="logo-link" target="_blank" title="Μετάβαση στην ιστοσελίδα του ΤΕΠΑΚ"></a>
+    <a href="https://www.cut.ac.cy" class="logo-link" target="_blank" title="Go to the CUT website"></a>
     <form action="verify.php" method="post">
-        <h2>Επαλήθευση Email</h2>
+        <h2>Email Verification</h2>
         <div class="form-group">
-            <input type="email" name="email" placeholder="Το Email σας" class="form-control" required>
+            <input type="email" name="email" placeholder="Your Email" class="form-control" required>
         </div>
         <div class="form-group mt-2">
-            <input type="text" name="verification_code" placeholder="Κωδικός Επαλήθευσης" class="form-control" required maxlength="6">
+            <input type="text" name="verification_code" placeholder="Verification Code" class="form-control" required maxlength="6">
         </div>
         <div class="form-btn mt-3">
-            <button type="submit" name="verify" class="btn btn-primary">Επαλήθευση Email</button>
+            <button type="submit" name="verify" class="btn btn-primary">Verify Email</button>
         </div>
     </form>
 </div>
