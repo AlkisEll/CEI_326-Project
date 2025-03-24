@@ -25,7 +25,7 @@ if (isset($_POST["submit"])) {
 
     // Validate form fields
     if (empty($fullName) || empty($email) || empty($password) || empty($passwordRepeat) || empty($country) || empty($city) || empty($address) || empty($postcode) || empty($dob)) {
-        array_push($errors, "Απαιτούνται όλα τα πεδία!");
+        array_push($errors, "All fields are required!");
     }
 
     // Check if email already exists
@@ -37,20 +37,20 @@ if (isset($_POST["submit"])) {
         mysqli_stmt_store_result($stmt);
         $rowCount = mysqli_stmt_num_rows($stmt);
         if ($rowCount > 0) {
-            array_push($errors, "Το Email υπάρχει ήδη!");
+            array_push($errors, "Email already exists!");
         } else {
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                array_push($errors, "Το Email δεν είναι έγκυρο!");
+                array_push($errors, "Email is not valid!");
             }
             if (strlen($password) < 8) {
-                array_push($errors, "Ο κωδικός πρέπει να είναι τουλάχιστον 8 χαρακτήρες!");
+                array_push($errors, "Password must be at least 8 characters!");
             }
             if ($password !== $passwordRepeat) {
-                array_push($errors, "Οι κωδικοί δεν αντιστοιχούν!");
+                array_push($errors, "Passwords do not match!");
             }
         }
     } else {
-        die("Κάτι πήγε στραβά. Δοκιμάστε ξανά αργότερα.");
+        die("Something went wrong. Please try again later.");
     }
 
     if (count($errors) > 0) {
@@ -74,7 +74,7 @@ if (isset($_POST["submit"])) {
             header("Location: select_verification_method.php");
             exit();
         } else {
-            die("Κάτι πήγε στραβά. Δοκιμάστε ξανά αργότερα.");
+            die("Something went wrong. Please try again later.");
         }
     }
 }
@@ -96,61 +96,61 @@ if (isset($_POST["submit"])) {
 </head>
 <body class="registration_page">
     <div class="container">
-        <a href="https://www.cut.ac.cy" class="logo-link" target="_blank" title="Μετάβαση στην ιστοσελίδα του ΤΕΠΑΚ"></a>
+        <a href="https://www.cut.ac.cy" class="logo-link" target="_blank" title="Go to CUT website"></a>
 
-        <h2>Εγγραφή Ειδικού Επιστήμονα</h2>
+        <h2>Special Scientist Registration</h2>
         <div id="password-alert" style="display: none;"></div>
         <form method="post" action="registration.php" id="registration-form">
             <div class="form-group">
-                <label for="fullname">Ονοματεπώνυμο</label>
-                <input type="text" class="form-control" name="fullname" placeholder="π.χ. Νίκος Νικολάου" required>
+                <label for="fullname">Full Name</label>
+                <input type="text" class="form-control" name="fullname" placeholder="e.g. Nikos Nikolaou" required>
             </div>
             <div class="form-group">
-                <label for="email">Ηλεκτρονική Διεύθυνση</label>
-                <input type="email" class="form-control" name="email" placeholder="π.χ. user@cut.ac.cy" required>
+                <label for="email">Email Address</label>
+                <input type="email" class="form-control" name="email" placeholder="e.g. user@cut.ac.cy" required>
             </div>
             <div class="form-group">
-                <label for="password">Κωδικός Πρόσβασης</label>
-                <input type="password" class="form-control" name="password" id="password" placeholder="Δημιουργήστε έναν κωδικό" required>
+                <label for="password">Password</label>
+                <input type="password" class="form-control" name="password" id="password" placeholder="Create a password" required>
                 <div class="password-strength-meter">
                     <div class="strength-bar" id="strength-bar"></div>
                 </div>
                 <div class="password-strength-text" id="strength-text"></div>
             </div>
             <div class="form-group">
-                <label for="repeat_password">Επαλήθευση Κωδικού</label>
-                <input type="password" class="form-control" name="repeat_password" placeholder="Επαναλάβετε τον κωδικό" required>
+                <label for="repeat_password">Confirm Password</label>
+                <input type="password" class="form-control" name="repeat_password" placeholder="Repeat your password" required>
             </div>
              <div class="form-group country_row">
-                <label for="country_input">Χώρα</label>
+                <label for="country_input">Country</label>
                 
             </div>
             <div class="form-group">
                 
-                <input type="text" class="form-control country_input" id="country" name="country" placeholder="Επιλέξτε την χώρα σας" required>
+                <input type="text" class="form-control country_input" id="country" name="country" placeholder="Select your country" required>
             </div>
             <div class="form-group">
-                <label for="city">Πόλη</label>
-                <input type="text" class="form-control" name="city" placeholder="Εισάγετε την πόλη σας" required>
+                <label for="city">City</label>
+                <input type="text" class="form-control" name="city" placeholder="Enter your city" required>
             </div>
             <div class="form-group">
-                <label for="address">Διεύθυνση</label>
-                <input type="text" class="form-control" name="address" placeholder="Εισάγετε την διεύθυνση σας" required>
+                <label for="address">Address</label>
+                <input type="text" class="form-control" name="address" placeholder="Enter your address" required>
             </div>
             <div class="form-group">
-                <label for="postcode">Ταχυδρομικός Κώδικας</label>
-                <input type="text" class="form-control" name="postcode" placeholder="Εισάγετε τον ταχυδρομικό σας κώδικα" required>
+                <label for="postcode">Postal Code</label>
+                <input type="text" class="form-control" name="postcode" placeholder="Enter your postal code" required>
             </div>
             <div class="form-group">
-                <label for="dob">Ημερομηνία Γέννησης</label>
-                <input type="date" class="form-control" name="dob" placeholder="Εισάγετε την ημερομηνία γέννησης σας" required>
+                <label for="dob">Date of Birth</label>
+                <input type="date" class="form-control" name="dob" placeholder="Enter your date of birth" required>
             </div>
             <div class="form-btn">
-                <input type="submit" class="btn btn-primary" value="Εγγραφή" name="submit">
+                <input type="submit" class="btn btn-primary" value="Register" name="submit">
             </div>
         </form>
         <div class="form-footer">
-            Έχετε ήδη λογαριασμό; <a href="login.php">Σύνδεση</a>
+            Already have an account? <a href="login.php">Login</a>
         </div>
     </div>
 
@@ -185,23 +185,23 @@ if (isset($_POST["submit"])) {
                 switch (strength) {
                     case 0:
                         strengthClass = "weak";
-                        strengthLabel = "Αδύναμος";
+                        strengthLabel = "Weak";
                         break;
                     case 1:
                         strengthClass = "fair";
-                        strengthLabel = "Μέτριος";
+                        strengthLabel = "Fair";
                         break;
                     case 2:
                         strengthClass = "good";
-                        strengthLabel = "Καλός";
+                        strengthLabel = "Good";
                         break;
                     case 3:
                         strengthClass = "very-good";
-                        strengthLabel = "Πολύ Καλός";
+                        strengthLabel = "Very Good";
                         break;
                     case 4:
                         strengthClass = "strong";
-                        strengthLabel = "Δυνατός";
+                        strengthLabel = "Strong";
                         break;
                 }
 
@@ -211,7 +211,7 @@ if (isset($_POST["submit"])) {
 
                 // Update strength text and color
                 strengthText.removeClass().addClass("password-strength-text " + strengthClass);
-                strengthText.text("Ισχύς Κωδικού: " + strengthLabel);
+                strengthText.text("Password Strength: " + strengthLabel);
             });
 
             // Form submission validation
@@ -222,7 +222,7 @@ if (isset($_POST["submit"])) {
 
                 if (strength < 1) { // Block submission if password is "Weak"
                     e.preventDefault();
-                    toastr.error('Ο κωδικός σας είναι πολύ αδύναμος. Παρακαλώ επιλέξτε έναν ισχυρότερο κωδικό');
+                    toastr.error('Your password is too weak. Please choose a stronger password');
                 }
             });
         });
