@@ -19,7 +19,7 @@ if (isset($_POST["submit"])) {
         $sql = "SELECT * FROM users WHERE email = ?";
         $stmt = mysqli_stmt_init($conn);
         if (!mysqli_stmt_prepare($stmt, $sql)) {
-            throw new Exception("Κάτι πήγε στραβά.");
+            throw new Exception("Something went wrong.");
         }
         mysqli_stmt_bind_param($stmt, "s", $email);
         mysqli_stmt_execute($stmt);
@@ -27,7 +27,7 @@ if (isset($_POST["submit"])) {
         $user = mysqli_fetch_assoc($result);
 
         if (!$user) {
-            throw new Exception("Το Email δεν βρέθηκε!");
+            throw new Exception("Email not found!");
         }
 
         // Generate a unique token for password reset
@@ -38,7 +38,7 @@ if (isset($_POST["submit"])) {
         $sql = "UPDATE users SET reset_token = ?, reset_token_expiry = ? WHERE email = ?";
         $stmt = mysqli_stmt_init($conn);
         if (!mysqli_stmt_prepare($stmt, $sql)) {
-            throw new Exception("Κάτι πήγε στραβά.");
+            throw new Exception("Something went wrong.");
         }
         mysqli_stmt_bind_param($stmt, "sss", $resetToken, $expiry, $email);
         mysqli_stmt_execute($stmt);
@@ -66,29 +66,28 @@ if (isset($_POST["submit"])) {
             $mail->isHTML(false); // Disable HTML for testing
             $mail->Subject = 'Password Reset Request'; 
             $userName = !empty($user['full_name']) ? $user['full_name'] : 'User';
-            $mail->Body = "Dear $userName,\n\nΛάβαμε αίτημα για αλλαγή του κωδικού πρόσβασης σας. Πατήστε στον πιο κάτω σύνδεσμο για να τον αλλάξετε:\nhttp://localhost/login-register/reset_password.php?token=$resetToken\n\nΕάν δεν ζητήσατε αυτήν την αλλαγή, παρακαλώ αγνοήστε αυτό το Email.";
+            $mail->Body = "Dear $userName,\n\nWe received a request to reset your password. Click the link below to change it:\nhttp://localhost/login-register/reset_password.php?token=$resetToken\n\nIf you did not request this change, please ignore this email.";
         
             // Send the email
             if (!$mail->send()) {
-                throw new Exception("Το Email δεν μπόρεσε να σταλεί. Σφάλμα: " . $mail->ErrorInfo);
+                throw new Exception("Email could not be sent. Error: " . $mail->ErrorInfo);
             }
         
-            $success = "Ο σύνδεσμος για αλλαγή του κωδικού σας, στάλθηκε στο Email σας. Παρακαλώ, ελέγξετε τα εισερχόμενα σας ή το Spam Folder σας, εάν δεν το βρείτε.";
+            $success = "The password reset link has been sent to your email. Please check your inbox or your Spam Folder if you don’t see it.";
         } catch (Exception $e) {
-            throw new Exception("Αποτυχία αποστολής email: " . $e->getMessage());
+            throw new Exception("Failed to send email: " . $e->getMessage());
         }
     } catch (Exception $e) {
         $error = $e->getMessage();
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <title>Ξεχάσατε τον Κωδικό - ΤΕΠΑΚ</title>
+    <title>Forgot Password - CUT</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap -->
@@ -100,8 +99,8 @@ if (isset($_POST["submit"])) {
 
 <body>
     <div class="container">
-        <a href="https://www.cut.ac.cy" class="logo-link" target="_blank" title="Μετάβαση στην ιστοσελίδα του ΤΕΠΑΚ"></a>
-        <h2>Ανάκτηση Κωδικού Πρόσβασης</h2>
+        <a href="https://www.cut.ac.cy" class="logo-link" target="_blank" title="Go to the CUT website"></a>
+        <h2>Password Recovery</h2>
 
         <?php if (!empty($error)): ?>
             <div class='alert alert-danger'><?= $error ?></div>
@@ -112,11 +111,11 @@ if (isset($_POST["submit"])) {
         <?php else: ?>
             <form action="forgot_password.php" method="post">
                 <div class="form-group">
-                    <label for="email">Ηλεκτρονική Διεύθυνση</label>
-                    <input type="email" placeholder="π.χ. user@cut.ac.cy" name="email" class="form-control" required>
+                    <label for="email">Email Address</label>
+                    <input type="email" placeholder="e.g. user@cut.ac.cy" name="email" class="form-control" required>
                 </div>
                 <div class="form-btn">
-                    <input type="submit" value="Αποστολή Συνδέσμου" name="submit" class="btn btn-primary">
+                    <input type="submit" value="Send Link" name="submit" class="btn btn-primary">
                 </div>
             </form>
         <?php endif; ?>
