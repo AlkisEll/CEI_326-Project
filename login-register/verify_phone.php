@@ -50,14 +50,14 @@ if (isset($_POST["verify"])) {
                 header("Location: index.php");
                 exit();
             } else {
-                die("Κάτι πήγε στραβά. Δοκιμάστε ξανά αργότερα.");
+                die("Something went wrong. Please try again later.");
             }
         } else {
             // Store error message in session
-            $_SESSION['error'] = 'Λανθασμένος κωδικός επαλήθευσης.';
+            $_SESSION['error'] = 'Incorrect verification code.';
         }
     } else {
-        die("Κάτι πήγε στραβά. Δοκιμάστε ξανά αργότερα.");
+        die("Something went wrong. Please try again later.");
     }
 }
 ?>
@@ -75,14 +75,14 @@ if (isset($_POST["verify"])) {
 </head>
 <body>
     <div class="container">
-        <h2>Επαληθεύστε τον αριθμό τηλεφώνου σας</h2>
+        <h2>Verify Your Phone Number</h2>
         <form method="post" action="verify_phone.php">
             <div class="form-group">
-                <label for="verification_code">Κωδικός Επαλήθευσης</label>
-                <input type="text" class="form-control" name="verification_code" placeholder="Εισάγετε τον κωδικό επαλήθευσης σας" required>
+                <label for="verification_code">Verification Code</label>
+                <input type="text" class="form-control" name="verification_code" placeholder="Enter your verification code" required>
             </div>
             <div class="form-btn">
-                <input type="submit" class="btn btn-primary" value="Επαλήθευση" name="verify">
+                <input type="submit" class="btn btn-primary" value="Verify" name="verify">
             </div>
         </form>
     </div>
@@ -94,17 +94,17 @@ if (isset($_POST["verify"])) {
     <script>
         // Toastr configuration
         toastr.options = {
-            closeButton: true, // Show close button
-            progressBar: true, // Show progress bar
-            positionClass: 'toast-top-right', // Position of the toast
-            timeOut: 5000, // Time to auto-close the toast
-            extendedTimeOut: 1000, // Additional time if the user hovers over the toast
+            closeButton: true,
+            progressBar: true,
+            positionClass: 'toast-top-right',
+            timeOut: 5000,
+            extendedTimeOut: 1000,
         };
 
         // Display error message from PHP using Toastr
         <?php if (isset($_SESSION['error'])): ?>
             toastr.error("<?php echo $_SESSION['error']; ?>");
-            <?php unset($_SESSION['error']); // Clear the error message after displaying ?>
+            <?php unset($_SESSION['error']); ?>
         <?php endif; ?>
     </script>
 </body>
