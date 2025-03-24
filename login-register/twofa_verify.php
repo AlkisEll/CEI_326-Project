@@ -39,7 +39,7 @@ if (isset($_POST["verify"])) {
         <h2>Έλεγχος Ταυτότητας 2 Παραγόντων (Two Factor Authentication - 2FA)</h2>
         <?php if (isset($error)) echo "<div class='alert alert-danger'>$error</div>"; ?>
         <div class="form-group">
-            <label for="twofa_code">Κωδικός 2FA</label>
+            <label for="twofa_code">Κωδικός 2FA (Ελέγξετε το Email σας για τον 2FA κωδικό)</label>
             <input type="text" name="twofa_code" id="twofa_code" class="form-control" placeholder="Εισάγετε τον 2FA κωδικό" required maxlength="6">
         </div>
         <input type="submit" name="verify" class="btn btn-primary" value="Επαλήθευση Κωδικού">
