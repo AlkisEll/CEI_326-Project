@@ -21,7 +21,7 @@ if (isset($_POST["verify"])) {
         header("Location: index.php");
         exit();
     } else {
-        $error = "Μη έγκυρος ή ληγμένος κωδικός.";
+        $error = "Invalid or expired code.";
     }
 }
 ?>
@@ -30,19 +30,19 @@ if (isset($_POST["verify"])) {
 <html lang="el">
 <head>
     <meta charset="UTF-8">
-    <title>Έλεγχος 2FA</title>
+    <title>2FA Verification</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="container">
     <form action="twofa_verify.php" method="post">
-        <h2>Έλεγχος Ταυτότητας 2 Παραγόντων (Two Factor Authentication - 2FA)</h2>
+        <h2>Two-Factor Authentication (2FA) Verification</h2>
         <?php if (isset($error)) echo "<div class='alert alert-danger'>$error</div>"; ?>
         <div class="form-group">
-            <label for="twofa_code">Κωδικός 2FA (Ελέγξετε το Email σας για τον 2FA κωδικό)</label>
-            <input type="text" name="twofa_code" id="twofa_code" class="form-control" placeholder="Εισάγετε τον 2FA κωδικό" required maxlength="6">
+            <label for="twofa_code">2FA Code (Check your email for the 2FA code)</label>
+            <input type="text" name="twofa_code" id="twofa_code" class="form-control" placeholder="Enter the 2FA code" required maxlength="6">
         </div>
-        <input type="submit" name="verify" class="btn btn-primary" value="Επαλήθευση Κωδικού">
+        <input type="submit" name="verify" class="btn btn-primary" value="Verify Code">
     </form>
 </div>
 </body>
