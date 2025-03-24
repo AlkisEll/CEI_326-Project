@@ -18,7 +18,7 @@ require 'PHPMailer-master/src/SMTP.php';
 
 <head>
     <meta charset="UTF-8">
-    <title>Σύνδεση στο Σύστημα - ΤΕΠΑΚ</title>
+    <title>System Login - CUT</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap -->
@@ -31,8 +31,8 @@ require 'PHPMailer-master/src/SMTP.php';
 
 <body>
     <div class="container">
-        <a href="https://www.cut.ac.cy" class="logo-link" target="_blank" title="Μετάβαση στην ιστοσελίδα του ΤΕΠΑΚ"></a>
-        <h2>Σύνδεση στο Σύστημα</h2>
+        <a href="https://www.cut.ac.cy" class="logo-link" target="_blank" title="Go to the CUT website"></a>
+        <h2>System Login</h2>
 
         <?php
         if (isset($_POST["login"])) {
@@ -77,7 +77,7 @@ require 'PHPMailer-master/src/SMTP.php';
                             $mail->addAddress($email, $user['full_name']);
                             $mail->isHTML(true);
                             $mail->Subject = "Your 2FA Login Code";
-                            $mail->Body = "<p>Ο 2FA κωδικός σας είναι: <b>$twofa_code</b></p>";
+                            $mail->Body = "<p>Your 2FA code is: <b>$twofa_code</b></p>";
 
                             $mail->send();
 
@@ -95,10 +95,10 @@ require 'PHPMailer-master/src/SMTP.php';
                             exit();
                         }
                     } else {
-                        echo "<div class='alert alert-danger'>Λανθασμένος Κωδικός.</div>";
+                        echo "<div class='alert alert-danger'>Incorrect Password.</div>";
                     }
                 } else {
-                    echo "<div class='alert alert-danger'>Το Email δεν βρέθηκε.</div>";
+                    echo "<div class='alert alert-danger'>Email not found.</div>";
                 }
             }
         }
@@ -106,20 +106,20 @@ require 'PHPMailer-master/src/SMTP.php';
 
         <form action="login.php" method="post">
             <div class="form-group">
-                <label for="email">Ηλεκτρονική Διεύθυνση</label>
-                <input type="email" placeholder="π.χ. user@cut.ac.cy" name="email" class="form-control" required>
+                <label for="email">Email Address</label>
+                <input type="email" placeholder="e.g. user@cut.ac.cy" name="email" class="form-control" required>
             </div>
             <div class="form-group">
-                <label for="password">Κωδικός Πρόσβασης</label>
-                <input type="password" placeholder="Εισάγετε τον κωδικό σας" name="password" class="form-control" required>
+                <label for="password">Password</label>
+                <input type="password" placeholder="Enter your password" name="password" class="form-control" required>
             </div>
             <div class="form-btn">
-                <input type="submit" value="Σύνδεση" name="login" class="btn btn-primary">
+                <input type="submit" value="Login" name="login" class="btn btn-primary">
             </div>
         </form>
 
-        <div class="form-footer">Δεν έχετε λογαριασμό; <a href="registration.php">Εγγραφή</a><br>
-            <a href="forgot_password.php">Ξεχάσατε τον κωδικό σας;</a>
+        <div class="form-footer">Don't have an account? <a href="registration.php">Register</a><br>
+            <a href="forgot_password.php">Forgot your password?</a>
         </div>
     </div>
 </body>
