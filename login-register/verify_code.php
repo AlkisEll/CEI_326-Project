@@ -26,13 +26,13 @@ if (mysqli_stmt_prepare($stmt, $sql)) {
             // Return success response
             echo json_encode(['success' => true]);
         } else {
-            die("Κάτι πήγε στραβά. Δοκιμάστε ξανά αργότερα.");
+            die("Something went wrong. Please try again later.");
         }
     } else {
         // Verification code is invalid
         echo json_encode(['success' => false]);
     }
 } else {
-    die("Κάτι πήγε στραβά. Δοκιμάστε ξανά αργότερα.");
+    die("Something went wrong. Please try again later.");
 }
 ?>
