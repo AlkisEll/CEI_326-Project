@@ -111,6 +111,10 @@ if (isset($_POST["submit"])) {
                 <input type="email" class="form-control" name="email" placeholder="e.g. user@cut.ac.cy" required>
             </div>
             <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" class="form-control" name="phone" placeholder="e.g. +35799112233" required>
+            </div>
+            <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" class="form-control" name="password" id="password" placeholder="Create a password" required>
                 <div class="password-strength-meter">
