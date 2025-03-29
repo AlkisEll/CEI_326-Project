@@ -18,13 +18,14 @@ if (isset($_POST["submit"])) {
     $address = $_POST["address"];
     $postcode = $_POST["postcode"];
     $dob = $_POST["dob"];
+    $phone = $_POST["phone"];
 
     $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
     $errors = array();
 
     // Validate form fields
-    if (empty($fullName) || empty($email) || empty($password) || empty($passwordRepeat) || empty($country) || empty($city) || empty($address) || empty($postcode) || empty($dob)) {
+    if (empty($fullName) || empty($email) || empty($password) || empty($passwordRepeat) || empty($country) || empty($city) || empty($address) || empty($postcode) || empty($dob) || empty($phone)) {
         array_push($errors, "All fields are required!");
     }
 
@@ -59,10 +60,10 @@ if (isset($_POST["submit"])) {
         }
     } else {
         // Insert user data into the database (with new fields)
-        $sql = "INSERT INTO users (full_name, email, password, country, city, address, postcode, dob, is_verified) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0)";
+        $sql = "INSERT INTO users (full_name, email, password, country, city, address, postcode, dob, phone, is_verified) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 0)";
         $stmt = mysqli_stmt_init($conn);
         if (mysqli_stmt_prepare($stmt, $sql)) {
-            mysqli_stmt_bind_param($stmt, "ssssssss", $fullName, $email, $passwordHash, $country, $city, $address, $postcode, $dob);
+            mysqli_stmt_bind_param($stmt, "sssssssss", $fullName, $email, $passwordHash, $country, $city, $address, $postcode, $dob, $phone);
             mysqli_stmt_execute($stmt);
 
             // Store user data in session for verification method selection
