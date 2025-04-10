@@ -4,7 +4,7 @@ require_once "database.php";
 
 $appId = '4012641692398081';
 $appSecret = '5b7208c90d3c93406c0a703de1bf5f67';
-$redirectUri = 'http://localhost/login-register/facebook_callback.php';
+$redirectUri = 'https://cei326-omada7.cut.ac.cy/login-register/facebook_callback.php';
 
 if (!isset($_GET['code'])) {
     die('Facebook login failed.');
