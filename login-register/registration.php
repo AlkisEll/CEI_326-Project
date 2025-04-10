@@ -117,7 +117,7 @@ if (isset($_POST["submit"])) {
             Continue with Google
         </a>
 
-    <a href="https://www.facebook.com/v17.0/4012641692398081/dialog/oauth?client_id=4012641692398081&redirect_uri=http://localhost/login-register/facebook_callback.php&scope=email,public_profile"
+    <a href="https://www.facebook.com/v17.0/4012641692398081/dialog/oauth?client_id=4012641692398081&redirect_uri=https://cei326-omada7.cut.ac.cy/login-register/facebook_callback.php&scope=email,public_profile" class="btn btn-primary">
        class="btn btn-primary d-inline-flex align-items-center justify-content-center gap-2">
         <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
              alt="Facebook" style="width: 20px; height: 20px;">
