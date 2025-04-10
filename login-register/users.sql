@@ -1,0 +1,21 @@
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `full_name` varchar(128) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `verification_token` varchar(255) DEFAULT NULL,
+  `is_verified` varchar(255) DEFAULT NULL,
+  `reset_token` varchar(255) DEFAULT NULL,
+  `reset_token_expiry` datetime DEFAULT NULL,
+  `verification_code` varchar(200) DEFAULT NULL,
+  `phone` varchar(200) DEFAULT NULL,
+  `country` varchar(100) DEFAULT NULL,
+  `city` varchar(100) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `postcode` varchar(20) DEFAULT NULL,
+  `dob` date DEFAULT NULL,
+  `twofa_code` varchar(6) DEFAULT NULL,
+  `twofa_expires` datetime DEFAULT NULL,
+  `role` varchar(20) DEFAULT 'user',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
