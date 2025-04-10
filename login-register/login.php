@@ -23,6 +23,8 @@ require 'PHPMailer-master/src/SMTP.php';
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
 
     <!-- Custom Styling -->
     <link rel="stylesheet" href="style.css">
@@ -34,6 +36,21 @@ require 'PHPMailer-master/src/SMTP.php';
         <a href="https://www.cut.ac.cy" class="logo-link" target="_blank" title="Go to the CUT website"></a>
         <h2>System Login</h2>
 
+        <!-- Social Sign-In -->
+        <div class="mb-4 text-center">
+            <a href="https://accounts.google.com/o/oauth2/v2/auth?client_id=298135741411-6gbhvfmubpk1vjgbeervmma5mntarggk.apps.googleusercontent.com&redirect_uri=http://localhost/login-register/google_callback.php&response_type=code&scope=email%20profile&access_type=online" 
+                class="btn btn-light border d-flex align-items-center justify-content-center gap-2"
+                style="max-width: 300px; margin: auto;">
+                <img src="https://developers.google.com/identity/images/g-logo.png" style="height: 20px;">
+                Continue with Google
+            </a>
+
+        <a href="#" class="btn btn-primary mt-3 d-inline-flex align-items-center justify-content-center gap-2">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
+                alt="Facebook" style="width: 20px; height: 20px;">
+            Continue with Facebook
+        </a>
+    </div>
         <?php
         if (isset($_POST["login"])) {
             $email = trim($_POST["email"]);
@@ -113,7 +130,10 @@ require 'PHPMailer-master/src/SMTP.php';
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" placeholder="Enter your password" name="password" class="form-control" required>
+                <div class="input-group">
+                    <input type="password" class="form-control" name="password" id="password" required>
+                    <span class="input-group-text toggle-password" data-target="#password"><i class="bi bi-eye"></i></span>
+                </div>
             </div>
             <div class="form-btn">
                 <input type="submit" value="Login" name="login" class="btn btn-primary">
@@ -124,5 +144,21 @@ require 'PHPMailer-master/src/SMTP.php';
             <a href="forgot_password.php">Forgot your password?</a>
         </div>
     </div>
+
+<!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Toggle password visibility
+        $(".toggle-password").on("click", function () {
+            const input = $($(this).data("target"));
+            const icon = $(this).find("i");
+            const type = input.attr("type") === "password" ? "text" : "password";
+            input.attr("type", type);
+            icon.toggleClass("bi-eye bi-eye-slash");
+        });
+    });
+</script>
+
 </body>
 </html>

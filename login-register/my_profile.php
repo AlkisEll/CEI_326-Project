@@ -8,11 +8,25 @@ if (!isset($_SESSION["user"])) {
     exit();
 }
 
+
 $user = $_SESSION["user"];
 $fullName = $user["full_name"];
 $email = $user["email"];
 $id = $user["id"];
 $role = $user["role"] ?? '';
+
+// Enforce profile completion
+$stmt = $conn->prepare("SELECT country, city, address, postcode, dob, phone FROM users WHERE id = ?");
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$result = $stmt->get_result();
+$userData = $result->fetch_assoc();
+
+if (!$userData || in_array(null, $userData, true) || in_array('', $userData, true)) {
+    header("Location: complete_profile.php");
+    exit();
+}
+
 
 $system_title = getSystemConfig("site_title");
 $logo_path = getSystemConfig("logo_path");

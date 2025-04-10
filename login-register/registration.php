@@ -40,7 +40,9 @@ if (isset($_POST["submit"])) {
         mysqli_stmt_store_result($stmt);
         $rowCount = mysqli_stmt_num_rows($stmt);
         if ($rowCount > 0) {
-            array_push($errors, "Email already exists!");
+            $_SESSION["registration_error"] = "An account with this email already exists!";
+            header("Location: registration.php");
+            exit();     
         } else {
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 array_push($errors, "Email is not valid!");
@@ -85,16 +87,46 @@ if (isset($_POST["submit"])) {
     <meta charset="UTF-8">
     <title>Register an Account</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/country-select-js/2.1.0/css/countrySelect.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body class="registration_page">
 <div class="container">
+
+    <?php if (isset($_SESSION["registration_error"])): ?>
+        <div class="alert alert-danger">
+            <?= $_SESSION["registration_error"]; unset($_SESSION["registration_error"]); ?>
+        </div>
+    <?php endif; ?>
+
     <a href="https://www.cut.ac.cy" class="logo-link" target="_blank" title="Go to CUT website"></a>
 
     <h2>Special Scientist Registration</h2>
+
+ <!-- Social Sign-In -->
+    <div class="mb-4 text-center">
+        <a href="https://accounts.google.com/o/oauth2/v2/auth?client_id=298135741411-6gbhvfmubpk1vjgbeervmma5mntarggk.apps.googleusercontent.com&redirect_uri=http://localhost/login-register/google_callback.php&response_type=code&scope=email%20profile&access_type=online" 
+            class="btn btn-light border d-flex align-items-center justify-content-center gap-2"
+            style="max-width: 300px; margin: auto;">
+            <img src="https://developers.google.com/identity/images/g-logo.png" style="height: 20px;">
+            Continue with Google
+        </a>
+
+    <a href="https://www.facebook.com/v17.0/4012641692398081/dialog/oauth?client_id=4012641692398081&redirect_uri=http://localhost/login-register/facebook_callback.php&scope=email,public_profile"
+       class="btn btn-primary d-inline-flex align-items-center justify-content-center gap-2">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
+             alt="Facebook" style="width: 20px; height: 20px;">
+        Continue with Facebook
+    </a>
+</div>
+
+
+
     <form method="post" action="registration.php" id="registration-form">
         <div class="form-group">
             <label for="fullname">Full Name</label>
@@ -106,7 +138,10 @@ if (isset($_POST["submit"])) {
         </div>
         <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" class="form-control" name="password" id="password" required>
+            <div class="input-group">
+                <input type="password" class="form-control" name="password" id="password" required>
+                <span class="input-group-text toggle-password" data-target="#password"><i class="bi bi-eye"></i></span>
+            </div>
             <div class="password-strength-meter">
                 <div class="strength-bar" id="strength-bar"></div>
             </div>
@@ -114,7 +149,10 @@ if (isset($_POST["submit"])) {
         </div>
         <div class="form-group">
             <label for="repeat_password">Confirm Password</label>
-            <input type="password" class="form-control" name="repeat_password" required>
+            <div class="input-group">
+                <input type="password" class="form-control" name="repeat_password" id="confirm_password" required>
+                <span class="input-group-text toggle-password" data-target="#confirm_password"><i class="bi bi-eye"></i></span>
+            </div>
         </div>
         <div class="form-group country_row">
             <label for="country_input">Country</label>
@@ -159,10 +197,7 @@ if (isset($_POST["submit"])) {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script>
     $(document).ready(function () {
-        $("#country").countrySelect({
-            defaultCountry: "cy",
-            responsiveDropdown: true
-        });
+        $("#country").countrySelect({ defaultCountry: "cy", responsiveDropdown: true });
 
         const phoneInput = document.querySelector("#phone");
         const iti = window.intlTelInput(phoneInput, {
@@ -174,57 +209,54 @@ if (isset($_POST["submit"])) {
 
         $('#country').on('change', function () {
             const selectedCountry = $(this).val().toLowerCase();
-            try {
-                iti.setCountry(selectedCountry);
-            } catch (e) {
-                console.warn("Invalid country name for phone sync: " + selectedCountry);
-            }
+            try { iti.setCountry(selectedCountry); } catch (e) {}
+        });
+
+        // Toggle password visibility
+        $(".toggle-password").on("click", function () {
+            const input = $($(this).data("target"));
+            const icon = $(this).find("i");
+            const type = input.attr("type") === "password" ? "text" : "password";
+            input.attr("type", type);
+            icon.toggleClass("bi-eye bi-eye-slash");
         });
 
         $("#password").on("input", function () {
             const password = $(this).val();
             const result = zxcvbn(password);
-            const strengthBar = $("#strength-bar");
-            const strengthText = $("#strength-text");
-
-            let strengthClass = "";
-            let strengthLabel = "";
+            let strengthClass = "", strengthLabel = "";
 
             switch (result.score) {
-                case 0:
-                    strengthClass = "weak"; strengthLabel = "Weak"; break;
-                case 1:
-                    strengthClass = "fair"; strengthLabel = "Fair"; break;
-                case 2:
-                    strengthClass = "good"; strengthLabel = "Good"; break;
-                case 3:
-                    strengthClass = "very-good"; strengthLabel = "Very Good"; break;
-                case 4:
-                    strengthClass = "strong"; strengthLabel = "Strong"; break;
+                case 0: strengthClass = "weak"; strengthLabel = "Weak"; break;
+                case 1: strengthClass = "fair"; strengthLabel = "Fair"; break;
+                case 2: strengthClass = "good"; strengthLabel = "Good"; break;
+                case 3: strengthClass = "very-good"; strengthLabel = "Very Good"; break;
+                case 4: strengthClass = "strong"; strengthLabel = "Strong"; break;
             }
 
-            strengthBar.removeClass().addClass("strength-bar " + strengthClass).css("width", (result.score + 1) * 25 + "%");
-            strengthText.removeClass().addClass("password-strength-text " + strengthClass).text("Password Strength: " + strengthLabel);
+            $("#strength-bar").removeClass().addClass("strength-bar " + strengthClass).css("width", (result.score + 1) * 25 + "%");
+            $("#strength-text").removeClass().addClass("password-strength-text " + strengthClass).text("Password Strength: " + strengthLabel);
         });
 
         $("#registration-form").submit(function () {
-            const fullPhoneNumber = iti.getNumber();
-            $('#phone').val(fullPhoneNumber);
-
+            $('#phone').val(iti.getNumber());
             const password = $("#password").val();
-            const result = zxcvbn(password);
-
-            if (result.score < 1) {
+            if (zxcvbn(password).score < 1) {
                 toastr.error('Your password is too weak. Please choose a stronger password.');
                 return false;
             }
         });
     });
-    // Disable future dates for Date of Birth
-    const dobInput = document.getElementById("dob");
-    const today = new Date().toISOString().split('T')[0];
-    dobInput.setAttribute("max", today);
 
+    // Limit future date of birth
+    document.getElementById("dob").setAttribute("max", new Date().toISOString().split('T')[0]);
+
+    // Google callback handler
+    function handleCredentialResponse(response) {
+        const jwt = JSON.parse(atob(response.credential.split('.')[1]));
+        document.querySelector('input[name="email"]').value = jwt.email || "";
+        document.querySelector('input[name="fullname"]').value = jwt.name || "";
+    }
 </script>
 </body>
 </html>

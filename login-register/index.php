@@ -1,17 +1,39 @@
 <?php
 session_start();
-
-if (!isset($_SESSION["user"])) {
-    header("Location: login.php");
-    exit();
-}
-
-$fullName = $_SESSION["user"]["full_name"] ?? 'User';
+require_once "database.php";
 require_once "get_config.php";
+
 $system_title = getSystemConfig("site_title");
 $logo_path = getSystemConfig("logo_path");
-?>
 
+// Default guest role
+$role = "Null";
+$fullName = "Guest";
+
+// If logged in, verify profile completeness
+if (isset($_SESSION["user"])) {
+    $userId = $_SESSION["user"]["id"];
+    $fullName = $_SESSION["user"]["full_name"] ?? 'User';
+    $role = $_SESSION["user"]["role"] ?? 'user';
+
+    $stmt = $conn->prepare("SELECT country, city, address, postcode, dob, phone FROM users WHERE id = ?");
+    $stmt->bind_param("i", $userId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $user = $result->fetch_assoc();
+
+    $fieldsComplete = $user && $user["country"] && $user["city"] && $user["address"] && $user["postcode"] && $user["dob"] && $user["phone"];
+
+    // Update profile_complete flag
+    $_SESSION["user"]["profile_complete"] = $fieldsComplete;
+
+    // Redirect if incomplete
+    if (!$fieldsComplete) {
+        header("Location: complete_profile.php");
+        exit();
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,9 +41,8 @@ $logo_path = getSystemConfig("logo_path");
   <title><?= htmlspecialchars($system_title) ?></title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
- <link rel="stylesheet" href="indexstyle.css">
-<link rel="stylesheet" href="darkmode.css">
-
+  <link rel="stylesheet" href="indexstyle.css">
+  <link rel="stylesheet" href="darkmode.css">
 </head>
 
 <body>
@@ -41,10 +62,17 @@ $logo_path = getSystemConfig("logo_path");
         <li class="nav-item"><a class="nav-link text-white" href="#">About</a></li>
         <li class="nav-item"><a class="nav-link text-white" href="#">Departments</a></li>
         <li class="nav-item"><a class="nav-link text-white" href="#">Contact</a></li>
-        <li class="nav-item"><a class="nav-link text-white" href="my_profile.php">My Profile</a></li>
-        <li class="nav-item">
-            <a class="nav-link text-white">Welcome, <strong><?= htmlspecialchars($fullName); ?></strong></a>
-        </li>
+
+        <?php if ($role === "Null"): ?>
+            <li class="nav-item"><a class="nav-link text-white" href="login.php">Login</a></li>
+            <li class="nav-item"><a class="nav-link text-white" href="registration.php">Register</a></li>
+        <?php else: ?>
+            <li class="nav-item"><a class="nav-link text-white" href="my_profile.php">My Profile</a></li>
+            <li class="nav-item">
+                <a class="nav-link text-white">Welcome, <strong><?= htmlspecialchars($fullName); ?></strong></a>
+            </li>
+        <?php endif; ?>
+
         <li class="nav-item ms-3">
             <div class="form-check form-switch text-white">
               <input class="form-check-input" type="checkbox" id="darkModeToggle">
@@ -94,7 +122,6 @@ $logo_path = getSystemConfig("logo_path");
   const toggle = document.getElementById('darkModeToggle');
   const body = document.body;
 
-  // Apply saved mode
   const savedMode = localStorage.getItem('dark-mode');
   if (savedMode === 'true') {
     body.classList.add('dark-mode');
@@ -104,6 +131,13 @@ $logo_path = getSystemConfig("logo_path");
   toggle.addEventListener('change', () => {
     body.classList.toggle('dark-mode');
     localStorage.setItem('dark-mode', body.classList.contains('dark-mode'));
+  });
+
+  // Prevent browser back from restoring cached version
+  window.addEventListener("pageshow", function (event) {
+    if (event.persisted || (window.performance && window.performance.getEntriesByType("navigation")[0].type === "back_forward")) {
+      window.location.reload();
+    }
   });
 </script>
 </body>

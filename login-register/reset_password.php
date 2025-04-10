@@ -61,6 +61,7 @@ if (isset($_GET["token"])) {
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Custom Styling -->
     <link rel="stylesheet" href="style.css">
@@ -85,7 +86,12 @@ if (isset($_GET["token"])) {
             <form action="reset_password.php?token=<?= htmlspecialchars($token) ?>" method="post" id="reset-password-form">
                 <div class="form-group">
                     <label for="new_password">New Password</label>
-                    <input type="password" placeholder="Enter new password" name="new_password" id="new_password" class="form-control" required>
+                    <div class="input-group">
+                        <input type="password" name="new_password" id="new_password" class="form-control" required>
+                        <span class="input-group-text toggle-password" data-target="#new_password">
+                            <i class="bi bi-eye"></i>
+                        </span>
+                    </div>
                     <div class="password-strength-meter">
                         <div class="strength-bar" id="strength-bar"></div>
                     </div>
@@ -93,7 +99,12 @@ if (isset($_GET["token"])) {
                 </div>
                 <div class="form-group">
                     <label for="confirm_password">Confirm Password</label>
-                    <input type="password" placeholder="Confirm new password" name="confirm_password" class="form-control" required>
+                    <div class="input-group">
+                        <input type="password" name="confirm_password" id="confirm_password" class="form-control" required>
+                        <span class="input-group-text toggle-password" data-target="#confirm_password">
+                            <i class="bi bi-eye"></i>
+                        </span>
+                    </div>
                 </div>
                 <div class="form-btn">
                     <input type="submit" value="Reset Password" name="submit" class="btn btn-primary">
@@ -110,6 +121,16 @@ if (isset($_GET["token"])) {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script>
         $(document).ready(function () {
+
+            // Toggle password visibility
+            $(".toggle-password").on("click", function () {
+                const input = $($(this).data("target"));
+                const icon = $(this).find("i");
+                const type = input.attr("type") === "password" ? "text" : "password";
+                input.attr("type", type);
+                icon.toggleClass("bi-eye bi-eye-slash");
+            });
+
             // Password strength meter
             $("#new_password").on("input", function () {
                 const password = $(this).val();

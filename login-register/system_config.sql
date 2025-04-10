@@ -1,4 +1,4 @@
-CREATE TABLE config (
+CREATE TABLE system_config (
     id INT(11) NOT NULL AUTO_INCREMENT,
     config_key VARCHAR(100) NOT NULL,
     config_value TEXT NOT NULL,
