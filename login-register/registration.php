@@ -108,22 +108,24 @@ if (isset($_POST["submit"])) {
 
     <h2>Special Scientist Registration</h2>
 
- <!-- Social Sign-In -->
-    <div class="mb-4 text-center">
-        <a href="https://accounts.google.com/o/oauth2/v2/auth?client_id=298135741411-6gbhvfmubpk1vjgbeervmma5mntarggk.apps.googleusercontent.com&redirect_uri=http://localhost/login-register/google_callback.php&response_type=code&scope=email%20profile&access_type=online" 
-            class="btn btn-light border d-flex align-items-center justify-content-center gap-2"
-            style="max-width: 300px; margin: auto;">
-            <img src="https://developers.google.com/identity/images/g-logo.png" style="height: 20px;">
-            Continue with Google
-        </a>
+<!-- Social Sign-In -->
+<div class="mb-4 text-center">
+    <a href="https://accounts.google.com/o/oauth2/v2/auth?client_id=298135741411-6gbhvfmubpk1vjgbeervmma5mntarggk.apps.googleusercontent.com&redirect_uri=https://cei326-omada7.cut.ac.cy/login-register/google_callback.php&response_type=code&scope=email%20profile&access_type=online" 
+       class="btn btn-light border d-flex align-items-center justify-content-center gap-2"
+       style="max-width: 300px; margin: auto;">
+        <img src="https://developers.google.com/identity/images/g-logo.png" style="height: 20px;">
+        Continue with Google
+    </a>
 
-    <a href="https://www.facebook.com/v17.0/4012641692398081/dialog/oauth?client_id=4012641692398081&redirect_uri=https://cei326-omada7.cut.ac.cy/login-register/facebook_callback.php&scope=email,public_profile" class="btn btn-primary">
-       class="btn btn-primary d-inline-flex align-items-center justify-content-center gap-2">
+    <a href="https://www.facebook.com/v17.0/4012641692398081/dialog/oauth?client_id=4012641692398081&redirect_uri=https://cei326-omada7.cut.ac.cy/login-register/facebook_callback.php&scope=email,public_profile" 
+       class="btn btn-primary d-inline-flex align-items-center justify-content-center gap-2 mt-3"
+       style="max-width: 300px; margin: auto;">
         <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
              alt="Facebook" style="width: 20px; height: 20px;">
         Continue with Facebook
     </a>
 </div>
+
 
 
 
