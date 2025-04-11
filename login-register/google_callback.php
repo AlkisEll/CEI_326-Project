@@ -56,8 +56,11 @@ if (!$email) {
 }
 
 // Check if user already exists
-$stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
-$stmt->bind_param("s", $email);
+$dummyPassword = password_hash(uniqid(), PASSWORD_DEFAULT); // generate a dummy password
+
+$stmt = $conn->prepare("INSERT INTO users (full_name, email, password, is_verified) VALUES (?, ?, ?, 1)");
+$stmt->bind_param("sss", $fullName, $email, $dummyPassword);
+
 $stmt->execute();
 $result = $stmt->get_result();
 
