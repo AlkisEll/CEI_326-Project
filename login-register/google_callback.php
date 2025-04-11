@@ -17,7 +17,7 @@ if (!isset($_GET['code'])) {
 
 $code = $_GET['code'];
 
-// Exchange authorization code for access token
+// Exchange code for access token
 $tokenRequest = curl_init('https://oauth2.googleapis.com/token');
 curl_setopt($tokenRequest, CURLOPT_POST, true);
 curl_setopt($tokenRequest, CURLOPT_RETURNTRANSFER, true);
@@ -28,7 +28,6 @@ curl_setopt($tokenRequest, CURLOPT_POSTFIELDS, http_build_query([
     'redirect_uri' => $redirectUri,
     'grant_type' => 'authorization_code'
 ]));
-
 $response = curl_exec($tokenRequest);
 curl_close($tokenRequest);
 $tokenData = json_decode($response, true);
@@ -56,20 +55,17 @@ if (!$email) {
 }
 
 // Check if user already exists
-$dummyPassword = password_hash(uniqid(), PASSWORD_DEFAULT); // generate a dummy password
-
-$stmt = $conn->prepare("INSERT INTO users (full_name, email, password, is_verified) VALUES (?, ?, ?, 1)");
-$stmt->bind_param("sss", $fullName, $email, $dummyPassword);
-
+$stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
+$stmt->bind_param("s", $email);
 $stmt->execute();
 $result = $stmt->get_result();
 
-if ($result->num_rows > 0) {
+if ($result && $result->num_rows > 0) {
     $user = $result->fetch_assoc();
 } else {
-    // Create new user with minimal info
-    $stmt = $conn->prepare("INSERT INTO users (full_name, email, is_verified) VALUES (?, ?, 1)");
-    $stmt->bind_param("ss", $fullName, $email);
+    $dummyPassword = password_hash(uniqid(), PASSWORD_DEFAULT);
+    $stmt = $conn->prepare("INSERT INTO users (full_name, email, password, is_verified) VALUES (?, ?, ?, 1)");
+    $stmt->bind_param("sss", $fullName, $email, $dummyPassword);
     $stmt->execute();
 
     $user = [
@@ -82,7 +78,7 @@ if ($result->num_rows > 0) {
         'postcode' => null,
         'dob' => null,
         'phone' => null,
-        'role' => 'user' // Default role
+        'role' => 'user'
     ];
 }
 
@@ -96,7 +92,7 @@ $is_complete = !(
     empty($user['phone'])
 );
 
-// Set session with profile completeness
+// Store in session
 $_SESSION['user'] = [
     'id' => $user['id'],
     'full_name' => $user['full_name'],
@@ -105,11 +101,7 @@ $_SESSION['user'] = [
     'profile_complete' => $is_complete
 ];
 
-// Redirect accordingly
-if ($is_complete) {
-    header("Location: index.php");
-} else {
-    header("Location: complete_profile.php");
-}
+// Redirect
+header("Location: " . ($is_complete ? "index.php" : "complete_profile.php"));
 exit();
 ?>
