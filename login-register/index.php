@@ -5,6 +5,7 @@ require_once "get_config.php";
 
 $system_title = getSystemConfig("site_title");
 $logo_path = getSystemConfig("logo_path");
+$moodle_url = getSystemConfig("moodle_url");
 
 // Default guest role
 $role = "Null";
@@ -58,7 +59,7 @@ if (isset($_SESSION["user"])) {
     </a>
     <div class="collapse navbar-collapse">
       <ul class="navbar-nav ms-auto align-items-center">
-        <li class="nav-item"><a class="nav-link text-white" href="#">Home</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="<?= htmlspecialchars($moodle_url) ?>" target="_blank">Moodle</a></li>
         <li class="nav-item"><a class="nav-link text-white" href="#">About</a></li>
         <li class="nav-item"><a class="nav-link text-white" href="#">Departments</a></li>
         <li class="nav-item"><a class="nav-link text-white" href="#">Contact</a></li>
