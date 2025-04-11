@@ -17,7 +17,7 @@ require_once "database.php";
 
 // Twilio credentials
 $accountSid = 'ACed50809afda0163369b2505abc4354f7';
-$authToken = '978bd899503cb48316db96598ee2662c';
+$authToken = '1a386b4ef6e6be7afa58a8b503d78adb';
 $twilioPhoneNumber = '+12182616825';
 
 // Get the user's phone number from the database
