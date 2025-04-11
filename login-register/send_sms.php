@@ -4,7 +4,7 @@ require_once "database.php";
 
 // Twilio credentials
 $accountSid = 'ACed50809afda0163369b2505abc4354f7'; // Your Twilio Account SID
-$authToken = 'e2da96226efadb15d09d2dee1b81836b'; // Your Twilio Auth Token
+$authToken = '1a386b4ef6e6be7afa58a8b503d78adb'; // Your Twilio Auth Token
 $twilioPhoneNumber = '+12182616825'; // Your Twilio phone number
 
 // Get data from the AJAX request
