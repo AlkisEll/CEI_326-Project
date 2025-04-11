@@ -50,21 +50,27 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     saveConfig("moodle_url", $moodle_url, $conn);
 
     // Handle logo upload
-    if (isset($_FILES["logo"]) && $_FILES["logo"]["error"] === UPLOAD_ERR_OK) {
-        $uploadDir = "uploads/";
-        if (!is_dir($uploadDir)) {
-            mkdir($uploadDir, 0755, true);
-        }
-
-        $filename = uniqid("logo_") . "_" . basename($_FILES["logo"]["name"]);
-        $uploadPath = $uploadDir . $filename;
-
-        if (move_uploaded_file($_FILES["logo"]["tmp_name"], $uploadPath)) {
-            saveConfig("logo_path", $uploadPath, $conn);
-            $logo_path = $uploadPath;
-            $logo_saved = true;
-        }
+if (isset($_FILES["logo"]) && $_FILES["logo"]["error"] === UPLOAD_ERR_OK) {
+    $uploadDir = "uploads/";
+    if (!is_dir($uploadDir)) {
+        mkdir($uploadDir, 0755, true);
     }
+
+    $filename = uniqid("logo_") . "_" . basename($_FILES["logo"]["name"]);
+    $uploadPath = $uploadDir . $filename;
+
+    if (move_uploaded_file($_FILES["logo"]["tmp_name"], $uploadPath)) {
+        saveConfig("logo_path", $uploadPath, $conn);
+        $logo_path = $uploadPath;
+        $logo_saved = true;
+        echo "<div class='alert alert-success'>Logo uploaded and saved as: $uploadPath</div>"; // TEMPORARY
+    } else {
+        echo "<div class='alert alert-danger'>❌ Upload failed. Check folder permissions.</div>"; // TEMPORARY
+    }
+} else {
+    echo "<div class='alert alert-warning'>No logo uploaded or upload error.</div>"; // TEMPORARY
+}
+
 
     $success = "Configuration saved successfully.";
 }
