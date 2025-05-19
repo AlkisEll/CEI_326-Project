@@ -8,7 +8,7 @@ require_once "database.php";
 
 $clientID = '298135741411-6gbhvfmubpk1vjgbeervmma5mntarggk.apps.googleusercontent.com';
 $clientSecret = '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';
-$redirectUri = 'http://localhost/special-scientists/google_callback.php';
+$redirectUri = 'http://cei326-omada7.cut.ac.cy/special-scientists/google_callback.php';
 
 if (!isset($_GET['code'])) {
     header('Location: registration.php');
