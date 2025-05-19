@@ -1,0 +1,614 @@
+/* === General === */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* === Navbar === */
+.navbar {
+    background-color: #003366;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar-brand,
+.nav-link {
+    color: #fff !important;
+}
+
+.navbar .nav-item strong {
+    color: #ffc107;
+}
+
+/* === Hero Section === */
+.hero-section {
+    background: url('Tepak.jpg') no-repeat center center;
+    background-size: cover;
+    height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+}
+
+.hero-section h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+}
+
+.hero-section p {
+    font-size: 1.25rem;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+/* === Content Section === */
+.content-section {
+    background-color: #ffffff00;
+    padding: 60px 0;
+}
+
+.content-section h3 {
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.content-section p {
+    font-size: 1rem;
+    color: #333;
+}
+
+/* === Footer === */
+.footer {
+    background-color: #f8f9fa;
+    padding: 20px 0;
+    font-size: 14px;
+    color: #555;
+    text-align: center;
+    margin-top: 60px;
+    padding-top: 40px;
+    border-top: 1px solid #ddd;
+}
+
+.footer-logo {
+    max-width: 160px;
+    height: auto;
+    margin-bottom: 15px;
+}
+
+  
+
+.dashboard-box {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px 30px;
+    background-color: #f9f9f9;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 8px rgba(0,0,0,0.05);
+}
+
+.dashboard-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    background-color: #f1f1f1;
+}
+
+/* Manage Users Table Layout */
+.table-wrapper {
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    margin-top: 40px;
+}
+
+.table th {
+    background-color: #003366;
+    color: white;
+    font-weight: 500;
+}
+
+.table td, .table th {
+    vertical-align: middle;
+}
+
+.badge.bg-danger {
+    font-weight: 500;
+    padding: 6px 10px;
+    border-radius: 6px;
+}
+
+/* Action Buttons spacing */
+.table .btn {
+    margin-right: 4px;
+}
+
+.my-apps-card {
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.05);
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 30px;
+}
+
+@keyframes driftAway {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(30px, -10px) rotate(5deg); }
+  }
+  
+  .logout-hover-effect {
+    cursor: url("https://em-content.zobj.net/thumbs/120/apple/354/hand-with-index-finger-and-thumb-crossed_1faf0.png"), auto;
+    animation: driftAway 0.4s forwards;
+  }
+
+  .custom-floating-menu {
+    position: absolute;
+    top: 70px; /* adjust depending on navbar height */
+    right: 1rem;
+    width: 280px;
+    background: rgba(0, 46, 93, 0.9);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 1.5rem 1rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    z-index: 1050;
+    transition: all 0.3s ease;
+  }
+
+/* Floating burger menu */
+.floating-menu {
+    position: fixed;
+    top: 70px;
+    right: 15px;
+    background-color: #1e293b;
+    color: white;
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    z-index: 9999;
+    width: 220px;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: all 0.25s ease-in-out;
+    pointer-events: none;
+  }
+
+  .floating-menu.show {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+  }
+  
+  .floating-menu a,
+  .floating-menu p,
+  .floating-menu button,
+  .floating-menu label {
+    display: block;
+    padding: 0.4rem 0;
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .floating-menu a:last-child {
+    border-bottom: none;
+  }
+  
+  .floating-menu a:hover {
+    color: #00bfff;
+    transform: scale(1.05);
+  }
+  
+  .floating-menu button {
+    width: 100%;
+    margin-top: 0.75rem;
+    padding: 0.4rem;
+    border-radius: 6px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    font-weight: 500;
+  }
+  
+  .floating-menu button:hover {
+    transform: scale(1.05);
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  .floating-menu .form-check {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  /* Add these classes */
+  .floating-menu.fade-in {
+    display: block;
+    animation: fadeInScale 0.25s ease-out forwards;
+    pointer-events: auto;
+  }
+  
+  .floating-menu.fade-out {
+    animation: fadeOutScale 0.25s ease-in forwards;
+    pointer-events: none;
+  }
+  
+  
+  @keyframes fadeInScale {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    
+  }
+
+  @keyframes fadeOutScale {
+    from {
+      opacity: 1;
+      transform: scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+}
+
+/* Shine effect on button */
+.btn-shiny {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+  border-radius: 50px;
+}
+
+.btn-shiny::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(120deg, rgba(255,255,255,0.2), rgba(255,255,255,0.8), rgba(255,255,255,0.2));
+  transform: skewX(-20deg);
+}
+
+.btn-shiny:hover::before {
+  left: 130%;
+  transition: left 0.6s ease-in-out;
+}
+
+/* Optional glass effect for blocks */
+.glass-card {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  padding: 25px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+}
+
+.section-heading {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 0.5rem;
+    text-align: center;
+}
+
+#typedText {
+  font-family: "Fira Code", "Courier New", monospace;
+  font-weight: 600;
+  font-size: 1.3rem;
+  color: #00ccf5;
+  text-shadow: 0 0 4px rgba(0,0,0,0.7);
+  opacity: 1;
+  transition: opacity 0.4s ease-in-out;
+  
+}
+
+
+.typed-cursor::after {
+  content: "|";
+  animation: blink 1s infinite;
+  font-weight: bold;
+  margin-left: 4px;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.invalid-feedback { display: block; font-size: 0.875em; }
+    .step-indicator {
+  background-color: #e9ecef;
+  height: 13px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.step-progress {
+  background-color: #0d6efd;
+  height: 100%;
+  width: 0;
+  transition: width 0.4s ease;
+}
+
+.progress-percentage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 13px;
+  color: #000;
+  font-weight: bold;
+}
+
+.accordion-button {
+  font-weight: bold;
+}
+
+.accordion-body {
+  padding-left: 1.5rem;
+}
+
+.course-highlight {
+  background-color: #fff3cd;
+  border-left: 4px solid #ffc107;
+  padding-left: 6px;
+  border-radius: 3px;
+}
+
+.step-guide {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 30px;
+  padding: 15px 10px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+.step-box {
+  flex: 1;
+  min-width: 130px;
+  border: 1px dashed #ccc;
+  border-radius: 6px;
+  padding: 10px;
+  background: white;
+  text-align: center;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.step-box.active {
+  border-color: #0d6efd;
+  background-color: #eaf3ff;
+}
+
+.step-label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.step-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 3px;
+  color: #0d6efd;
+}
+
+.step-desc {
+  font-size: 0.8rem;
+  color: #555;
+}
+
+@keyframes bounce {
+  0%   { transform: scaleX(1); }
+  60%  { transform: scaleX(1.05); }
+  100% { transform: scaleX(1); }
+}
+
+.step-progress.bounce {
+  animation: bounce 0.3s ease;
+}
+
+/* Feedback Bubble Button */
+.feedback-bubble {
+  position: fixed;
+  bottom: 69px;
+  right: 20px;
+  width: 55px;
+  height: 55px;
+  background-color: #0d6efd;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  z-index: 1060;
+  transition: background-color 0.3s ease;
+}
+
+.feedback-bubble:hover {
+  background-color: #0b5ed7;
+}
+
+/* Feedback Slide Panel */
+.feedback-panel {
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  width: 300px;
+  background-color: #ffffff;
+  border: 2px solid black; /* Outline for light mode */
+  border-radius: 12px;
+  padding: 15px;
+  display: none;
+  z-index: 1061;
+  animation: slideFadeIn 0.3s ease-out;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+@keyframes slideFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+
+.feedback-textarea {
+  resize: none;
+  font-size: 0.95rem;
+  min-height: 50px;
+  max-height: 80px;
+  border-radius: 8px;
+}
+
+/* Optional: glowing border focus */
+.feedback-textarea:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.15rem rgba(13, 110, 253, 0.25);
+}
+
+/* Notification styling */
+.feedback-notification {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.9);
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 8px;
+  z-index: 10500;
+  opacity: 0;
+  pointer-events: none;
+  font-size: 1rem;
+  transition: opacity 0.3s ease;
+}
+
+.feedback-notification.show {
+  opacity: 1;
+}
+
+.step-scroll-wrapper {
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+  padding-bottom: 10px;
+}
+
+.step-guide {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  min-width: max-content; /* ensures scrolling works */
+}
+
+.step-box {
+  flex-shrink: 0;
+  width: 140px;
+  background-color: #ffffff;
+  color: #000000;
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 10px 12px;
+  text-align: center;
+  transition: all 0.3s ease;
+  height: 150px; /* Ensures consistent height */
+
+}
+
+.step-box.active {
+    background-color: #bdd2f1;
+    color: #000000;
+    border-color: #66b2ff;
+    box-shadow: 0 0 10px rgba(13, 110, 253, 0.3);
+}
+
+.step-label {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #000000;
+  margin-bottom: 4px;
+}
+
+.step-title {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 3px;
+  color: inherit;
+}
+
+.step-desc {
+  font-size: 0.8rem;
+  opacity: 0.75;
+  color: #2d2d2d;
+}
+
+.step-arrow {
+  font-size: 1.8rem;
+  color: #0d6efd;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  transform: translateY(2px);
+}
+
+/* Light mode scrollbar styling inside scroll wrapper */
+.step-scroll-wrapper::-webkit-scrollbar {
+  height: 8px;
+}
+
+.step-scroll-wrapper::-webkit-scrollbar-track {
+  background: #e0e0e0;
+  border-radius: 10px;
+}
+
+.step-scroll-wrapper::-webkit-scrollbar-thumb {
+  background-color: #999;
+  border-radius: 10px;
+}
+
+.step-scroll-wrapper::-webkit-scrollbar-thumb:hover {
+  background-color: #777;
+}
+
+
+.h4, h4 {
+    font-size: calc(1.275rem + .3vw);
+    padding-top: 8px;
+}

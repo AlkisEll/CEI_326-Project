@@ -1,0 +1,42 @@
+{"exception":"webservice_access_exception","errorcode":"accessexception","message":"Access control exception (Access to the function core_course_create_courses() is not allowed.\n                     There could be multiple reasons for this:\n                     1. The service linked to the user token does not contain the function.\n                     2. The service is user-restricted and the user is not listed.\n                     3. The service is IP-restricted and the user IP is not listed.\n                     4. The service is time-restricted and the time has expired.\n                     5. The token is time-restricted and the time has expired.\n                     6. The service requires a specific capability which the user does not have.\n                     7. The function is called with username\/password (no user token is sent)\n                     and none of the services has the function to allow the user.\n                     These settings can be found in Administration > Site administration\n                     > Server > Web services > External services and Manage tokens.)","debuginfo":"Access to the function core_course_create_courses() is not allowed.\n                     There could be multiple reasons for this:\n                     1. The service linked to the user token does not contain the function.\n                     2. The service is user-restricted and the user is not listed.\n                     3. The service is IP-restricted and the user IP is not listed.\n                     4. The service is time-restricted and the time has expired.\n                     5. The token is time-restricted and the time has expired.\n                     6. The service requires a specific capability which the user does not have.\n                     7. The function is called with username\/password (no user token is sent)\n                     and none of the services has the function to allow the user.\n                     These settings can be found in Administration > Site administration\n                     > Server > Web services > External services and Manage tokens."}
+[{"id":2,"shortname":"CC301"}]
+[{"id":3,"shortname":"CC301"}]
+[{"id":4,"shortname":"CC301"}]
+[{"id":5,"shortname":"COM101"}]
+{"exception":"core\\exception\\moodle_exception","errorcode":"shortnametaken","message":"Short name is already used for another course (CC301)"}
+[{"id":6,"shortname":"COM101"}]
+[{"id":7,"shortname":"CC301"}]
+[{"id":8,"shortname":"COM101"}]
+[{"id":9,"shortname":"AI301"}]
+[{"id":10,"shortname":"BST301"}]
+{"exception":"core\\exception\\moodle_exception","errorcode":"shortnametaken","message":"Short name is already used for another course (BST301)"}
+[{"id":11,"shortname":"CE101"}]
+{"exception":"core\\exception\\moodle_exception","errorcode":"shortnametaken","message":"Short name is already used for another course (CE101)"}
+{"exception":"core\\exception\\moodle_exception","errorcode":"shortnametaken","message":"Short name is already used for another course (CE101)"}
+{"exception":"core\\exception\\moodle_exception","errorcode":"shortnametaken","message":"Short name is already used for another course (CE101)"}
+{"exception":"core\\exception\\moodle_exception","errorcode":"shortnametaken","message":"Short name is already used for another course (CE101)"}
+[{"id":12,"shortname":"BST301"}]
+[{"id":13,"shortname":"CC301"}]
+{"exception":"core\\exception\\moodle_exception","errorcode":"shortnametaken","message":"Short name is already used for another course (BST301)"}
+{"exception":"core\\exception\\moodle_exception","errorcode":"shortnametaken","message":"Short name is already used for another course (CC301)"}
+[{"id":14,"shortname":"AF201"}]
+{"exception":"core\\exception\\moodle_exception","errorcode":"shortnametaken","message":"Short name is already used for another course (AF201)"}
+{"exception":"core\\exception\\moodle_exception","errorcode":"shortnametaken","message":"Short name is already used for another course (BST301)"}
+{"exception":"core\\exception\\moodle_exception","errorcode":"shortnametaken","message":"Short name is already used for another course (CC301)"}
+{"exception":"core\\exception\\moodle_exception","errorcode":"shortnametaken","message":"Short name is already used for another course (AF201)"}
+{"exception":"core\\exception\\moodle_exception","errorcode":"shortnametaken","message":"Short name is already used for another course (AF201)"}
+{"exception":"core\\exception\\moodle_exception","errorcode":"shortnametaken","message":"Short name is already used for another course (AF201)"}
+{"exception":"core\\exception\\moodle_exception","errorcode":"shortnametaken","message":"Short name is already used for another course (AF201)"}
+{"exception":"core\\exception\\moodle_exception","errorcode":"shortnametaken","message":"Short name is already used for another course (AF201)"}
+{"exception":"core\\exception\\moodle_exception","errorcode":"shortnametaken","message":"Short name is already used for another course (AF201)"}
+{"exception":"core\\exception\\moodle_exception","errorcode":"shortnametaken","message":"Short name is already used for another course (AF201)"}
+{"exception":"core\\exception\\moodle_exception","errorcode":"shortnametaken","message":"Short name is already used for another course (AF201)"}
+{"exception":"core\\exception\\moodle_exception","errorcode":"shortnametaken","message":"Short name is already used for another course (AF201)"}
+{"exception":"core\\exception\\moodle_exception","errorcode":"shortnametaken","message":"Short name is already used for another course (AF201)"}
+{"exception":"core\\exception\\moodle_exception","errorcode":"shortnametaken","message":"Short name is already used for another course (AF201)"}
+{"exception":"core\\exception\\moodle_exception","errorcode":"shortnametaken","message":"Short name is already used for another course (AF201)"}
+{"exception":"core\\exception\\moodle_exception","errorcode":"shortnametaken","message":"Short name is already used for another course (AF201)"}
+{"exception":"core\\exception\\moodle_exception","errorcode":"shortnametaken","message":"Short name is already used for another course (AF201)"}
+{"exception":"core\\exception\\moodle_exception","errorcode":"shortnametaken","message":"Short name is already used for another course (AF201)"}
+{"exception":"core\\exception\\moodle_exception","errorcode":"shortnametaken","message":"Short name is already used for another course (AF201)"}
+[{"id":15,"shortname":"AF201"}]

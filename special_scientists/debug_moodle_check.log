@@ -1,0 +1,121 @@
+Array
+(
+    [exception] => webservice_access_exception
+    [errorcode] => accessexception
+    [message] => Access control exception (Access to the function core_user_get_users() is not allowed.
+                     There could be multiple reasons for this:
+                     1. The service linked to the user token does not contain the function.
+                     2. The service is user-restricted and the user is not listed.
+                     3. The service is IP-restricted and the user IP is not listed.
+                     4. The service is time-restricted and the time has expired.
+                     5. The token is time-restricted and the time has expired.
+                     6. The service requires a specific capability which the user does not have.
+                     7. The function is called with username/password (no user token is sent)
+                     and none of the services has the function to allow the user.
+                     These settings can be found in Administration > Site administration
+                     > Server > Web services > External services and Manage tokens.)
+    [debuginfo] => Access to the function core_user_get_users() is not allowed.
+                     There could be multiple reasons for this:
+                     1. The service linked to the user token does not contain the function.
+                     2. The service is user-restricted and the user is not listed.
+                     3. The service is IP-restricted and the user IP is not listed.
+                     4. The service is time-restricted and the time has expired.
+                     5. The token is time-restricted and the time has expired.
+                     6. The service requires a specific capability which the user does not have.
+                     7. The function is called with username/password (no user token is sent)
+                     and none of the services has the function to allow the user.
+                     These settings can be found in Administration > Site administration
+                     > Server > Web services > External services and Manage tokens.
+)
+Array
+(
+    [exception] => webservice_access_exception
+    [errorcode] => accessexception
+    [message] => Access control exception (Access to the function core_user_get_users() is not allowed.
+                     There could be multiple reasons for this:
+                     1. The service linked to the user token does not contain the function.
+                     2. The service is user-restricted and the user is not listed.
+                     3. The service is IP-restricted and the user IP is not listed.
+                     4. The service is time-restricted and the time has expired.
+                     5. The token is time-restricted and the time has expired.
+                     6. The service requires a specific capability which the user does not have.
+                     7. The function is called with username/password (no user token is sent)
+                     and none of the services has the function to allow the user.
+                     These settings can be found in Administration > Site administration
+                     > Server > Web services > External services and Manage tokens.)
+    [debuginfo] => Access to the function core_user_get_users() is not allowed.
+                     There could be multiple reasons for this:
+                     1. The service linked to the user token does not contain the function.
+                     2. The service is user-restricted and the user is not listed.
+                     3. The service is IP-restricted and the user IP is not listed.
+                     4. The service is time-restricted and the time has expired.
+                     5. The token is time-restricted and the time has expired.
+                     6. The service requires a specific capability which the user does not have.
+                     7. The function is called with username/password (no user token is sent)
+                     and none of the services has the function to allow the user.
+                     These settings can be found in Administration > Site administration
+                     > Server > Web services > External services and Manage tokens.
+)
+Array
+(
+    [exception] => webservice_access_exception
+    [errorcode] => accessexception
+    [message] => Access control exception (Access to the function core_user_get_users() is not allowed.
+                     There could be multiple reasons for this:
+                     1. The service linked to the user token does not contain the function.
+                     2. The service is user-restricted and the user is not listed.
+                     3. The service is IP-restricted and the user IP is not listed.
+                     4. The service is time-restricted and the time has expired.
+                     5. The token is time-restricted and the time has expired.
+                     6. The service requires a specific capability which the user does not have.
+                     7. The function is called with username/password (no user token is sent)
+                     and none of the services has the function to allow the user.
+                     These settings can be found in Administration > Site administration
+                     > Server > Web services > External services and Manage tokens.)
+    [debuginfo] => Access to the function core_user_get_users() is not allowed.
+                     There could be multiple reasons for this:
+                     1. The service linked to the user token does not contain the function.
+                     2. The service is user-restricted and the user is not listed.
+                     3. The service is IP-restricted and the user IP is not listed.
+                     4. The service is time-restricted and the time has expired.
+                     5. The token is time-restricted and the time has expired.
+                     6. The service requires a specific capability which the user does not have.
+                     7. The function is called with username/password (no user token is sent)
+                     and none of the services has the function to allow the user.
+                     These settings can be found in Administration > Site administration
+                     > Server > Web services > External services and Manage tokens.
+)
+Array
+(
+    [users] => Array
+        (
+            [0] => Array
+                (
+                    [id] => 11
+                    [username] => eliassol1000
+                    [firstname] => Markos
+                    [lastname] => Kosta Nikolaou
+                    [fullname] => Markos Kosta Nikolaou
+                    [email] => eliassolomonides200@gmail.com
+                    [department] => 
+                    [firstaccess] => 0
+                    [lastaccess] => 0
+                    [auth] => manual
+                    [suspended] => 
+                    [confirmed] => 1
+                    [lang] => en
+                    [theme] => 
+                    [timezone] => 99
+                    [mailformat] => 1
+                    [trackforums] => 0
+                    [profileimageurlsmall] => http://localhost/moodle/theme/image.php/boost/core/1745225774/u/f2
+                    [profileimageurl] => http://localhost/moodle/theme/image.php/boost/core/1745225774/u/f1
+                )
+
+        )
+
+    [warnings] => Array
+        (
+        )
+
+)

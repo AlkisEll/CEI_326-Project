@@ -1,0 +1,889 @@
+🟢 Entered unassign_course block
+User: nikoscy100, Moodle UID: 12, Course: AF201, Moodle CID: 
+Remaining assignments for course 31: 0
+Response: Array
+(
+    [users] => Array
+        (
+            [0] => Array
+                (
+                    [id] => 12
+                    [username] => nikoscy100
+                    [firstname] => Nikos
+                    [lastname] => Nikolaou
+                    [fullname] => Nikos Nikolaou
+                    [email] => em.solomonides@gmail.com
+                    [department] => 
+                    [firstaccess] => 0
+                    [lastaccess] => 0
+                    [auth] => manual
+                    [suspended] => 
+                    [confirmed] => 1
+                    [lang] => en
+                    [theme] => 
+                    [timezone] => 99
+                    [mailformat] => 1
+                    [trackforums] => 0
+                    [profileimageurlsmall] => http://localhost/moodle/theme/image.php/boost/core/1746618883/u/f2
+                    [profileimageurl] => http://localhost/moodle/theme/image.php/boost/core/1746618883/u/f1
+                )
+
+        )
+
+    [warnings] => Array
+        (
+        )
+
+)
+
+🟢 Entered unassign_course block
+User: nikoscy100, Moodle UID: 12, Course: AF201, Moodle CID: 
+Remaining assignments for course 31: 0
+Response: Array
+(
+    [users] => Array
+        (
+            [0] => Array
+                (
+                    [id] => 12
+                    [username] => nikoscy100
+                    [firstname] => Nikos
+                    [lastname] => Nikolaou
+                    [fullname] => Nikos Nikolaou
+                    [email] => em.solomonides@gmail.com
+                    [department] => 
+                    [firstaccess] => 0
+                    [lastaccess] => 0
+                    [auth] => manual
+                    [suspended] => 
+                    [confirmed] => 1
+                    [lang] => en
+                    [theme] => 
+                    [timezone] => 99
+                    [mailformat] => 1
+                    [trackforums] => 0
+                    [profileimageurlsmall] => http://localhost/moodle/theme/image.php/boost/core/1746618883/u/f2
+                    [profileimageurl] => http://localhost/moodle/theme/image.php/boost/core/1746618883/u/f1
+                )
+
+        )
+
+    [warnings] => Array
+        (
+        )
+
+)
+
+Response: Array
+(
+    [users] => Array
+        (
+            [0] => Array
+                (
+                    [id] => 12
+                    [username] => nikoscy100
+                    [firstname] => Nikos
+                    [lastname] => Nikolaou
+                    [fullname] => Nikos Nikolaou
+                    [email] => em.solomonides@gmail.com
+                    [department] => 
+                    [firstaccess] => 0
+                    [lastaccess] => 0
+                    [auth] => manual
+                    [suspended] => 
+                    [confirmed] => 1
+                    [lang] => en
+                    [theme] => 
+                    [timezone] => 99
+                    [mailformat] => 1
+                    [trackforums] => 0
+                    [profileimageurlsmall] => http://localhost/moodle/theme/image.php/boost/core/1746618883/u/f2
+                    [profileimageurl] => http://localhost/moodle/theme/image.php/boost/core/1746618883/u/f1
+                )
+
+        )
+
+    [warnings] => Array
+        (
+        )
+
+)
+
+🟢 Entered unassign_course block
+Course lookup for shortname 'AF201'
+Response:
+Array
+(
+    [exception] => webservice_access_exception
+    [errorcode] => accessexception
+    [message] => Access control exception (Access to the function core_course_get_courses_by_field() is not allowed.
+                     There could be multiple reasons for this:
+                     1. The service linked to the user token does not contain the function.
+                     2. The service is user-restricted and the user is not listed.
+                     3. The service is IP-restricted and the user IP is not listed.
+                     4. The service is time-restricted and the time has expired.
+                     5. The token is time-restricted and the time has expired.
+                     6. The service requires a specific capability which the user does not have.
+                     7. The function is called with username/password (no user token is sent)
+                     and none of the services has the function to allow the user.
+                     These settings can be found in Administration > Site administration
+                     > Server > Web services > External services and Manage tokens.)
+    [debuginfo] => Access to the function core_course_get_courses_by_field() is not allowed.
+                     There could be multiple reasons for this:
+                     1. The service linked to the user token does not contain the function.
+                     2. The service is user-restricted and the user is not listed.
+                     3. The service is IP-restricted and the user IP is not listed.
+                     4. The service is time-restricted and the time has expired.
+                     5. The token is time-restricted and the time has expired.
+                     6. The service requires a specific capability which the user does not have.
+                     7. The function is called with username/password (no user token is sent)
+                     and none of the services has the function to allow the user.
+                     These settings can be found in Administration > Site administration
+                     > Server > Web services > External services and Manage tokens.
+)
+
+User: nikoscy100, Moodle UID: 12, Course: AF201, Moodle CID: 
+Remaining assignments for course 31: 0
+Response: Array
+(
+    [users] => Array
+        (
+            [0] => Array
+                (
+                    [id] => 12
+                    [username] => nikoscy100
+                    [firstname] => Nikos
+                    [lastname] => Nikolaou
+                    [fullname] => Nikos Nikolaou
+                    [email] => em.solomonides@gmail.com
+                    [department] => 
+                    [firstaccess] => 0
+                    [lastaccess] => 0
+                    [auth] => manual
+                    [suspended] => 
+                    [confirmed] => 1
+                    [lang] => en
+                    [theme] => 
+                    [timezone] => 99
+                    [mailformat] => 1
+                    [trackforums] => 0
+                    [profileimageurlsmall] => http://localhost/moodle/theme/image.php/boost/core/1746618883/u/f2
+                    [profileimageurl] => http://localhost/moodle/theme/image.php/boost/core/1746618883/u/f1
+                )
+
+        )
+
+    [warnings] => Array
+        (
+        )
+
+)
+
+Response: Array
+(
+    [users] => Array
+        (
+            [0] => Array
+                (
+                    [id] => 12
+                    [username] => nikoscy100
+                    [firstname] => Nikos
+                    [lastname] => Nikolaou
+                    [fullname] => Nikos Nikolaou
+                    [email] => em.solomonides@gmail.com
+                    [department] => 
+                    [firstaccess] => 0
+                    [lastaccess] => 0
+                    [auth] => manual
+                    [suspended] => 
+                    [confirmed] => 1
+                    [lang] => en
+                    [theme] => 
+                    [timezone] => 99
+                    [mailformat] => 1
+                    [trackforums] => 0
+                    [profileimageurlsmall] => http://localhost/moodle/theme/image.php/boost/core/1746618883/u/f2
+                    [profileimageurl] => http://localhost/moodle/theme/image.php/boost/core/1746618883/u/f1
+                )
+
+        )
+
+    [warnings] => Array
+        (
+        )
+
+)
+
+🟢 Entered unassign_course block
+Course lookup for shortname 'AF201'
+Response:
+Array
+(
+    [courses] => Array
+        (
+            [0] => Array
+                (
+                    [id] => 14
+                    [fullname] => Accounting &amp; Finance
+                    [displayname] => Accounting &amp; Finance
+                    [shortname] => AF201
+                    [courseimage] => http://localhost/moodle/pluginfile.php/47/course/generated/course.svg
+                    [categoryid] => 1
+                    [categoryname] => Category 1
+                    [sortorder] => 10001
+                    [summary] => 
+                    [summaryformat] => 1
+                    [summaryfiles] => Array
+                        (
+                        )
+
+                    [overviewfiles] => Array
+                        (
+                        )
+
+                    [showactivitydates] => 
+                    [showcompletionconditions] => 1
+                    [contacts] => Array
+                        (
+                        )
+
+                    [enrollmentmethods] => Array
+                        (
+                            [0] => manual
+                        )
+
+                    [idnumber] => 
+                    [format] => topics
+                    [showgrades] => 1
+                    [newsitems] => 5
+                    [startdate] => 0
+                    [enddate] => 0
+                    [maxbytes] => 0
+                    [showreports] => 0
+                    [visible] => 1
+                    [groupmode] => 0
+                    [groupmodeforce] => 0
+                    [defaultgroupingid] => 0
+                    [enablecompletion] => 1
+                    [completionnotify] => 0
+                    [lang] => 
+                    [theme] => 
+                    [marker] => 0
+                    [legacyfiles] => 0
+                    [calendartype] => 
+                    [timecreated] => 1746605126
+                    [timemodified] => 1746605126
+                    [requested] => 0
+                    [cacherev] => 1746618883
+                    [filters] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [filter] => displayh5p
+                                    [localstate] => 0
+                                    [inheritedstate] => 1
+                                )
+
+                            [1] => Array
+                                (
+                                    [filter] => activitynames
+                                    [localstate] => 0
+                                    [inheritedstate] => 1
+                                )
+
+                            [2] => Array
+                                (
+                                    [filter] => mathjaxloader
+                                    [localstate] => 0
+                                    [inheritedstate] => 1
+                                )
+
+                            [3] => Array
+                                (
+                                    [filter] => emoticon
+                                    [localstate] => 0
+                                    [inheritedstate] => 1
+                                )
+
+                            [4] => Array
+                                (
+                                    [filter] => urltolink
+                                    [localstate] => 0
+                                    [inheritedstate] => 1
+                                )
+
+                            [5] => Array
+                                (
+                                    [filter] => mediaplugin
+                                    [localstate] => 0
+                                    [inheritedstate] => 1
+                                )
+
+                        )
+
+                    [courseformatoptions] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [name] => hiddensections
+                                    [value] => 1
+                                )
+
+                            [1] => Array
+                                (
+                                    [name] => coursedisplay
+                                    [value] => 0
+                                )
+
+                            [2] => Array
+                                (
+                                    [name] => indentation
+                                    [value] => 1
+                                )
+
+                        )
+
+                )
+
+        )
+
+    [warnings] => Array
+        (
+        )
+
+)
+
+User: nikoscy100, Moodle UID: 12, Course: AF201, Moodle CID: 14
+Unenrolled user 12 from course 14
+Remaining assignments for course 31: 0
+🚨 Deleting course AF201 from Moodle (ID: 14)
+Response: Array
+(
+    [users] => Array
+        (
+            [0] => Array
+                (
+                    [id] => 12
+                    [username] => nikoscy100
+                    [firstname] => Nikos
+                    [lastname] => Nikolaou
+                    [fullname] => Nikos Nikolaou
+                    [email] => em.solomonides@gmail.com
+                    [department] => 
+                    [firstaccess] => 0
+                    [lastaccess] => 0
+                    [auth] => manual
+                    [suspended] => 
+                    [confirmed] => 1
+                    [lang] => en
+                    [theme] => 
+                    [timezone] => 99
+                    [mailformat] => 1
+                    [trackforums] => 0
+                    [profileimageurlsmall] => http://localhost/moodle/theme/image.php/boost/core/1746618883/u/f2
+                    [profileimageurl] => http://localhost/moodle/theme/image.php/boost/core/1746618883/u/f1
+                )
+
+        )
+
+    [warnings] => Array
+        (
+        )
+
+)
+
+Response: Array
+(
+    [users] => Array
+        (
+            [0] => Array
+                (
+                    [id] => 12
+                    [username] => nikoscy100
+                    [firstname] => Nikos
+                    [lastname] => Nikolaou
+                    [fullname] => Nikos Nikolaou
+                    [email] => em.solomonides@gmail.com
+                    [department] => 
+                    [firstaccess] => 0
+                    [lastaccess] => 0
+                    [auth] => manual
+                    [suspended] => 
+                    [confirmed] => 1
+                    [lang] => en
+                    [theme] => 
+                    [timezone] => 99
+                    [mailformat] => 1
+                    [trackforums] => 0
+                    [profileimageurlsmall] => http://localhost/moodle/theme/image.php/boost/core/1746618883/u/f2
+                    [profileimageurl] => http://localhost/moodle/theme/image.php/boost/core/1746618883/u/f1
+                )
+
+        )
+
+    [warnings] => Array
+        (
+        )
+
+)
+
+Response: Array
+(
+    [users] => Array
+        (
+            [0] => Array
+                (
+                    [id] => 12
+                    [username] => nikoscy100
+                    [firstname] => Nikos
+                    [lastname] => Nikolaou
+                    [fullname] => Nikos Nikolaou
+                    [email] => em.solomonides@gmail.com
+                    [department] => 
+                    [firstaccess] => 0
+                    [lastaccess] => 0
+                    [auth] => manual
+                    [suspended] => 
+                    [confirmed] => 1
+                    [lang] => en
+                    [theme] => 
+                    [timezone] => 99
+                    [mailformat] => 1
+                    [trackforums] => 0
+                    [profileimageurlsmall] => http://localhost/moodle/theme/image.php/boost/core/1746618883/u/f2
+                    [profileimageurl] => http://localhost/moodle/theme/image.php/boost/core/1746618883/u/f1
+                )
+
+        )
+
+    [warnings] => Array
+        (
+        )
+
+)
+
+Response: Array
+(
+    [users] => Array
+        (
+            [0] => Array
+                (
+                    [id] => 12
+                    [username] => nikoscy100
+                    [firstname] => Nikos
+                    [lastname] => Nikolaou
+                    [fullname] => Nikos Nikolaou
+                    [email] => em.solomonides@gmail.com
+                    [department] => 
+                    [firstaccess] => 0
+                    [lastaccess] => 0
+                    [auth] => manual
+                    [suspended] => 
+                    [confirmed] => 1
+                    [lang] => en
+                    [theme] => 
+                    [timezone] => 99
+                    [mailformat] => 1
+                    [trackforums] => 0
+                    [profileimageurlsmall] => http://localhost/moodle/theme/image.php/boost/core/1746618883/u/f2
+                    [profileimageurl] => http://localhost/moodle/theme/image.php/boost/core/1746618883/u/f1
+                )
+
+        )
+
+    [warnings] => Array
+        (
+        )
+
+)
+
+Response: Array
+(
+    [users] => Array
+        (
+            [0] => Array
+                (
+                    [id] => 12
+                    [username] => nikoscy100
+                    [firstname] => Nikos
+                    [lastname] => Nikolaou
+                    [fullname] => Nikos Nikolaou
+                    [email] => em.solomonides@gmail.com
+                    [department] => 
+                    [firstaccess] => 0
+                    [lastaccess] => 0
+                    [auth] => manual
+                    [suspended] => 
+                    [confirmed] => 1
+                    [lang] => en
+                    [theme] => 
+                    [timezone] => 99
+                    [mailformat] => 1
+                    [trackforums] => 0
+                    [profileimageurlsmall] => http://localhost/moodle/theme/image.php/boost/core/1746618883/u/f2
+                    [profileimageurl] => http://localhost/moodle/theme/image.php/boost/core/1746618883/u/f1
+                )
+
+        )
+
+    [warnings] => Array
+        (
+        )
+
+)
+
+🟢 Entered unassign_course block
+Course lookup for shortname 'BST301'
+Response:
+Array
+(
+    [courses] => Array
+        (
+            [0] => Array
+                (
+                    [id] => 12
+                    [fullname] => Biostatistics
+                    [displayname] => Biostatistics
+                    [shortname] => BST301
+                    [courseimage] => http://localhost/moodle/pluginfile.php/44/course/generated/course.svg
+                    [categoryid] => 1
+                    [categoryname] => Category 1
+                    [sortorder] => 10003
+                    [summary] => 
+                    [summaryformat] => 1
+                    [summaryfiles] => Array
+                        (
+                        )
+
+                    [overviewfiles] => Array
+                        (
+                        )
+
+                    [showactivitydates] => 
+                    [showcompletionconditions] => 1
+                    [contacts] => Array
+                        (
+                        )
+
+                    [enrollmentmethods] => Array
+                        (
+                            [0] => manual
+                        )
+
+                    [idnumber] => 
+                    [format] => topics
+                    [showgrades] => 1
+                    [newsitems] => 5
+                    [startdate] => 0
+                    [enddate] => 0
+                    [maxbytes] => 0
+                    [showreports] => 0
+                    [visible] => 1
+                    [groupmode] => 0
+                    [groupmodeforce] => 0
+                    [defaultgroupingid] => 0
+                    [enablecompletion] => 1
+                    [completionnotify] => 0
+                    [lang] => 
+                    [theme] => 
+                    [marker] => 0
+                    [legacyfiles] => 0
+                    [calendartype] => 
+                    [timecreated] => 1746604919
+                    [timemodified] => 1746604919
+                    [requested] => 0
+                    [cacherev] => 1746618883
+                    [filters] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [filter] => displayh5p
+                                    [localstate] => 0
+                                    [inheritedstate] => 1
+                                )
+
+                            [1] => Array
+                                (
+                                    [filter] => activitynames
+                                    [localstate] => 0
+                                    [inheritedstate] => 1
+                                )
+
+                            [2] => Array
+                                (
+                                    [filter] => mathjaxloader
+                                    [localstate] => 0
+                                    [inheritedstate] => 1
+                                )
+
+                            [3] => Array
+                                (
+                                    [filter] => emoticon
+                                    [localstate] => 0
+                                    [inheritedstate] => 1
+                                )
+
+                            [4] => Array
+                                (
+                                    [filter] => urltolink
+                                    [localstate] => 0
+                                    [inheritedstate] => 1
+                                )
+
+                            [5] => Array
+                                (
+                                    [filter] => mediaplugin
+                                    [localstate] => 0
+                                    [inheritedstate] => 1
+                                )
+
+                        )
+
+                    [courseformatoptions] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [name] => hiddensections
+                                    [value] => 1
+                                )
+
+                            [1] => Array
+                                (
+                                    [name] => coursedisplay
+                                    [value] => 0
+                                )
+
+                            [2] => Array
+                                (
+                                    [name] => indentation
+                                    [value] => 1
+                                )
+
+                        )
+
+                )
+
+        )
+
+    [warnings] => Array
+        (
+        )
+
+)
+
+User: nikoscy100, Moodle UID: 12, Course: BST301, Moodle CID: 12
+Unenrolled user 12 from course 12
+Remaining assignments for course 22: 1
+Response: Array
+(
+    [users] => Array
+        (
+            [0] => Array
+                (
+                    [id] => 12
+                    [username] => nikoscy100
+                    [firstname] => Nikos
+                    [lastname] => Nikolaou
+                    [fullname] => Nikos Nikolaou
+                    [email] => em.solomonides@gmail.com
+                    [department] => 
+                    [firstaccess] => 0
+                    [lastaccess] => 0
+                    [auth] => manual
+                    [suspended] => 
+                    [confirmed] => 1
+                    [lang] => en
+                    [theme] => 
+                    [timezone] => 99
+                    [mailformat] => 1
+                    [trackforums] => 0
+                    [profileimageurlsmall] => http://localhost/moodle/theme/image.php/boost/core/1746618883/u/f2
+                    [profileimageurl] => http://localhost/moodle/theme/image.php/boost/core/1746618883/u/f1
+                )
+
+        )
+
+    [warnings] => Array
+        (
+        )
+
+)
+
+🟢 Entered unassign_course block
+Course lookup for shortname 'AF201'
+Response:
+Array
+(
+    [courses] => Array
+        (
+            [0] => Array
+                (
+                    [id] => 15
+                    [fullname] => Accounting &amp; Finance
+                    [displayname] => Accounting &amp; Finance
+                    [shortname] => AF201
+                    [courseimage] => http://localhost/moodle/pluginfile.php/49/course/generated/course.svg
+                    [categoryid] => 1
+                    [categoryname] => Category 1
+                    [sortorder] => 10001
+                    [summary] => 
+                    [summaryformat] => 1
+                    [summaryfiles] => Array
+                        (
+                        )
+
+                    [overviewfiles] => Array
+                        (
+                        )
+
+                    [showactivitydates] => 
+                    [showcompletionconditions] => 1
+                    [contacts] => Array
+                        (
+                        )
+
+                    [enrollmentmethods] => Array
+                        (
+                            [0] => manual
+                        )
+
+                    [idnumber] => 
+                    [format] => topics
+                    [showgrades] => 1
+                    [newsitems] => 5
+                    [startdate] => 0
+                    [enddate] => 0
+                    [maxbytes] => 0
+                    [showreports] => 0
+                    [visible] => 1
+                    [groupmode] => 0
+                    [groupmodeforce] => 0
+                    [defaultgroupingid] => 0
+                    [enablecompletion] => 1
+                    [completionnotify] => 0
+                    [lang] => 
+                    [theme] => 
+                    [marker] => 0
+                    [legacyfiles] => 0
+                    [calendartype] => 
+                    [timecreated] => 1746637685
+                    [timemodified] => 1746637685
+                    [requested] => 0
+                    [cacherev] => 1746637687
+                    [filters] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [filter] => displayh5p
+                                    [localstate] => 0
+                                    [inheritedstate] => 1
+                                )
+
+                            [1] => Array
+                                (
+                                    [filter] => activitynames
+                                    [localstate] => 0
+                                    [inheritedstate] => 1
+                                )
+
+                            [2] => Array
+                                (
+                                    [filter] => mathjaxloader
+                                    [localstate] => 0
+                                    [inheritedstate] => 1
+                                )
+
+                            [3] => Array
+                                (
+                                    [filter] => emoticon
+                                    [localstate] => 0
+                                    [inheritedstate] => 1
+                                )
+
+                            [4] => Array
+                                (
+                                    [filter] => urltolink
+                                    [localstate] => 0
+                                    [inheritedstate] => 1
+                                )
+
+                            [5] => Array
+                                (
+                                    [filter] => mediaplugin
+                                    [localstate] => 0
+                                    [inheritedstate] => 1
+                                )
+
+                        )
+
+                    [courseformatoptions] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [name] => hiddensections
+                                    [value] => 1
+                                )
+
+                            [1] => Array
+                                (
+                                    [name] => coursedisplay
+                                    [value] => 0
+                                )
+
+                            [2] => Array
+                                (
+                                    [name] => indentation
+                                    [value] => 1
+                                )
+
+                        )
+
+                )
+
+        )
+
+    [warnings] => Array
+        (
+        )
+
+)
+
+User: nikoscy100, Moodle UID: 12, Course: AF201, Moodle CID: 15
+Unenrolled user 12 from course 15
+Remaining assignments for course 31: 0
+🚨 Deleting course AF201 from Moodle (ID: 15)
+Response: Array
+(
+    [users] => Array
+        (
+            [0] => Array
+                (
+                    [id] => 12
+                    [username] => nikoscy100
+                    [firstname] => Nikos
+                    [lastname] => Nikolaou
+                    [fullname] => Nikos Nikolaou
+                    [email] => em.solomonides@gmail.com
+                    [department] => 
+                    [firstaccess] => 0
+                    [lastaccess] => 0
+                    [auth] => manual
+                    [suspended] => 
+                    [confirmed] => 1
+                    [lang] => en
+                    [theme] => 
+                    [timezone] => 99
+                    [mailformat] => 1
+                    [trackforums] => 0
+                    [profileimageurlsmall] => http://localhost/moodle/theme/image.php/boost/core/1746618883/u/f2
+                    [profileimageurl] => http://localhost/moodle/theme/image.php/boost/core/1746618883/u/f1
+                )
+
+        )
+
+    [warnings] => Array
+        (
+        )
+
+)
+

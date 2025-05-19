@@ -1,0 +1,1 @@
+[{"level":"Bachelor (BSc, BA)","title":"dgfhdfgsdfg","institution":"dghfdgfh","from":"2025-05-13","to":"2025-05-27","country":"Cyprus","grade":"","thesis":"","qualifications":""}]
