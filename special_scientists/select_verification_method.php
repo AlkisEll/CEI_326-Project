@@ -22,7 +22,7 @@ use PHPMailer\PHPMailer\Exception;
 
 // Twilio credentials
 $accountSid = 'ACed50809afda0163369b2505abc4354f7';
-$authToken = '1a386b4ef6e6be7afa58a8b503d78adb';
+$authToken = 'a0e8ced97d0ab07db55e20f99fa7121e';
 $twilioPhoneNumber = '+12182616825';
 
 // Get user's phone from DB
