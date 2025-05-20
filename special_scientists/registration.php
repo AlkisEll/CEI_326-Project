@@ -54,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["manual_email"])) {
 
     <!-- Google Sign-In -->
     <div class="mb-3">
-        <a href="https://accounts.google.com/o/oauth2/v2/auth?client_id=298135741411-6gbhvfmubpk1vjgbeervmma5mntarggk.apps.googleusercontent.com&redirect_uri=https://cei326-omada7.cut.ac.cy/special_scientists/google-callback.php&response_type=code&scope=email%20profile&access_type=online" 
+        <a href="https://accounts.google.com/o/oauth2/v2/auth?client_id=298135741411-6gbhvfmubpk1vjgbeervmma5mntarggk.apps.googleusercontent.com&redirect_uri=https://cei326-omada7.cut.ac.cy/special_scientists/google_callback.php&response_type=code&scope=email%20profile&access_type=online" 
            class="btn btn-light border d-flex align-items-center justify-content-center gap-2 mx-auto" style="max-width: 300px;">
             <img src="https://developers.google.com/identity/images/g-logo.png" style="height: 20px;">
             Continue with Google
