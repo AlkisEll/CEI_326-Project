@@ -66,7 +66,7 @@ if (isset($_POST["submit"])) {
             $mail->isHTML(false); // Disable HTML for testing
             $mail->Subject = 'Password Reset Request'; 
             $userName = !empty($user['full_name']) ? $user['full_name'] : 'User';
-            $mail->Body = "Dear $userName,\n\nWe received a request to reset your password. Click the link below to change it:\nhttp://localhost/login-register/reset_password.php?token=$resetToken\n\nIf you did not request this change, please ignore this email.";
+            $mail->Body = "Dear $userName,\n\nWe received a request to reset your password. Click the link below to change it:\nhttp://cei326-omada7.cut.ac.cy/special_scientists/reset_password.php?token=$resetToken\n\nIf you did not request this change, please ignore this email.";
         
             // Send the email
             if (!$mail->send()) {
