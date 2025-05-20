@@ -24,11 +24,16 @@ if (isset($_POST["verify"])) {
                     mysqli_stmt_execute($stmtUpdate);
 
                     // Automatically log the user in by setting session variables
-                    $_SESSION["user"] = [
-                        "id" => $row["id"],
-                        "email" => $row["email"],
-                        "full_name" => $row["full_name"]
-                    ];
+                    $_SESSION["user_id"] = $row["id"];
+$_SESSION["username"] = $row["username"]; // or full_name if no username field
+$_SESSION["email"] = $row["email"];
+$_SESSION["role"] = $row["role"]; // optional, only if you use roles
+
+$_SESSION["user"] = [
+    "id" => $row["id"],
+    "email" => $row["email"],
+    "full_name" => $row["full_name"]
+];
 
                     // Redirect instantly to dashboard (index.php)
                     header("Location: index.php");
