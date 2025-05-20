@@ -72,7 +72,7 @@ if ($autoSync && $autoSync['auto_sync_enabled']) {
 
     if ($row && $row['lms_access']) {
         $token = '3223ebfec77abfe903c27c1468a7d7c5';
-        $domain = 'http://localhost/moodle';
+        $domain = 'http://cei326-omada7.cut.ac.cy/moodle';
 
         $full_name_parts = explode(' ', $row['full_name']);
         $firstname = array_shift($full_name_parts);
@@ -137,7 +137,7 @@ if ($autoSync && $autoSync['auto_sync_enabled']) {
   $row = $res->fetch_assoc();
 
   $token = '3223ebfec77abfe903c27c1468a7d7c5'; // Replace with actual Moodle token
-  $domain = 'http://localhost/moodle'; // Replace with your actual Moodle domain
+  $domain = 'http://cei326-omada7.cut.ac.cy/moodle'; // Replace with your actual Moodle domain
   $full_name_parts = explode(' ', $row['full_name']);
   $firstname = array_shift($full_name_parts); // First word
   $lastname = implode(' ', $full_name_parts); // Everything else
