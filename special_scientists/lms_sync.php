@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['unassign_course'])) {
       include_once 'moodle_api_helpers.php';
 
       $token = '3223ebfec77abfe903c27c1468a7d7c5';
-      $domain = 'http://localhost/moodle';
+      $domain = 'http://cei326-omada7.cut.ac.cy/moodle/';
 
       // Get Moodle user and course
       $moodle_user = get_moodle_user_by_username($token, $domain, $user_result['username']);
@@ -90,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['assign_courses']) && 
     $user_result = mysqli_query($conn, "SELECT * FROM users WHERE id = $scientist_id");
     if ($user = mysqli_fetch_assoc($user_result)) {
         $token = '3223ebfec77abfe903c27c1468a7d7c5';
-        $domain = 'http://localhost/moodle';
+        $domain = 'http://cei326-omada7.cut.ac.cy/moodle/';
 
         $full_name_parts = explode(' ', $user['full_name']);
         $firstname = array_shift($full_name_parts);
@@ -144,7 +144,7 @@ if (isset($_GET['toggle']) && in_array($role, ['admin', 'owner', 'hr'])) {
       include_once 'moodle_api_helpers.php';
 
 $token = '3223ebfec77abfe903c27c1468a7d7c5';
-$domain = 'http://localhost/moodle';
+$domain = 'http://cei326-omada7.cut.ac.cy/moodle/';
 
 $moodle_user = get_moodle_user_by_username($token, $domain, $user['username']);
 
@@ -159,7 +159,7 @@ if ($moodle_user && isset($moodle_user['id'])) {
           include_once 'moodle_api_helpers.php';
 
           $token = '3223ebfec77abfe903c27c1468a7d7c5'; // Your Moodle token
-          $domain = 'http://localhost/moodle';       // Your Moodle domain
+          $domain = 'http://cei326-omada7.cut.ac.cy/moodle/';       // Your Moodle domain
 
           $full_name_parts = explode(' ', $user['full_name']);
           $firstname = array_shift($full_name_parts);
@@ -182,7 +182,7 @@ if ($moodle_user && isset($moodle_user['id'])) {
         include_once 'moodle_api_helpers.php';
     
         $token = '3223ebfec77abfe903c27c1468a7d7c5';
-        $domain = 'http://localhost/moodle';
+        $domain = 'http://cei326-omada7.cut.ac.cy/moodle/';
     
         $user_id = $user['id'];
         $moodle_user = get_moodle_user_by_username($token, $domain, $user['username']);
@@ -297,7 +297,7 @@ while ($course = mysqli_fetch_assoc($course_query)) {
 // 2. Get sync status
 include_once 'moodle_api_helpers.php';
 $token = '3223ebfec77abfe903c27c1468a7d7c5';
-$domain = 'http://localhost/moodle';
+$domain = 'http://cei326-omada7.cut.ac.cy/moodle/';
 
 $sync_status = 'Unknown';
 if ($row['lms_access']) {
