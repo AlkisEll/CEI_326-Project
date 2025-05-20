@@ -249,7 +249,7 @@ $backLink = "enrollment_dashboard.php";
   <div class="alert <?= $self['lms_access'] ? 'alert-success' : 'alert-danger' ?> text-center">
     <?php if ($self['lms_access']): ?>
       ✅ Your LMS Access is <strong>Enabled</strong>.<br>
-      <a href="http://localhost/moodle" class="btn btn-sm btn-light mt-2" target="_blank">
+      <a href="http://cei326-omada7.cut.ac.cy/moodle/" class="btn btn-sm btn-light mt-2" target="_blank">
         Go to Moodle <i class="bi bi-box-arrow-up-right"></i>
       </a>
     <?php else: ?>
