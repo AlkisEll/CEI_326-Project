@@ -3,7 +3,7 @@ session_start();
 
 $client_id = '56612818-b196-4abd-944f-198689fee50c';
 $client_secret = 'IpX8Q~Q5ohhAejsYGRgIUadGGBFjIql21ptJab7f';
-$redirect_uri = 'http://cei326-omada7.cut.ac.cy/special_scientists/microsoft_callback.php';
+$redirect_uri = 'http://cei326-omada7.cut.ac.cy/special-scientists/microsoft_callback.php';
 
 if (!isset($_GET['code'])) {
     echo 'Microsoft login failed: ' . htmlspecialchars($_GET['error_description'] ?? 'No code returned.');
