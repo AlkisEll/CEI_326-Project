@@ -29,7 +29,7 @@ if (isset($_POST['manual_sync'])) {
   include_once 'moodle_api_helpers.php';
 
   $token = '3223ebfec77abfe903c27c1468a7d7c5';
-  $domain = 'http://localhost/moodle';
+  $domain = 'http://cei326-omada7.cut.ac.cy/moodle/';
   
   // Get all scientists with LMS access ON
   $scientists = mysqli_query($conn, "SELECT * FROM users WHERE role = 'scientist' AND lms_access = 1");
