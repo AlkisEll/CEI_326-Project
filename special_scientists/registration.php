@@ -62,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["manual_email"])) {
     </div>
 
     <!-- Microsoft Sign-In -->
-    <a href="https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=56612818-b196-4abd-944f-198689fee50c&response_type=code&redirect_uri=https%3A%2F%2Fcei326-omada7.cut.ac.cy%2Fspecial-scientists%2Fmicrosoft_callback.php&response_mode=query&scope=https%3A%2F%2Fgraph.microsoft.com%2Fuser.read&state=12345"
+    <a href="https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=56612818-b196-4abd-944f-198689fee50c&response_type=code&redirect_uri=https%3A%2F%2Fcei326-omada7.cut.ac.cy%2Fspecial_scientists%2Fmicrosoft_callback.php&response_mode=query&scope=https%3A%2F%2Fgraph.microsoft.com%2Fuser.read&state=12345"
     class="btn btn-light border d-flex align-items-center justify-content-center gap-2 mt-3" style="max-width: 300px; margin: auto;">
         <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft" style="height: 20px;">
         Continue with Microsoft
