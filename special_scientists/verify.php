@@ -31,9 +31,11 @@ $_SESSION["email"] = $row["email"];
 $_SESSION["role"] = $row["role"]; // optional, only if you use roles
 
 $_SESSION["user"] = [
-    "id" => $row["id"],
-    "email" => $row["email"],
-    "full_name" => $row["full_name"]
+    "id"         => $row["id"],
+    "email"      => $row["email"],
+    "full_name"  => $row["full_name"],
+    "role"       => $row["role"],
+    "profile_complete" => $row["is_verified"],  // if you check that elsewhere
 ];
 
                     // Redirect instantly to dashboard (index.php)
