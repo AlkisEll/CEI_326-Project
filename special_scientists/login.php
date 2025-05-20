@@ -31,7 +31,7 @@ require 'PHPMailer-master/src/SMTP.php';
     <!-- Social Sign-In -->
     <div class="mb-4 text-center">
         <!-- Google -->
-        <a href="https://accounts.google.com/o/oauth2/v2/auth?client_id=298135741411-6gbhvfmubpk1vjgbeervmma5mntarggk.apps.googleusercontent.com&redirect_uri=http://localhost/special-scientists/google_callback.php&response_type=code&scope=email%20profile&access_type=online" 
+        <a href="https://accounts.google.com/o/oauth2/v2/auth?client_id=298135741411-6gbhvfmubpk1vjgbeervmma5mntarggk.apps.googleusercontent.com&redirect_uri=http://cei326-omada7.cut.ac.cy/special_scientists/google_callback.php&response_type=code&scope=email%20profile&access_type=online" 
            class="btn btn-light border d-flex align-items-center justify-content-center gap-2"
            style="max-width: 300px; margin: auto;">
             <img src="https://developers.google.com/identity/images/g-logo.png" style="height: 20px;">
@@ -39,7 +39,7 @@ require 'PHPMailer-master/src/SMTP.php';
         </a>
 
         <!-- Microsoft -->
-        <a href="https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=56612818-b196-4abd-944f-198689fee50c&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%2Fspecial-scientists%2Fmicrosoft_callback.php&response_mode=query&scope=https%3A%2F%2Fgraph.microsoft.com%2Fuser.read&state=12345"
+        <a href="https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=56612818-b196-4abd-944f-198689fee50c&response_type=code&redirect_uri=http%3A%2F%2Fcei326-omada7.cut.ac.cy%2Fspecial_scientists%2Fmicrosoft_callback.php&response_mode=query&scope=https%3A%2F%2Fgraph.microsoft.com%2Fuser.read&state=12345"
            class="btn btn-light border d-flex align-items-center justify-content-center gap-2 mt-3"
            style="max-width: 300px; margin: auto;">
             <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" 
