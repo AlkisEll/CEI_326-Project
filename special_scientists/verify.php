@@ -1,5 +1,7 @@
 <?php
+hi
 session_start();
+
 require_once "database.php";
 
 if (isset($_POST["verify"])) {
