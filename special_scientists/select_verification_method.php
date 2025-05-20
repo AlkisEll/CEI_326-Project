@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 require_once "database.php";
 
 // Get user info from session safely
@@ -147,7 +146,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["select_method"])) {
             <input type="text" class="form-control" value="<?= htmlspecialchars($userPhone) ?>" readonly>
         </div>
 
-        <div class="form-btn">
+        <div class="form-btn mt-3">
             <input type="submit" class="btn btn-primary" value="Continue" name="select_method">
         </div>
     </form>
@@ -155,6 +154,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["select_method"])) {
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
+    const userPhone = <?= json_encode($userPhone) ?>;
+
     $(document).ready(function () {
         $('#verification_method').on('change', function () {
             const method = $(this).val();
