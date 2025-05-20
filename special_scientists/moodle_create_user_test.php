@@ -3,7 +3,7 @@ require_once "database.php";
 
 // Moodle API Config
 $token = '3223ebfec77abfe903c27c1468a7d7c5';  // 🔐 Replace this with your actual token
-$domain = 'http://localhost/moodle';
+$domain = 'http://cei326-omada7.cut.ac.cy/moodle';
 $function = 'core_user_create_users';
 $serverurl = "$domain/webservice/rest/server.php?wstoken=$token&wsfunction=$function&moodlewsrestformat=json";
 
