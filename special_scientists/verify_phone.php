@@ -37,18 +37,25 @@ if (isset($_POST["verify"])) {
                 mysqli_stmt_execute($stmt);
 
                 // Store user data in session
-                $_SESSION["user"] = [
-                    "id" => $row["id"],
-                    "email" => $row["email"],
-                    "full_name" => $row["full_name"]
-                ];
+$_SESSION["user_id"] = $row["id"];
+$_SESSION["username"] = $row["username"]; // or full_name if username not available
+$_SESSION["email"] = $row["email"];
+$_SESSION["role"] = $row["role"]; // only if your app uses roles
 
-                // Set a session variable to indicate successful verification
-                $_SESSION["verification_success"] = true;
+// Optional: still store this array if you want
+$_SESSION["user"] = [
+    "id" => $row["id"],
+    "email" => $row["email"],
+    "full_name" => $row["full_name"]
+];
 
-                // Redirect to index.php after successful verification
-                header("Location: index.php");
-                exit();
+// Set a session variable to indicate successful verification
+$_SESSION["verification_success"] = true;
+
+// Redirect to index.php after successful verification
+header("Location: index.php");
+exit();
+
             } else {
                 die("Something went wrong. Please try again later.");
             }

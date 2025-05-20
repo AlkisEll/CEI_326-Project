@@ -6,33 +6,46 @@ require_once "database.php";
 $phone = $_POST['phone'];
 $verification_code = $_POST['verification_code'];
 
-// Check if the verification code exists in the database
+// Verification code is valid, fetch user data and update is_verified
 $sql = "SELECT * FROM users WHERE phone = ? AND verification_code = ?";
-$stmt = mysqli_stmt_init($conn);
-if (mysqli_stmt_prepare($stmt, $sql)) {
-    mysqli_stmt_bind_param($stmt, "ss", $phone, $verification_code);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_store_result($stmt);
-    $rowCount = mysqli_stmt_num_rows($stmt);
+$stmt = $conn->prepare($sql);
 
-    if ($rowCount > 0) {
-        // Verification code is valid, update is_verified to 1
-        $sql = "UPDATE users SET is_verified = 1 WHERE phone = ?";
-        $stmt = mysqli_stmt_init($conn);
-        if (mysqli_stmt_prepare($stmt, $sql)) {
-            mysqli_stmt_bind_param($stmt, "s", $phone);
-            mysqli_stmt_execute($stmt);
+if ($stmt) {
+    $stmt->bind_param("ss", $phone, $verification_code);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-            // Return success response
+    if ($result->num_rows > 0) {
+        $user = $result->fetch_assoc();
+
+        // Update verification status
+        $update_sql = "UPDATE users SET is_verified = 1 WHERE phone = ?";
+        $update_stmt = $conn->prepare($update_sql);
+
+        if ($update_stmt) {
+            $update_stmt->bind_param("s", $phone);
+            $update_stmt->execute();
+
+            // Set session variables
+            $_SESSION["user_id"] = $user["id"];
+            $_SESSION["username"] = $user["username"];
+            $_SESSION["email"] = $user["email"];
+            $_SESSION["role"] = $user["role"]; // optional
+            $_SESSION["user"] = [
+                "id" => $user["id"],
+                "email" => $user["email"],
+                "full_name" => $user["full_name"]
+            ];
+
             echo json_encode(['success' => true]);
         } else {
-            die("Something went wrong. Please try again later.");
+            echo json_encode(['success' => false, 'error' => 'Update failed.']);
         }
     } else {
-        // Verification code is invalid
-        echo json_encode(['success' => false]);
+        echo json_encode(['success' => false, 'error' => 'Invalid code.']);
     }
 } else {
-    die("Something went wrong. Please try again later.");
+    echo json_encode(['success' => false, 'error' => 'Statement prepare failed.']);
 }
 ?>
+
