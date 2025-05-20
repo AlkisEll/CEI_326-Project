@@ -44,9 +44,11 @@ $_SESSION["role"] = $row["role"]; // only if your app uses roles
 
 // Optional: still store this array if you want
 $_SESSION["user"] = [
-    "id" => $row["id"],
-    "email" => $row["email"],
-    "full_name" => $row["full_name"]
+    "id"         => $row["id"],
+    "email"      => $row["email"],
+    "full_name"  => $row["full_name"],
+    "role"       => $row["role"],
+    "profile_complete" => $row["is_verified"],  // if you check that elsewhere
 ];
 
 // Set a session variable to indicate successful verification
