@@ -82,7 +82,11 @@ function check_moodle_user_exists($token, $domain, $username) {
 function create_moodle_user($token, $domain, $user_data) {
     $functionname = 'core_user_create_users';
 
-    $params = ['users' => [$user_data]];
+    // Flatten the users array manually for Moodle
+    $params = [];
+    foreach ($user_data as $key => $value) {
+        $params["users[0][$key]"] = $value;
+    }
 
     $curl = curl_init();
     curl_setopt_array($curl, [
@@ -95,13 +99,14 @@ function create_moodle_user($token, $domain, $user_data) {
     $response = curl_exec($curl);
     curl_close($curl);
 
-    // ⛔️ TEMPORARY DEBUG: Print to browser
-    echo "<pre>MOODLE RESPONSE:\n$response</pre>";
-    exit; // Stop execution so you can see the output
+    // TEMP: Show raw response (REMOVE THIS IN PRODUCTION)
+    echo "<pre>Moodle Create User Response:\n$response</pre>";
+    exit;
 
     $data = json_decode($response, true);
     return $data[0]['id'] ?? null;
 }
+
 
 // 3. Enroll User in Course and Assign Role
 function enroll_user_to_course($token, $domain, $userid, $courseid, $roleid = 5) {
