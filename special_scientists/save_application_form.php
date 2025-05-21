@@ -25,8 +25,8 @@ if ($first_experience) {
     $professional_experience = $first_experience['summary'];
     $expertise_area = $first_experience['expertise'];
     $project_highlights = $first_experience['projects'];
-    $experience_start_date = $first_experience['from'];
-    $experience_end_date = $first_experience['to'];
+    $experience_start_date = !empty($first_experience['from']) ? $first_experience['from'] : null;
+    $experience_end_date = !empty($first_experience['to']) ? $first_experience['to'] : null;
     $part_or_full_time = $first_experience['type'];
 } else {
     $current_position = $current_employer = $professional_experience = $expertise_area = $project_highlights = null;
