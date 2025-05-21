@@ -2,36 +2,33 @@
 require_once "database.php";
 
 // Moodle API Config
-$token = '72e8b354b48d4af20f56a041c4c4d614';  // ✅ Use your actual token
+$token = '72e8b354b48d4af20f56a041c4c4d614';  // Use your real token
 $domain = 'https://cei326-omada7.cut.ac.cy/moodle';
 $function = 'core_user_create_users';
 $serverurl = "$domain/webservice/rest/server.php?wstoken=$token&wsfunction=$function&moodlewsrestformat=json";
 
-// Prepare test user manually
+// Prepare user data in Moodle-compatible format
 $params = [
-    'users' => [[
-        'username'  => 'nikoscy100',
-        'password'  => 'Crystal060506#',
-        'firstname' => 'Nikos',
-        'lastname'  => 'Nikolaou',
-        'email'     => 'em.solomonides@gmail.com',
-        'auth'      => 'manual'
-    ]]
+    'users[0][username]'  => 'nikoscy100',
+    'users[0][password]'  => 'Crystal060506#',
+    'users[0][firstname]' => 'Nikos',
+    'users[0][lastname]'  => 'Nikolaou',
+    'users[0][email]'     => 'em.solomonides@gmail.com',
+    'users[0][auth]'      => 'manual'
 ];
 
-// Debug Payload
+// Debug
 echo "<h4>Payload being sent to Moodle:</h4><pre>";
 print_r($params);
 echo "</pre>";
 
-// Send via CURL using JSON body
+// Send using x-www-form-urlencoded (default expected by Moodle REST)
 $curl = curl_init();
 curl_setopt_array($curl, [
     CURLOPT_URL => $serverurl,
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_POST => true,
-    CURLOPT_POSTFIELDS => json_encode($params), // ✅ Proper nested JSON
-    CURLOPT_HTTPHEADER => ['Content-Type: application/json'], // ✅ Must include header
+    CURLOPT_POSTFIELDS => http_build_query($params), // Moodle expects this format
 ]);
 
 $response = curl_exec($curl);
