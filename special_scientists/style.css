@@ -155,15 +155,13 @@ input[type="submit"]:hover {
 /* --- Unified fixed-height wizard layout --- */
 .wizard-box {
     max-width: 480px;
-    height: 655px;
+    height: auto;
     margin: 40px auto;
     background: rgba(255, 255, 255, 0.96);
-    padding: 5px 30px 670px;
+    padding: 5px 30px 30px;
     border-radius: 12px;
     box-shadow: 0 0 20px rgba(0,0,0,0.2);
-    
 }
-
 
 /* Step control */
 .wizard-step {
@@ -295,4 +293,13 @@ span.input-group-text.toggle-password {
     text-shadow: 0 0 2px white;
     font-weight: bold;
     z-index: 1;
+}
+
+#username-message-wrapper {
+    min-height: 2.5rem;
+}
+
+#username-status {
+    display: block;
+    font-size: 0.875rem;
 }

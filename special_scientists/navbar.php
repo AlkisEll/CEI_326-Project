@@ -68,11 +68,12 @@ $role = $_SESSION["user"]["role"] ?? "Null";
         <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
   <form method="post" action="switch_lang.php">
     <input type="hidden" name="lang" value="<?= $_SESSION['lang'] === 'en' ? 'el' : 'en' ?>">
-    <button type="submit" class="btn btn-outline-light">
-      <?= $_SESSION['lang'] === 'en' ? 'Ελληνικά' : 'English' ?>
+    <button type="submit" style="background: none; border: none; padding: 0;" title="Switch Language">
+      <img src="assets/flags/<?= $_SESSION['lang'] === 'en' ? 'gr' : 'en' ?>.png" alt="Language" style="width: 28px; height: 20px; border-radius: 4px;">
     </button>
   </form>
 </li>
+
         <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
           <div class="form-check form-switch text-white">
             <input class="form-check-input" type="checkbox" id="darkModeToggle">
@@ -110,11 +111,9 @@ $role = $_SESSION["user"]["role"] ?? "Null";
     <?php endif; ?>
 
    <form method="post" action="switch_lang.php" class="mb-2">
-  <?php if ($_SESSION['lang'] === 'en'): ?>
-    <button type="submit" name="lang" value="el" class="btn w-100 text-white" style="background-color: #4da3ff;">Ελληνικά</button>
-  <?php else: ?>
-    <button type="submit" name="lang" value="en" class="btn w-100 text-white" style="background-color: #4da3ff;">English</button>
-  <?php endif; ?>
+  <button type="submit" style="background: none; border: none; padding: 0;" title="<?= $_SESSION['lang'] === 'en' ? 'Greek' : 'English' ?>">
+  <img src="assets/flags/<?= $_SESSION['lang'] === 'en' ? 'gr' : 'en' ?>.png" alt="Language" style="width: 28px; height: 20px; border-radius: 4px;">
+</button>
 </form>
 
     <button data-bs-toggle="modal" data-bs-target="#logoutModal">
@@ -208,4 +207,9 @@ darkMobile?.addEventListener('change', () => {
   darkToggle.dispatchEvent(new Event('change'));
 });
 </script>
+<style>
+  button img {
+    cursor: pointer;
+  }
+</style>
 

@@ -415,7 +415,7 @@ $periodInfo = $nextPeriod->fetch_assoc();
         <ul class="list-unstyled">
           <li><a href="<?= htmlspecialchars($moodle_url) ?>" class="text-white text-decoration-none" target="_blank">Moodle</a></li>
           <li>
-  <a href="https://www.cut.ac.cy/university/administration/administrative-services/ist/services/" class="text-white text-decoration-none" target="_blank">
+  <a href="https://www.cut.ac.cy/university/administration/administrative-services/ist/support/" class="text-white text-decoration-none" target="_blank">
     <?= $_SESSION['lang'] === 'el' ? 'Υποστήριξη IT' : 'IT Support' ?>
   </a>
 </li>
@@ -706,6 +706,10 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 <div id="feedbackNotification" class="feedback-notification"></div>
-
+<style>
+  button img {
+    cursor: pointer;
+  }
+</style>
 </body>
 </html>
