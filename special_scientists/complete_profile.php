@@ -19,6 +19,9 @@ $errors = [];
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $fullName = trim($_POST["fullname"]);
     $nameParts = preg_split('/\s+/', $fullName);
+    if (count($nameParts) < 2 || count($nameParts) > 3) {
+    $errors[] = "Full name must be 2 or 3 words (e.g., First Last or First Middle Last).";
+}
     $firstName = $nameParts[0];
     $lastName = $nameParts[count($nameParts) - 1];
     $middleName = count($nameParts) > 2 ? implode(" ", array_slice($nameParts, 1, -1)) : null;
@@ -56,6 +59,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if ($password !== $repeat_password) {
         $errors[] = "Passwords do not match!";
+    }
+
+        // Check for duplicate username
+    if ($isSocialLogin) {
+        $stmt = $conn->prepare("SELECT id FROM users WHERE username = ? AND id != ?");
+        $stmt->bind_param("si", $username, $userId);
+    } else {
+        $stmt = $conn->prepare("SELECT id FROM users WHERE username = ?");
+        $stmt->bind_param("s", $username);
+    }
+
+    $stmt->execute();
+    $stmt->store_result();
+
+    if ($stmt->num_rows > 0) {
+        $errors[] = "This username already exists, please choose a different one.";
     }
 
     if (empty($errors)) {
@@ -135,10 +154,27 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
                 <div class="form-group"><label>Full Name</label>
                     <input type="text" name="fullname" class="form-control" placeholder="e.g. John Doe" value="<?= htmlspecialchars($_POST['fullname'] ?? '') ?>" required>
+                    <?php
+    if (!empty($errors)) {
+        foreach ($errors as $error) {
+            if (str_contains($error, "Full name must be")) {
+                echo "<div class='text-danger mt-1'>" . htmlspecialchars($error) . "</div>";
+            }
+        }
+    }
+?>
                 </div>
                 <div class="form-group"><label>Username</label>
-                    <input type="text" name="username" class="form-control" placeholder="Choose a username" value="<?= htmlspecialchars($_POST['username'] ?? '') ?>" required>
-                </div>
+    <input type="text" name="username" id="username" class="form-control" placeholder="Choose a username" value="<?= htmlspecialchars($_POST['username'] ?? '') ?>" required>
+    <small id="username-status" class="text-danger"></small>
+    <?php if (!empty($errors)) {
+        foreach ($errors as $error) {
+            if (str_contains($error, "username")) {
+                echo "<div class='text-danger mt-1'>" . htmlspecialchars($error) . "</div>";
+            }
+        }
+    } ?>
+</div>
                 <div class="form-group"><label>Email Address</label>
                     <input type="email" class="form-control" value="<?= htmlspecialchars($email) ?>" readonly>
                 </div>
@@ -223,7 +259,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 <script>
+let usernameValid = false;
+
 $(document).ready(function () {
+    $("input[name='fullname']").on("input", function () {
+    const nameParts = $(this).val().trim().split(/\s+/);
+    if (nameParts.length >= 2 && nameParts.length <= 3) {
+        $(this).removeClass("is-invalid");
+        $("#fullname-error").remove();
+    }
+});
+
     $("#country").countrySelect({ defaultCountry: "cy" });
 
     const iti = window.intlTelInput(document.querySelector("#phone"), {
@@ -245,15 +291,18 @@ $(document).ready(function () {
         $("#submitBtn").toggle(step === totalSteps);
 
         $("#step-progress").css("width", (step / totalSteps) * 100 + "%");
-
         $("#progress-percentage").text(Math.round((step / totalSteps) * 100) + "%");
-
         $(`#step${step} input:not([type=hidden]):first`).focus();
     }
 
     $("#nextBtn").click(function () {
+        if (currentStep === 1) {
+            $("#username").trigger("blur");
+        }
+
         const currentFields = $(`#step${currentStep} input:required`);
         let valid = true;
+
         currentFields.each(function () {
             if (!$(this).val().trim()) {
                 $(this).addClass("is-invalid");
@@ -263,10 +312,32 @@ $(document).ready(function () {
             }
         });
 
-        if (valid && currentStep < totalSteps) {
-            currentStep++;
-            showStep(currentStep);
+        if (currentStep === 1 && !usernameValid) {
+            $("#username").addClass("is-invalid");
+            $("#username-status").text("This username already exists, please choose a different one.");
+            valid = false;
         }
+
+        if (currentStep === 1) {
+    const fullName = $("input[name='fullname']").val().trim();
+    const nameParts = fullName.split(/\s+/);
+    if (nameParts.length < 2 || nameParts.length > 3) {
+        $("input[name='fullname']").addClass("is-invalid");
+        if ($("#fullname-error").length === 0) {
+            $("<div id='fullname-error' class='text-danger mt-1'>Full name must be 2 or 3 words (e.g., First Last or First Middle Last).</div>").insertAfter("input[name='fullname']");
+        }
+        valid = false;
+    } else {
+        $("input[name='fullname']").removeClass("is-invalid");
+        $("#fullname-error").remove();
+    }
+}
+
+if (valid && currentStep < totalSteps) {
+    currentStep++;
+    showStep(currentStep);
+}
+
     });
 
     $("#prevBtn").click(function () {
@@ -284,27 +355,50 @@ $(document).ready(function () {
     });
 
     $("#password").on("input", function () {
-    const val = $(this).val();
+        const val = $(this).val();
 
-    const checks = {
-        length: val.length >= 8,
-        uppercase: /[A-Z]/.test(val),
-        number: /[0-9]/.test(val),
-        symbol: /[\W_]/.test(val)
-    };
+        const checks = {
+            length: val.length >= 8,
+            uppercase: /[A-Z]/.test(val),
+            number: /[0-9]/.test(val),
+            symbol: /[\W_]/.test(val)
+        };
 
-    $("#check-length").html((checks.length ? '✅' : '<span class="text-danger">✖</span>') + ' At least 8 characters');
-    $("#check-uppercase").html((checks.uppercase ? '✅' : '<span class="text-danger">✖</span>') + ' At least 1 uppercase letter');
-    $("#check-number").html((checks.number ? '✅' : '<span class="text-danger">✖</span>') + ' At least 1 number');
-    $("#check-symbol").html((checks.symbol ? '✅' : '<span class="text-danger">✖</span>') + ' At least 1 symbol');
-});
-
-    $("#complete-profile-form").submit(function () {
-        $('#phone').val(iti.getNumber());
+        $("#check-length").html((checks.length ? '✅' : '<span class="text-danger">✖</span>') + ' At least 8 characters');
+        $("#check-uppercase").html((checks.uppercase ? '✅' : '<span class="text-danger">✖</span>') + ' At least 1 uppercase letter');
+        $("#check-number").html((checks.number ? '✅' : '<span class="text-danger">✖</span>') + ' At least 1 number');
+        $("#check-symbol").html((checks.symbol ? '✅' : '<span class="text-danger">✖</span>') + ' At least 1 symbol');
     });
 
-    document.getElementById("dob").max = new Date().toISOString().split('T')[0];
-    showStep(currentStep);
+    $("#complete-profile-form").on("submit", function (e) {
+        const fullPhone = iti.getNumber();
+
+        if (!iti.isValidNumber()) {
+            e.preventDefault();
+            $("#phone").addClass("is-invalid");
+            alert("Please enter a valid phone number.");
+            return false;
+        }
+
+        $('#phone').val(fullPhone); // you can replace this with a hidden input if needed
+    });
+
+    $("#username").on("blur", function () {
+        const username = $(this).val().trim();
+        if (username.length === 0) return;
+
+        $.post("check_username.php", { username }, function (response) {
+            if (response === "taken") {
+                $("#username-status").text("This username already exists, please choose a different one.");
+                usernameValid = false;
+            } else {
+                $("#username-status").text("");
+                usernameValid = true;
+            }
+        });
+    });
+
+    showStep(currentStep); // initialize first step
 });
 </script>
 </body>
