@@ -74,7 +74,7 @@ if ($autoSync && $autoSync['auto_sync_enabled']) {
         include_once 'moodle_api_helpers.php';
 
 $token = '72e8b354b48d4af20f56a041c4c4d614';
-$domain = 'http://cei326-omada7.cut.ac.cy/moodle';
+$domain = 'https://cei326-omada7.cut.ac.cy/moodle';
 
 $full_name_parts = explode(' ', $row['full_name']);
 $firstname = array_shift($full_name_parts);
