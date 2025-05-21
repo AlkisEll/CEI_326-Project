@@ -11,16 +11,16 @@ body, html {
     position: sticky;
     top: 0;
     z-index: 1000;
+    
+}
+@media (min-width: 992px) {
+    .navbar-expand-lg .navbar-nav {
+        flex-direction: row;
+        white-space: nowrap;
+    }
 }
 
-.navbar-brand,
-.nav-link {
-    color: #fff !important;
-}
 
-.navbar .nav-item strong {
-    color: #ffc107;
-}
 
 /* === Hero Section === */
 .hero-section {
