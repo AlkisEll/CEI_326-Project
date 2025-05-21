@@ -82,7 +82,7 @@ function check_moodle_user_exists($token, $domain, $username) {
 function create_moodle_user($token, $domain, $user_data) {
     $functionname = 'core_user_create_users';
 
-    // Flatten the users array manually for Moodle
+    // Manually flatten into Moodle's required format: users[0][username], users[0][email], etc.
     $params = [];
     foreach ($user_data as $key => $value) {
         $params["users[0][$key]"] = $value;
@@ -90,16 +90,20 @@ function create_moodle_user($token, $domain, $user_data) {
 
     $curl = curl_init();
     curl_setopt_array($curl, [
-        CURLOPT_URL => $domain . '/webservice/rest/server.php?wstoken=' . $token . '&wsfunction=' . $functionname . '&moodlewsrestformat=json',
+        CURLOPT_URL => $domain . '/webservice/rest/server.php',
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_POST => true,
-        CURLOPT_POSTFIELDS => http_build_query($params)
+        CURLOPT_POSTFIELDS => array_merge($params, [
+            'wstoken' => $token,
+            'wsfunction' => $functionname,
+            'moodlewsrestformat' => 'json'
+        ])
     ]);
 
     $response = curl_exec($curl);
     curl_close($curl);
 
-    // TEMP: Show raw response (REMOVE THIS IN PRODUCTION)
+    // DEBUGGING: show raw Moodle response
     echo "<pre>Moodle Create User Response:\n$response</pre>";
     exit;
 
