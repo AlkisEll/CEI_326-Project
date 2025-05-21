@@ -612,3 +612,7 @@ body, html {
     font-size: calc(1.275rem + .3vw);
     padding-top: 8px;
 }
+button.btn {
+  white-space: nowrap;
+}
+
