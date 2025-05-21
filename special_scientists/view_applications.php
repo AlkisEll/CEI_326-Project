@@ -116,71 +116,8 @@ foreach ($course_codes as $index => $code) {
         }
     }
 }
-
-  // === Moodle Integration Starts Here ===
-  include_once 'moodle_api_helpers.php';
-
-  $appId = $_GET['id'];
-  $query = "
-  SELECT 
-      a.id,
-      u.full_name,
-      u.email,
-      u.username,
-      ap.name AS period_name,
-      a.status,
-      a.created_at,
-      a.rejection_reason,
-      a.reviewed_at,
-      GROUP_CONCAT(DISTINCT c.course_name ORDER BY c.course_name SEPARATOR ', ') AS course_list,
-      GROUP_CONCAT(DISTINCT c.course_code ORDER BY c.course_code SEPARATOR ', ') AS course_codes
-  FROM applications a
-  JOIN users u ON a.user_id = u.id
-  JOIN application_periods ap ON a.period_id = ap.id
-  LEFT JOIN users r ON a.reviewed_by = r.id
-  LEFT JOIN application_courses ac ON ac.application_id = a.id
-  LEFT JOIN courses c ON ac.course_id = c.id
-  WHERE a.id = ?
-  GROUP BY a.id
-  ";  
-  $stmt = $conn->prepare($query);
-  $stmt->bind_param("i", $appId);
-  $stmt->execute();
-  $res = $stmt->get_result();
-  $row = $res->fetch_assoc();
-
-  $token = '72e8b354b48d4af20f56a041c4c4d614'; // Replace with actual Moodle token
-  $domain = 'http://cei326-omada7.cut.ac.cy/moodle'; // Replace with your actual Moodle domain
-  $full_name_parts = explode(' ', $row['full_name']);
-  $firstname = array_shift($full_name_parts); // First word
-  $lastname = implode(' ', $full_name_parts); // Everything else
-
-  $user_data = [
-    'username' => $row['username'],
-    'firstname' => $firstname,   // ✅ Correct
-    'lastname' => $lastname,     // ✅ Correct
-    'email' => $row['email'],
-    'password' => 'TempPass123!',
-    'auth' => 'manual'
-];
-
-// Call user creation
-$userid = create_moodle_user($token, $domain, $user_data);
-
-$course_codes = explode(',', $row['course_codes'] ?? '');
-$course_names = explode(',', $row['course_list'] ?? '');
-
-foreach ($course_codes as $index => $code) {
-    $shortname = trim($code);
-    $fullname = isset($course_names[$index]) ? trim($course_names[$index]) : $shortname;
-
-    if ($shortname && $fullname) {
-        $courseid = create_moodle_course_if_not_exists($token, $domain, $shortname, $fullname);
-        enroll_user_to_course($token, $domain, $userid, $courseid, 3); // roleid 3 = teacher
     }
 }
-
- // stop execution to inspect results
 
   // === Moodle Integration Ends ===
 
