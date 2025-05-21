@@ -103,10 +103,6 @@ function create_moodle_user($token, $domain, $user_data) {
     $response = curl_exec($curl);
     curl_close($curl);
 
-    // DEBUGGING: show raw Moodle response
-    echo "<pre>Moodle Create User Response:\n$response</pre>";
-    exit;
-
     $data = json_decode($response, true);
     return $data[0]['id'] ?? null;
 }
