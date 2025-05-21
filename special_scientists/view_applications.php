@@ -71,35 +71,48 @@ if ($autoSync && $autoSync['auto_sync_enabled']) {
     $row = $res->fetch_assoc();
 
     if ($row && $row['lms_access']) {
-        $token = '72e8b354b48d4af20f56a041c4c4d614';
-        $domain = 'http://cei326-omada7.cut.ac.cy/moodle';
+        include_once 'moodle_api_helpers.php';
 
-        $full_name_parts = explode(' ', $row['full_name']);
-        $firstname = array_shift($full_name_parts);
-        $lastname = implode(' ', $full_name_parts);
+$token = '72e8b354b48d4af20f56a041c4c4d614';
+$domain = 'http://cei326-omada7.cut.ac.cy/moodle';
 
-        $user_data = [
-            'username' => $row['username'],
-            'firstname' => $firstname,
-            'lastname' => $lastname ?: $firstname,
-            'email' => $row['email'],
-            'password' => 'TempPass123!',
-            'auth' => 'manual'
-        ];
+$full_name_parts = explode(' ', $row['full_name']);
+$firstname = array_shift($full_name_parts);
+$lastname = implode(' ', $full_name_parts);
 
-        $userid = create_moodle_user($token, $domain, $user_data);
+$user_data = [
+    'username' => $row['username'],
+    'firstname' => $firstname,
+    'lastname' => $lastname ?: $firstname,
+    'email' => $row['email'],
+    'password' => 'TempPass123!',
+    'auth' => 'manual'
+];
 
-        $course_codes = explode(',', $row['course_codes'] ?? '');
-        $course_names = explode(',', $row['course_list'] ?? '');
+// Check if Moodle user already exists
+$moodle_user = get_moodle_user_by_username($token, $domain, $user_data['username']);
+if ($moodle_user) {
+    $userid = $moodle_user['id'];
+} else {
+    $userid = create_moodle_user($token, $domain, $user_data);
+    if (!$userid) {
+        log_moodle_sync('user', $user_data['username'], 'failure', 'User creation failed.');
+    }
+}
 
-        foreach ($course_codes as $index => $code) {
-            $shortname = trim($code);
-            $fullname = isset($course_names[$index]) ? trim($course_names[$index]) : $shortname;
+$course_codes = explode(',', $row['course_codes'] ?? '');
+$course_names = explode(',', $row['course_list'] ?? '');
 
-            if ($shortname && $fullname) {
-                $courseid = create_moodle_course_if_not_exists($token, $domain, $shortname, $fullname);
-                enroll_user_to_course($token, $domain, $userid, $courseid, 3); // roleid 3 = teacher
-            }
+foreach ($course_codes as $index => $code) {
+    $shortname = trim($code);
+    $fullname = isset($course_names[$index]) ? trim($course_names[$index]) : $shortname;
+
+    if ($shortname && $fullname) {
+        $courseid = create_moodle_course_if_not_exists($token, $domain, $shortname, $fullname);
+        if ($courseid) {
+            enroll_user_to_course($token, $domain, $userid, $courseid, 3); // roleid 3 = teacher
+        } else {
+            log_moodle_sync('course', $shortname, 'failure', 'Could not create or retrieve course.');
         }
     }
 }
