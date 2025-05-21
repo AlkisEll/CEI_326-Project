@@ -47,7 +47,8 @@ curl_setopt_array($curl, [
     CURLOPT_URL => $serverurl,
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_POST => true,
-    CURLOPT_POSTFIELDS => http_build_query($params),  // ✅ Moodle-native format
+    CURLOPT_POSTFIELDS => json_encode($params),
+CURLOPT_HTTPHEADER => ['Content-Type: application/json'],
 ]);
 
 $response = curl_exec($curl);
