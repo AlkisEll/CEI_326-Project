@@ -133,14 +133,17 @@ if (!$application_id) {
 }
 
 // Link all selected courses to that one application
-if (!empty($_POST['course_ids']) && is_array($_POST['course_ids'])) {
-    $course_stmt = $conn->prepare("INSERT INTO application_courses (application_id, course_id) VALUES (?, ?)");
-    foreach ($_POST['course_ids'] as $course_id) {
-        $course_stmt->bind_param("ii", $application_id, $course_id);
-        $course_stmt->execute();
-    }
-    $course_stmt->close();
+if (empty($_POST['course_ids']) || !is_array($_POST['course_ids'])) {
+    die("Error: No courses were selected. Please go back and select at least one.");
 }
+
+$course_stmt = $conn->prepare("INSERT INTO application_courses (application_id, course_id) VALUES (?, ?)");
+foreach ($_POST['course_ids'] as $course_id) {
+    $course_stmt->bind_param("ii", $application_id, $course_id);
+    $course_stmt->execute();
+}
+$course_stmt->close();
+
 
 // Insert additional uploaded files
 foreach ($uploaded_files as $type => $file_data) {
