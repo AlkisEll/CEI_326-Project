@@ -138,6 +138,9 @@ if (!$application_id) {
 if (!empty($_POST['course_ids']) && is_array($_POST['course_ids'])) {
     $course_stmt = $conn->prepare("INSERT INTO application_courses (application_id, course_id) VALUES (?, ?)");
     foreach ($_POST['course_ids'] as $course_id) {
+        if (!is_numeric($course_id) || empty($course_id)) {
+            continue; // ⛔ Skip invalid or empty values
+        }
         $course_stmt->bind_param("ii", $application_id, $course_id);
         $course_stmt->execute();
     }
