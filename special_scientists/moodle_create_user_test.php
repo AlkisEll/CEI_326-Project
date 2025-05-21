@@ -26,12 +26,14 @@ $lastname = $nameParts[1] ?? '-';
 
 // Flattened array for http_build_query()
 $params = [
-    'users[0][username]' => 'nikoscy100',                   // e.g., nikoscy100
-    'users[0][password]' => 'Crystal060506#',                   // must meet password policy
-    'users[0][firstname]' => 'Nikos',                         // e.g., Nikos
-    'users[0][lastname]' => 'Nikolaou',                           // e.g., Nikolaou
-    'users[0][email]' => 'em.solomonides@gmail.com',                         // e.g., em.solomonides@gmail.com
-    'users[0][auth]' => 'manual'
+    'users' => [[
+        'username'  => 'nikoscy100',
+        'password'  => 'Crystal060506#',
+        'firstname' => 'Nikos',
+        'lastname'  => 'Nikolaou',
+        'email'     => 'em.solomonides@gmail.com',
+        'auth'      => 'manual'
+    ]]
 ];
 
 // Debug Payload
