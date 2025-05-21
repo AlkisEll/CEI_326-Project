@@ -95,11 +95,11 @@ function create_moodle_user($token, $domain, $user_data) {
     $response = curl_exec($curl);
     curl_close($curl);
 
-    // 🔍 Add this to debug Moodle response
-    file_put_contents('moodle_user_create_debug.log', $response . PHP_EOL, FILE_APPEND);
+    // ⛔️ TEMPORARY DEBUG: Print to browser
+    echo "<pre>MOODLE RESPONSE:\n$response</pre>";
+    exit; // Stop execution so you can see the output
 
     $data = json_decode($response, true);
-
     return $data[0]['id'] ?? null;
 }
 
