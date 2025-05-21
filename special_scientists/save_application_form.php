@@ -19,15 +19,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $experience_entries = json_decode($experience_json, true);
     $first_experience = $experience_entries[0] ?? null;
 
+$first_experience = $experience_entries[0] ?? null;
+
 if ($first_experience) {
-    $current_position = $first_experience['job_title'];
-    $current_employer = $first_experience['employer'];
-    $professional_experience = $first_experience['summary'];
-    $expertise_area = $first_experience['expertise'];
-    $project_highlights = $first_experience['projects'];
-    $experience_start_date = $first_experience['from'];
-    $experience_end_date = $first_experience['to'];
-    $part_or_full_time = $first_experience['type'];
+    $current_position = $first_experience['job_title'] ?? null;
+    $current_employer = $first_experience['employer'] ?? null;
+    $professional_experience = $first_experience['summary'] ?? null;
+    $expertise_area = $first_experience['expertise'] ?? null;
+    $project_highlights = $first_experience['projects'] ?? null;
+    $experience_start_date = !empty($first_experience['from']) ? $first_experience['from'] : null;
+    $experience_end_date = !empty($first_experience['to']) ? $first_experience['to'] : null;
+    $part_or_full_time = $first_experience['type'] ?? null;
 } else {
     $current_position = $current_employer = $professional_experience = $expertise_area = $project_highlights = null;
     $experience_start_date = $experience_end_date = $part_or_full_time = null;
