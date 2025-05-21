@@ -58,11 +58,9 @@ $role = $_SESSION["user"]["role"] ?? "Null";
           <li class="nav-item"><a class="nav-link text-white" href="index.php">Home</a></li>
           <li class="nav-item">
             <button class="btn btn-outline-light d-flex align-items-center gap-1 px-3 py-1 rounded-pill"
-                    data-bs-toggle="modal" data-bs-target="#logoutModal" style="font-size: 0.9rem; white-space: nowrap;">
-              <span class="d-flex align-items-center">
-                <i class="bi bi-box-arrow-left" style="font-size: 1rem;"></i>
-                <span class="ms-1">Logout</span>
-              </span>
+                    data-bs-toggle="modal" data-bs-target="#logoutModal" style="font-size: 0.9rem;">
+              <i class="bi bi-box-arrow-left" style="font-size: 1rem;"></i>
+              Logout
             </button>
           </li>
         <?php endif; ?>
