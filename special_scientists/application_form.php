@@ -121,7 +121,7 @@ $postal_code = $user_data['postcode'];
     <?php endif; ?>
 
     <!-- Step Overview Boxes -->
-<div class="step-guide-scroll">
+<div class="step-scroll-wrapper">
   <div class="step-guide mb-4" id="stepGuide">
     <!-- Boxes will be generated dynamically -->
   </div>
