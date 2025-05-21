@@ -15,7 +15,7 @@ ob_start(function ($buffer) {
 });
 
 function translateWithDeepL($html, $targetLang) {
-    $apiKey = 'c5eee18e-2084-4356-97dd-a7e7a65fde7b;
+    $apiKey = 'c5eee18e-2084-4356-97dd-a7e7a65fde7b';
     $url = 'https://api.deepl.com/v2/translate';
 
     $data = http_build_query([
