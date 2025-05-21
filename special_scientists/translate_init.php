@@ -15,8 +15,8 @@ ob_start(function ($buffer) {
 });
 
 function translateWithDeepL($html, $targetLang) {
-    $apiKey = 'cf6a8b9e-ed2e-433b-ac63-c92a2d5f86fe:fx';
-    $url = 'https://api-free.deepl.com/v2/translate';
+    $apiKey = 'c5eee18e-2084-4356-97dd-a7e7a65fde7b;
+    $url = 'https://api.deepl.com/v2/translate';
 
     $data = http_build_query([
         'auth_key' => $apiKey,
