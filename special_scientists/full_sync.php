@@ -28,7 +28,7 @@ if (isset($_GET['toggle_auto_sync'])) {
 if (isset($_POST['manual_sync'])) {
   include_once 'moodle_api_helpers.php';
 
-  $token = '3223ebfec77abfe903c27c1468a7d7c5';
+  $token = '72e8b354b48d4af20f56a041c4c4d614';
   $domain = 'http://cei326-omada7.cut.ac.cy/moodle/';
   
   // Get all scientists with LMS access ON
