@@ -11,6 +11,8 @@ body, html {
     position: sticky;
     top: 0;
     z-index: 1000;
+    max-height: 56px;
+    max-width: 1227px;
     
 }
 @media (min-width: 992px) {
