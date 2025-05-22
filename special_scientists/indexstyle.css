@@ -15,7 +15,7 @@ body, html {
     max-width: 1700px;
     
 }
-@media (min-width: 992px) {
+@media (min-width: 2000px) {
     .navbar-expand-lg .navbar-nav {
         flex-direction: row;
         white-space: nowrap;
@@ -654,13 +654,6 @@ body, html {
   margin-top: 10px;
   font-size: 0.95rem;
   color: #333;
-}
-
-@media (min-width: 2000px) {
-    .navbar-expand-lg .navbar-nav {
-        flex-direction: row;
-        white-space: nowrap;
-    }
 }
 
 /* === Dark Mode Compatibility for Drag & Drop Upload === */
