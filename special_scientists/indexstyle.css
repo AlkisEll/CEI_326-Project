@@ -618,3 +618,60 @@ body, html {
   white-space: nowrap;
 }
 
+
+/* === Drag & Drop Upload Enhancements === */
+.drag-drop-area {
+  border: 2px dashed #aaa;
+  border-radius: 12px;
+  background-color: #f0f0f0;
+  padding: 40px;
+  min-height: 180px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.drag-drop-area:hover {
+  background-color: #e8e8e8;
+}
+
+.drag-drop-area.dragover {
+  background-color: #d9eaff;
+  border-color: #0d6efd;
+}
+
+.drag-drop-area p {
+  font-size: 1.1rem;
+  color: #444;
+  margin: 0;
+}
+
+.selected-files {
+  margin-top: 10px;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+/* === Dark Mode Compatibility for Drag & Drop Upload === */
+body.dark-mode .drag-drop-area {
+  background-color: #2c2c2c;
+  border-color: #555;
+  color: #eee;
+}
+
+body.dark-mode .drag-drop-area p {
+  color: #ccc;
+}
+
+body.dark-mode .drag-drop-area.dragover {
+  background-color: #3a3a3a;
+  border-color: #66b2ff;
+}
+
+body.dark-mode .selected-files {
+  color: #ddd;
+}
