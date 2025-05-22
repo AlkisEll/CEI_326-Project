@@ -110,11 +110,14 @@ $role = $_SESSION["user"]["role"] ?? "Null";
       <a href="enrollment_dashboard.php">Enrollment Dashboard</a>
     <?php endif; ?>
 
-   <form method="post" action="switch_lang.php" class="mb-2">
-  <button type="submit" style="background: none; border: none; padding: 0;" title="<?= $_SESSION['lang'] === 'en' ? 'Greek' : 'English' ?>">
-  <img src="assets/flags/<?= $_SESSION['lang'] === 'en' ? 'gr' : 'en' ?>.png" alt="Language" style="width: 28px; height: 20px; border-radius: 4px;">
-</button>
-</form>
+        <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
+  <form method="post" action="switch_lang.php">
+    <input type="hidden" name="lang" value="<?= $_SESSION['lang'] === 'en' ? 'el' : 'en' ?>">
+    <button type="submit" style="background: none; border: none; padding: 0;" title="Switch Language">
+      <img src="assets/flags/<?= $_SESSION['lang'] === 'en' ? 'gr' : 'en' ?>.png" alt="Language" style="width: 28px; height: 20px; border-radius: 4px;">
+    </button>
+  </form>
+</li>
 
     <button data-bs-toggle="modal" data-bs-target="#logoutModal">
       <i class="bi bi-box-arrow-left me-1"></i> Logout
