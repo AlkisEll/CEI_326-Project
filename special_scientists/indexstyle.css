@@ -656,6 +656,13 @@ body, html {
   color: #333;
 }
 
+@media (min-width: 2000px) {
+    .navbar-expand-lg .navbar-nav {
+        flex-direction: row;
+        white-space: nowrap;
+    }
+}
+
 /* === Dark Mode Compatibility for Drag & Drop Upload === */
 body.dark-mode .drag-drop-area {
   background-color: #2c2c2c;
