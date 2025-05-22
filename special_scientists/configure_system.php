@@ -100,15 +100,25 @@ $backLink = "admin_dashboard.php";
         <input type="text" name="site_title" class="form-control" value="<?= htmlspecialchars($site_title); ?>" required>
       </div>
 
-      <div class="mb-3">
-        <label class="form-label"><strong>Upload Logo</strong></label>
-        <input type="file" name="logo" class="form-control" accept="image/*">
-        <?php if (!empty($logo_path) && file_exists($logo_path)): ?>
-          <div class="mt-2">
-            <img src="<?= $logo_path ?>" alt="Current Logo" style="height: 60px;">
-          </div>
-        <?php endif; ?>
-      </div>
+<div class="mb-3">
+  <label class="form-label"><strong>Upload Logo</strong></label>
+  <input type="file" name="logo" class="form-control" accept="image/*">
+
+  <?php if (!empty($logo_path) && file_exists($logo_path)): ?>
+    <div class="mt-2">
+      <img src="<?= $logo_path ?>" alt="Current Logo" style="height: 60px;">
+    </div>
+
+    <!-- New: remove-logo checkbox -->
+    <div class="form-check mt-2">
+      <input class="form-check-input" type="checkbox" name="remove_logo" id="removeLogoCheckbox" value="1">
+      <label class="form-check-label" for="removeLogoCheckbox">
+        Remove current logo
+      </label>
+    </div>
+  <?php endif; ?>
+</div>
+
 
       <div class="mb-3">
         <label class="form-label"><strong>Moodle URL</strong></label>
