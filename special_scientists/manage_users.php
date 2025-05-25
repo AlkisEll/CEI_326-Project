@@ -103,47 +103,15 @@ $backLink = "admin_dashboard.php";
                   <?= $user["last_login"] ? date("M j, Y, g:i a", strtotime($user["last_login"])) : "<span class='text-muted'>Never</span>" ?>
                 </td>
                 <td>
-                  <?php
-  $roleHierarchy = ['user', 'scientist', 'evaluator', 'hr', 'admin'];
-  $currentRole = $user["role"];
-  $currentIndex = array_search($currentRole, $roleHierarchy);
-
-  $promoteTo = $currentIndex !== false && $currentIndex < count($roleHierarchy) - 1
-      ? $roleHierarchy[$currentIndex + 1]
-      : null;
-
-  $demoteTo = $currentIndex !== false && $currentIndex > 0
-      ? $roleHierarchy[$currentIndex - 1]
-      : null;
-
-  function formatRoleName($roleCode) {
-      return match ($roleCode) {
-          'user' => 'Candidate (User)',
-          'scientist' => 'Scientist',
-          'evaluator' => 'Evaluator',
-          'hr' => 'HR',
-          'admin' => 'Admin',
-          default => ucfirst($roleCode)
-      };
-}
-?>
-<?php if ($user["role"] === 'owner'): ?>
+                  <?php if ($user["role"] === 'owner'): ?>
   <em>Protected</em>
 <?php elseif ($user["id"] != $_SESSION["user"]["id"]): ?>
   <a href="edit_user.php?id=<?= $user['id'] ?>" class="btn btn-sm btn-info">Edit</a>
-
-  <?php if ($promoteTo): ?>
-    <a href="update_role.php?id=<?= $user['id'] ?>&role=<?= $promoteTo ?>" class="btn btn-sm btn-success">
-      Promote to <?= formatRoleName($promoteTo) ?>
-    </a>
+  <?php if ($user["role"] === 'admin'): ?>
+    <a href="update_role.php?id=<?= $user['id'] ?>&role=user" class="btn btn-sm btn-warning">Demote</a>
+  <?php else: ?>
+    <a href="update_role.php?id=<?= $user['id'] ?>&role=admin" class="btn btn-sm btn-success">Promote</a>
   <?php endif; ?>
-
-  <?php if ($demoteTo): ?>
-    <a href="update_role.php?id=<?= $user['id'] ?>&role=<?= $demoteTo ?>" class="btn btn-sm btn-warning">
-      Demote to <?= formatRoleName($demoteTo) ?>
-    </a>
-  <?php endif; ?>
-
   <a href="delete_user.php?id=<?= $user['id'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this user?');">Delete</a>
 <?php else: ?>
   <em>Current Admin</em>
