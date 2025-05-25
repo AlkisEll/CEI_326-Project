@@ -474,8 +474,8 @@ if (!preg_match('/^\d+$/', $postcode)) {
   class="form-control"
   value="<?= htmlspecialchars($_POST['city'] ?? '') ?>"
   required
-  oninput="this.value = this.value.replace(/[^a-zA-Z\sά-ώΑ-ΏϊΰΪΫ]/g, '')"
->
+  oninput="this.value = this.value.replace(/[^\p{L}\s]/gu, '')"
+/>
         </div>
         <div class="form-group">
           <label>Address</label>
