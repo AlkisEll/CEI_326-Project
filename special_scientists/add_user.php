@@ -11,18 +11,38 @@ if (!isset($_SESSION["user"]) || !in_array($_SESSION["user"]["role"], ['admin', 
 $system_title = getSystemConfig("site_title");
 $logo_path = getSystemConfig("logo_path");
 
+$error = "";
+$success = "";
+
 if (isset($_POST["create"])) {
     $full_name = trim($_POST["full_name"]);
     $email = trim($_POST["email"]);
     $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
     $role = $_POST["role"];
 
-    $stmt = $conn->prepare("INSERT INTO users (full_name, email, password, role, is_verified) VALUES (?, ?, ?, ?, 1)");
-    $stmt->bind_param("ssss", $full_name, $email, $password, $role);
-    $stmt->execute();
+    // Check if email already exists
+    $checkQuery = "SELECT id FROM users WHERE email = ?";
+    $checkStmt = $conn->prepare($checkQuery);
+    $checkStmt->bind_param("s", $email);
+    $checkStmt->execute();
+    $checkStmt->store_result();
 
-    header("Location: manage_users.php");
-    exit();
+    if ($checkStmt->num_rows > 0) {
+        $error = "A user with this email already exists.";
+    } else {
+        // Insert new user
+        $stmt = $conn->prepare("INSERT INTO users (full_name, email, password, role, is_verified) VALUES (?, ?, ?, ?, 1)");
+        $stmt->bind_param("ssss", $full_name, $email, $password, $role);
+        if ($stmt->execute()) {
+            $success = "User created successfully!";
+            header("Location: manage_users.php");
+            exit();
+        } else {
+            $error = "Failed to create user. Please try again.";
+        }
+    }
+
+    $checkStmt->close();
 }
 $showBack = true;
 $backLink = "manage_users.php";
@@ -48,6 +68,13 @@ $backLink = "manage_users.php";
 <div class="container py-5">
   <h2 class="mb-4"><i class="bi bi-person-plus-fill me-2"></i>Add New User</h2>
   <div class="my-apps-card">
+
+    <?php if ($error): ?>
+      <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
+    <?php elseif ($success): ?>
+      <div class="alert alert-success"><?= htmlspecialchars($success) ?></div>
+    <?php endif; ?>
+
     <form method="post">
       <div class="mb-3">
         <label class="form-label"><strong>Full Name</strong></label>
@@ -82,8 +109,7 @@ $backLink = "manage_users.php";
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-  const savedMode = localStorage.getItem('dark-mode');
-  if (savedMode === 'true') {
+  if (localStorage.getItem('dark-mode') === 'true') {
     document.body.classList.add('dark-mode');
   }
 </script>
