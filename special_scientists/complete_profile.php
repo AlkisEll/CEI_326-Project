@@ -586,16 +586,21 @@ $(document).ready(function () {
       const nameParts = fullName.split(/\s+/);
 
       // no digits
-      if (/\d/.test(fullName)) {
-        $("input[name='fullname']").addClass("is-invalid");
-        if ($("#fullname-error").length === 0) {
-          $("<div id='fullname-error' class='text-danger mt-1'>Please enter a proper Full Name!</div>")
-            .insertAfter("input[name='fullname']");
-        } else {
-          $("#fullname-error").text("Please enter a proper Full Name!");
-        }
-        valid = false;
-      }
+      const nameRegex = /^[\p{L}\s]{3,100}$/u;
+if (!nameRegex.test(fullName) || nameParts.length < 2 || nameParts.length > 3) {
+  $("input[name='fullname']").addClass("is-invalid");
+  if ($("#fullname-error").length === 0) {
+    $("<div id='fullname-error' class='text-danger mt-1'>Full name must be 2 or 3 words and contain only letters and spaces.</div>")
+      .insertAfter("input[name='fullname']");
+  } else {
+    $("#fullname-error").text("Full name must be 2 or 3 words and contain only letters and spaces.");
+  }
+  valid = false;
+} else {
+  $("input[name='fullname']").removeClass("is-invalid");
+  $("#fullname-error").remove();
+}
+
       // word count
       else if (nameParts.length < 2 || nameParts.length > 3) {
         $("input[name='fullname']").addClass("is-invalid");
