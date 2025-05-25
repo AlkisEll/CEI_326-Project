@@ -56,6 +56,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $errors[] = "Email is not valid!";
     }
 
+    // City must contain only letters and spaces (Greek and Latin)
+if (!preg_match('/^[a-zA-Z\sά-ώΑ-ΏϊΰΪΫ]+$/u', $city)) {
+    $errors[] = "City must contain only letters.";
+}
+
+// Postcode must be digits only
+if (!preg_match('/^\d+$/', $postcode)) {
+    $errors[] = "Postal code must contain only numbers.";
+}
+
     // Password strength
     if (
         strlen($password) < 8 ||
@@ -438,12 +448,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <div class="form-group">
           <label>City</label>
           <input
-            type="text"
-            name="city"
-            class="form-control"
-            value="<?= htmlspecialchars($_POST['city'] ?? '') ?>"
-            required
-          >
+  type="text"
+  name="city"
+  class="form-control"
+  value="<?= htmlspecialchars($_POST['city'] ?? '') ?>"
+  required
+  oninput="this.value = this.value.replace(/[^a-zA-Z\sά-ώΑ-ΏϊΰΪΫ]/g, '')"
+>
         </div>
         <div class="form-group">
           <label>Address</label>
@@ -458,12 +469,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <div class="form-group">
           <label>Postal Code</label>
           <input
-            type="text"
-            name="postcode"
-            class="form-control"
-            value="<?= htmlspecialchars($_POST['postcode'] ?? '') ?>"
-            required
-          >
+  type="text"
+  name="postcode"
+  class="form-control"
+  value="<?= htmlspecialchars($_POST['postcode'] ?? '') ?>"
+  required
+  oninput="this.value = this.value.replace(/\D/g, '')"
+>
         </div>
       </div>
 
