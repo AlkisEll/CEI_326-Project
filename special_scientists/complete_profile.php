@@ -34,10 +34,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $dob             = $_POST["dob"];
     $phone           = $_POST["phone"];
 
-    // Full Name must not contain digits
-    if (preg_match('/\d/', $fullName)) {
-        $errors[] = "Please enter a proper Full Name!";
-    }
     // Full Name word count
     if (count($nameParts) < 2 || count($nameParts) > 3) {
         $errors[] = "Full name must be 2 or 3 words (e.g., First Last or First Middle Last).";
@@ -255,23 +251,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <div class="form-group">
           <label>Full Name</label>
           <input
-            type="text"
-            name="fullname"
-            class="form-control"
-            placeholder="e.g. John Doe"
-            value="<?= htmlspecialchars($_POST['fullname'] ?? '') ?>"
-            required
-          >
+  type="text"
+  name="fullname"
+  class="form-control"
+  placeholder="e.g. John Doe"
+  value="<?= htmlspecialchars($_POST['fullname'] ?? '') ?>"
+  required
+  oninput="this.value = this.value.replace(/[0-9]/g, '')"
+>
           <?php if (!empty($errors)): ?>
             <?php foreach ($errors as $error): ?>
-              <?php if (
-                str_contains($error, "Full name must") ||
-                $error === "Please enter a proper Full Name!"
-              ): ?>
-                <div class="text-danger mt-1">
-                  <?= htmlspecialchars($error) ?>
-                </div>
-              <?php endif; ?>
+              <?php if (str_contains($error, "Full name must")): ?>
+  <div class="text-danger mt-1">
+    <?= htmlspecialchars($error) ?>
+  </div>
+<?php endif; ?>
             <?php endforeach; ?>
           <?php endif; ?>
         </div>
