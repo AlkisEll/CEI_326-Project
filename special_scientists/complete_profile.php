@@ -56,6 +56,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $errors[] = "Email is not valid!";
     }
 
+    // Username: only letters, digits, underscores
+if (!preg_match('/^[a-zA-Z0-9_]+$/', $username)) {
+    $errors[] = "Username must contain only letters, numbers, or underscores.";
+}
+
+// Full Name: only Greek/Latin letters and space
+if (!preg_match('/^[a-zA-Zά-ώΑ-ΏϊΰΪΫ\s]+$/u', $fullName)) {
+    $errors[] = "Full name must not contain symbols or numbers.";
+}
+
+// Phone: only + and digits
+if (!preg_match('/^\+?[0-9]{7,15}$/', $phone)) {
+    $errors[] = "Phone number is not valid!";
+}
+
     // City must contain only letters and spaces (Greek and Latin)
 if (!preg_match('/^[a-zA-Z\sά-ώΑ-ΏϊΰΪΫ]+$/u', $city)) {
     $errors[] = "City must contain only letters.";
@@ -267,7 +282,7 @@ if (!preg_match('/^\d+$/', $postcode)) {
   placeholder="e.g. John Doe"
   value="<?= htmlspecialchars($_POST['fullname'] ?? '') ?>"
   required
-  oninput="this.value = this.value.replace(/[0-9]/g, '')"
+  oninput="this.value = this.value.replace(/[^a-zA-Zά-ώΑ-ΏϊΰΪΫ\s]/g, '')"
 >
           <?php if (!empty($errors)): ?>
             <?php foreach ($errors as $error): ?>
@@ -290,6 +305,7 @@ if (!preg_match('/^\d+$/', $postcode)) {
             placeholder="Choose a username"
             value="<?= htmlspecialchars($_POST['username'] ?? '') ?>"
             required
+            oninput="this.value = this.value.replace(/[^a-zA-Z0-9_]/g, '')"
           >
           <small id="username-status" class="text-danger"></small>
           <?php if (!empty($errors)): ?>
@@ -322,6 +338,7 @@ if (!preg_match('/^\d+$/', $postcode)) {
             name="phone"
             value="<?= htmlspecialchars($_POST['phone'] ?? '') ?>"
             required
+            oninput="this.value = this.value.replace(/[^\d+]/g, '')"
           >
         </div>
 
