@@ -282,7 +282,7 @@ if (!preg_match('/^\d+$/', $postcode)) {
   placeholder="e.g. John Doe"
   value="<?= htmlspecialchars($_POST['fullname'] ?? '') ?>"
   required
-  oninput="this.value = this.value.replace(/[^a-zA-Zά-ώΑ-ΏϊΰΪΫ\s]/g, '')"
+  oninput="this.value = this.value.replace(/[^\p{L}\s]/gu, '')"
 >
           <?php if (!empty($errors)): ?>
             <?php foreach ($errors as $error): ?>
