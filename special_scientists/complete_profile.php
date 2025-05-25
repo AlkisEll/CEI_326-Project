@@ -33,11 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $postcode        = trim($_POST["postcode"]);
     $dob             = $_POST["dob"];
     $phone           = $_POST["phone"];
-
-    // Full Name must not contain digits
-    if (preg_match('/\d/', $fullName)) {
-        $errors[] = "Please enter a proper Full Name!";
-    }
+    
     // Full Name word count
     if (count($nameParts) < 2 || count($nameParts) > 3) {
         $errors[] = "Full name must be 2 or 3 words (e.g., First Last or First Middle Last).";
@@ -88,12 +84,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
 
-    // **City validation: only letters & spaces**
+    // City validation: only letters & spaces
     if (!preg_match('/^[a-zA-Z\s]+$/', $city)) {
         $errors[] = "City can only contain letters and spaces!";
     }
 
-    // **Postal Code validation: only digits**
+    // Postal Code validation: only digits
     if (!preg_match('/^[0-9]+$/', $postcode)) {
         $errors[] = "Postal Code can only contain numbers!";
     }
@@ -245,7 +241,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <div class="wizard-content">
       <!-- Step 1 -->
       <div class="form-step active" id="step1">
-        <!-- … your existing Step 1 markup … -->
+        <div class="form-group">
+          <label for="fullname">Full Name</label>
+          <input
+            type="text"
+            name="fullname"
+            id="fullname"
+            class="form-control"
+            pattern="[A-Za-z\s]+"
+            title="Full Name can only contain letters and spaces"
+            value="<?= htmlspecialchars($_POST['fullname'] ?? '') ?>"
+            required
+          >
+        </div>
+        <!-- … your other Step 1 fields (username, password, etc.) … -->
       </div>
 
       <!-- Step 2 -->
@@ -367,12 +376,21 @@ $(document).ready(function () {
     }
   );
 
+  // Prevent typing digits into Full Name
+  $("#fullname").on("keypress", function(e) {
+    const char = String.fromCharCode(e.which);
+    if (/\d/.test(char)) {
+      e.preventDefault();
+    }
+  });
+
   let currentStep = 1, totalSteps = 3;
   function showStep(step) { /* … unchanged … */ }
   $("#nextBtn").click(function () { /* … unchanged … */ });
   $("#prevBtn").click(function () { /* … unchanged … */ });
   $(".toggle-password").click(function () { /* … unchanged … */ });
   $("#password").on("input", function () { /* … unchanged … */ });
+
   $("#complete-profile-form").on("submit", function (e) {
     // **Phone validation**
     const fullPhone = iti.getNumber();
@@ -413,6 +431,8 @@ $(document).ready(function () {
       $("input[name='postcode']").removeClass("is-invalid");
       $("#postcode-error").remove();
     }
+
+    // At this point Full Name cannot contain digits (they were never allowed), so no extra error needed.
 
     // If we get here, all validations passed and the form will submit
   });
