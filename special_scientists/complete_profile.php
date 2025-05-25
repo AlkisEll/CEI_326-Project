@@ -61,11 +61,6 @@ if (!preg_match('/^[a-zA-Z0-9_]+$/', $username)) {
     $errors[] = "Username must contain only letters, numbers, or underscores.";
 }
 
-// Full Name: only Greek/Latin letters and space
-if (!preg_match('/^[a-zA-Zά-ώΑ-ΏϊΰΪΫ\s]+$/u', $fullName)) {
-    $errors[] = "Full name must not contain symbols or numbers.";
-}
-
 // Phone: only + and digits
 if (!preg_match('/^\+?[0-9]{7,15}$/', $phone)) {
     $errors[] = "Phone number is not valid!";
@@ -585,21 +580,20 @@ $(document).ready(function () {
       const fullName = $("input[name='fullname']").val().trim();
       const nameParts = fullName.split(/\s+/);
 
-      // no digits
-      const nameRegex = /^[\p{L}\s]{3,100}$/u;
-if (!nameRegex.test(fullName) || nameParts.length < 2 || nameParts.length > 3) {
+  if (nameParts.length < 2 || nameParts.length > 3) {
   $("input[name='fullname']").addClass("is-invalid");
   if ($("#fullname-error").length === 0) {
-    $("<div id='fullname-error' class='text-danger mt-1'>Full name must be 2 or 3 words and contain only letters and spaces.</div>")
+    $("<div id='fullname-error' class='text-danger mt-1'>Full name must be 2 or 3 words.</div>")
       .insertAfter("input[name='fullname']");
   } else {
-    $("#fullname-error").text("Full name must be 2 or 3 words and contain only letters and spaces.");
+    $("#fullname-error").text("Full name must be 2 or 3 words.");
   }
   valid = false;
 } else {
   $("input[name='fullname']").removeClass("is-invalid");
   $("#fullname-error").remove();
 }
+
 
       // word count
       else if (nameParts.length < 2 || nameParts.length > 3) {
