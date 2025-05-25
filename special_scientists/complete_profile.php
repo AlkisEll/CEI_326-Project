@@ -72,8 +72,12 @@ if (!preg_match('/^\+?[0-9]{7,15}$/', $phone)) {
 }
 
     // City must contain only letters and spaces (Greek and Latin)
-if (!preg_match('/^[a-zA-Z\sά-ώΑ-ΏϊΰΪΫ]+$/u', $city)) {
-    $errors[] = "City must contain only letters.";
+if (!preg_match('/^[\p{L}\s]+$/u', $city)) {
+    $errors[] = "City must contain only letters and spaces.";
+}
+
+if (!preg_match('/^[\p{L}\p{N}\s,\-\.]+$/u', $address)) {
+    $errors[] = "Address can only contain letters, numbers, spaces, commas, hyphens, and periods.";
 }
 
 // Postcode must be digits only
@@ -481,6 +485,7 @@ if (!preg_match('/^\d+$/', $postcode)) {
             class="form-control"
             value="<?= htmlspecialchars($_POST['address'] ?? '') ?>"
             required
+            oninput="this.value = this.value.replace(/[^\p{L}\p{N}\s,\-\.]/gu, '')"
           >
         </div>
         <div class="form-group">
