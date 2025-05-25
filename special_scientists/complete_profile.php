@@ -28,9 +28,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $password        = $_POST["password"];
     $repeat_password = $_POST["repeat_password"];
     $country         = $_POST["country"];
-    $city            = trim($_POST["city"]);
-    $address         = trim($_POST["address"]);
-    $postcode        = trim($_POST["postcode"]);
+    $city            = $_POST["city"];
+    $address         = $_POST["address"];
+    $postcode        = $_POST["postcode"];
     $dob             = $_POST["dob"];
     $phone           = $_POST["phone"];
 
@@ -86,16 +86,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $errors[] = "Date of Birth can not be more than 100 years or less than 16 years old!";
             }
         }
-    }
-
-    // **City validation: only letters & spaces**
-    if (!preg_match('/^[a-zA-Z\s]+$/', $city)) {
-        $errors[] = "City can only contain letters and spaces!";
-    }
-
-    // **Postal Code validation: only digits**
-    if (!preg_match('/^[0-9]+$/', $postcode)) {
-        $errors[] = "Postal Code can only contain numbers!";
     }
 
     // Check duplicate username
@@ -245,12 +235,187 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <div class="wizard-content">
       <!-- Step 1 -->
       <div class="form-step active" id="step1">
-        <!-- … your existing Step 1 markup … -->
+        <?php if (!empty($errors) && isset($_POST["fullname"])): ?>
+          <?php foreach ($errors as $error): ?>
+            <?php if (in_array(
+              $error,
+              [
+                "All fields are required!",
+                "Phone number is not valid!",
+                "Email is not valid!"
+              ]
+            )): ?>
+              <div class="alert alert-danger">
+                <?= htmlspecialchars($error) ?>
+              </div>
+            <?php endif; ?>
+          <?php endforeach; ?>
+        <?php endif; ?>
+
+        <div class="form-group">
+          <label>Full Name</label>
+          <input
+            type="text"
+            name="fullname"
+            class="form-control"
+            placeholder="e.g. John Doe"
+            value="<?= htmlspecialchars($_POST['fullname'] ?? '') ?>"
+            required
+          >
+          <?php if (!empty($errors)): ?>
+            <?php foreach ($errors as $error): ?>
+              <?php if (
+                str_contains($error, "Full name must") ||
+                $error === "Please enter a proper Full Name!"
+              ): ?>
+                <div class="text-danger mt-1">
+                  <?= htmlspecialchars($error) ?>
+                </div>
+              <?php endif; ?>
+            <?php endforeach; ?>
+          <?php endif; ?>
+        </div>
+
+        <div class="form-group">
+          <label>Username</label>
+          <input
+            type="text"
+            name="username"
+            id="username"
+            class="form-control"
+            placeholder="Choose a username"
+            value="<?= htmlspecialchars($_POST['username'] ?? '') ?>"
+            required
+          >
+          <small id="username-status" class="text-danger"></small>
+          <?php if (!empty($errors)): ?>
+            <?php foreach ($errors as $error): ?>
+              <?php if (str_contains($error, "username")): ?>
+                <div class="text-danger mt-1">
+                  <?= htmlspecialchars($error) ?>
+                </div>
+              <?php endif; ?>
+            <?php endforeach; ?>
+          <?php endif; ?>
+        </div>
+
+        <div class="form-group">
+          <label>Email Address</label>
+          <input
+            type="email"
+            class="form-control"
+            value="<?= htmlspecialchars($email) ?>"
+            readonly
+          >
+        </div>
+
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input
+            type="tel"
+            class="form-control"
+            id="phone"
+            name="phone"
+            value="<?= htmlspecialchars($_POST['phone'] ?? '') ?>"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label>Date of Birth</label>
+          <input
+            type="date"
+            name="dob"
+            class="form-control"
+            id="dob"
+            value="<?= htmlspecialchars($_POST['dob'] ?? '') ?>"
+            required
+          >
+          <?php if (!empty($errors)): ?>
+            <?php foreach ($errors as $error): ?>
+              <?php if (
+                $error ===
+                "Date of Birth can not be more than 100 years or less than 16 years old!" ||
+                $error === "Date of Birth is invalid!"
+              ): ?>
+                <div class="text-danger mt-1">
+                  <?= htmlspecialchars($error) ?>
+                </div>
+              <?php endif; ?>
+            <?php endforeach; ?>
+          <?php endif; ?>
+        </div>
       </div>
 
       <!-- Step 2 -->
       <div class="form-step" id="step2">
-        <!-- … your existing Step 2 markup … -->
+        <?php if (!empty($errors) && isset($_POST["password"])): ?>
+          <?php foreach ($errors as $error): ?>
+            <?php if (in_array(
+              $error,
+              [
+                "All fields are required!",
+                "Password must be at least 8 characters and include an uppercase letter, a number, and a symbol.",
+                "Passwords do not match!"
+              ]
+            )): ?>
+              <div class="alert alert-danger">
+                <?= htmlspecialchars($error) ?>
+              </div>
+            <?php endif; ?>
+          <?php endforeach; ?>
+        <?php endif; ?>
+
+        <div class="form-group">
+          <label>Password</label>
+          <div class="input-group">
+            <input
+              type="password"
+              name="password"
+              class="form-control"
+              id="password"
+              required
+            >
+            <span
+              class="input-group-text toggle-password"
+              data-target="#password"
+            ><i class="bi bi-eye"></i></span>
+          </div>
+          <ul
+            class="password-checklist mt-2"
+            style="list-style:none; padding-left:0; font-size:14px;"
+          >
+            <li id="check-length">
+              <span class="text-danger">✖</span> At least 8 characters
+            </li>
+            <li id="check-uppercase">
+              <span class="text-danger">✖</span> At least 1 uppercase letter
+            </li>
+            <li id="check-number">
+              <span class="text-danger">✖</span> At least 1 number
+            </li>
+            <li id="check-symbol">
+              <span class="text-danger">✖</span> At least 1 symbol
+            </li>
+          </ul>
+        </div>
+
+        <div class="form-group">
+          <label>Confirm Password</label>
+          <div class="input-group">
+            <input
+              type="password"
+              name="repeat_password"
+              class="form-control"
+              id="confirm_password"
+              required
+            >
+            <span
+              class="input-group-text toggle-password"
+              data-target="#confirm_password"
+            ><i class="bi bi-eye"></i></span>
+          </div>
+        </div>
       </div>
 
       <!-- Step 3 -->
@@ -276,20 +441,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             required
           >
         </div>
-
         <div class="form-group">
           <label>City</label>
           <input
             type="text"
             name="city"
             class="form-control"
-            pattern="[A-Za-z\s]+"
-            title="City can only contain letters and spaces"
             value="<?= htmlspecialchars($_POST['city'] ?? '') ?>"
             required
           >
         </div>
-
         <div class="form-group">
           <label>Address</label>
           <input
@@ -300,15 +461,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             required
           >
         </div>
-
         <div class="form-group">
           <label>Postal Code</label>
           <input
             type="text"
             name="postcode"
             class="form-control"
-            pattern="\d+"
-            title="Postal Code can only contain numbers"
             value="<?= htmlspecialchars($_POST['postcode'] ?? '') ?>"
             required
           >
@@ -368,13 +526,116 @@ $(document).ready(function () {
   );
 
   let currentStep = 1, totalSteps = 3;
-  function showStep(step) { /* … unchanged … */ }
-  $("#nextBtn").click(function () { /* … unchanged … */ });
-  $("#prevBtn").click(function () { /* … unchanged … */ });
-  $(".toggle-password").click(function () { /* … unchanged … */ });
-  $("#password").on("input", function () { /* … unchanged … */ });
+
+  function showStep(step) {
+    $(".form-step").removeClass("active");
+    $("#step" + step).addClass("active");
+    $("#prevBtn").toggle(step > 1);
+    $("#nextBtn").toggle(step < totalSteps);
+    $("#submitBtn").toggle(step === totalSteps);
+    $("#step-progress").css("width", (step/totalSteps)*100 + "%");
+    $("#progress-percentage").text(
+      Math.round((step/totalSteps)*100) + "%"
+    );
+    $(`#step${step} input:visible:first`).focus();
+  }
+
+  $("#nextBtn").click(function () {
+    let valid = true;
+    // validate required fields
+    $(`#step${currentStep} input:required`).each(function () {
+      if (!$(this).val().trim()) {
+        $(this).addClass("is-invalid");
+        valid = false;
+      } else {
+        $(this).removeClass("is-invalid");
+      }
+    });
+
+    // Step 1 extra checks
+    if (currentStep === 1) {
+      const fullName = $("input[name='fullname']").val().trim();
+      const nameParts = fullName.split(/\s+/);
+
+      // no digits
+      if (/\d/.test(fullName)) {
+        $("input[name='fullname']").addClass("is-invalid");
+        if ($("#fullname-error").length === 0) {
+          $("<div id='fullname-error' class='text-danger mt-1'>Please enter a proper Full Name!</div>")
+            .insertAfter("input[name='fullname']");
+        } else {
+          $("#fullname-error").text("Please enter a proper Full Name!");
+        }
+        valid = false;
+      }
+      // word count
+      else if (nameParts.length < 2 || nameParts.length > 3) {
+        $("input[name='fullname']").addClass("is-invalid");
+        if ($("#fullname-error").length === 0) {
+          $("<div id='fullname-error' class='text-danger mt-1'>Full name must be 2 or 3 words (e.g., First Last or First Middle Last).</div>")
+            .insertAfter("input[name='fullname']");
+        } else {
+          $("#fullname-error").text("Full name must be 2 or 3 words (e.g., First Last or First Middle Last).");
+        }
+        valid = false;
+      } else {
+        $("input[name='fullname']").removeClass("is-invalid");
+        $("#fullname-error").remove();
+      }
+
+      // DOB age check
+      const dobVal = $("input[name='dob']").val();
+      if (dobVal) {
+        const dobDate = new Date(dobVal);
+        const today   = new Date();
+        let age = today.getFullYear() - dobDate.getFullYear();
+        const m = today.getMonth() - dobDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < dobDate.getDate())) {
+          age--;
+        }
+        if (age < 16 || age > 100) {
+          $("input[name='dob']").addClass("is-invalid");
+          if ($("#dob-error").length === 0) {
+            $("<div id='dob-error' class='text-danger mt-1'>Date of Birth can not be more than 100 years or less than 16 years old!</div>")
+              .insertAfter("input[name='dob']");
+          }
+          valid = false;
+        } else {
+          $("input[name='dob']").removeClass("is-invalid");
+          $("#dob-error").remove();
+        }
+      }
+    }
+
+    if (valid && currentStep < totalSteps) {
+      currentStep++;
+      showStep(currentStep);
+    }
+  });
+
+  $("#prevBtn").click(function () {
+    if (currentStep > 1) {
+      currentStep--;
+      showStep(currentStep);
+    }
+  });
+
+  $(".toggle-password").click(function () {
+    const target = $($(this).data("target"));
+    const type   = target.attr("type") === "password" ? "text" : "password";
+    target.attr("type", type);
+    $(this).find("i").toggleClass("bi-eye bi-eye-slash");
+  });
+
+  $("#password").on("input", function () {
+    const val = $(this).val();
+    $("#check-length").html( (val.length>=8 ? '✅' : '<span class="text-danger">✖</span>') + " At least 8 characters" );
+    $("#check-uppercase").html( (/[A-Z]/.test(val) ? '✅' : '<span class="text-danger">✖</span>') + " At least 1 uppercase letter" );
+    $("#check-number").html( (/[0-9]/.test(val) ? '✅' : '<span class="text-danger">✖</span>') + " At least 1 number" );
+    $("#check-symbol").html( (/[\W_]/.test(val) ? '✅' : '<span class="text-danger">✖</span>') + " At least 1 symbol" );
+  });
+
   $("#complete-profile-form").on("submit", function (e) {
-    // **Phone validation**
     const fullPhone = iti.getNumber();
     if (!iti.isValidNumber()) {
       e.preventDefault();
@@ -383,41 +644,20 @@ $(document).ready(function () {
       return false;
     }
     $('#phone').val(fullPhone);
-
-    // **City validation**
-    const cityVal = $("input[name='city']").val().trim();
-    if (!/^[A-Za-z\s]+$/.test(cityVal)) {
-      e.preventDefault();
-      $("input[name='city']").addClass("is-invalid");
-      if (!$("#city-error").length) {
-        $("<div id='city-error' class='text-danger mt-1'>City can only contain letters and spaces.</div>")
-          .insertAfter("input[name='city']");
-      }
-      return false;
-    } else {
-      $("input[name='city']").removeClass("is-invalid");
-      $("#city-error").remove();
-    }
-
-    // **Postal Code validation**
-    const postcodeVal = $("input[name='postcode']").val().trim();
-    if (!/^\d+$/.test(postcodeVal)) {
-      e.preventDefault();
-      $("input[name='postcode']").addClass("is-invalid");
-      if (!$("#postcode-error").length) {
-        $("<div id='postcode-error' class='text-danger mt-1'>Postal Code can only contain numbers.</div>")
-          .insertAfter("input[name='postcode']");
-      }
-      return false;
-    } else {
-      $("input[name='postcode']").removeClass("is-invalid");
-      $("#postcode-error").remove();
-    }
-
-    // If we get here, all validations passed and the form will submit
   });
 
-  $("#username").on("blur", function () { /* … unchanged … */ });
+  $("#username").on("blur", function () {
+    const username = $(this).val().trim();
+    if (!username) return;
+    $.post("check_username.php", { username }, function (response) {
+      if (response === "taken") {
+        $("#username-status").text("This username already exists, please choose a different one.");
+      } else {
+        $("#username-status").text("");
+      }
+    });
+  });
+
   showStep(currentStep);
 });
 </script>
