@@ -303,7 +303,7 @@ if (in_array($role, ['hr', 'admin', 'owner'])) {
 <!-- Stats For Staff Section -->
 <?php if (in_array($role, ['hr', 'admin', 'owner'])): ?>
 <div class="container text-center py-5" data-aos="fade-up">
-  <h2 class="section-heading">Recruitment Overview</h2>
+  <h2 id="recruitment-overview" class="section-heading">Recruitment Overview</h2>
   <div class="row justify-content-center g-4">
     <div class="col-md-3">
       <div class="dashboard-box">
@@ -711,5 +711,19 @@ document.addEventListener("DOMContentLoaded", () => {
     cursor: pointer;
   }
 </style>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const userRole = "<?= $_SESSION['user']['role'] ?? '' ?>";
+    
+    if (userRole === 'admin' || userRole === 'owner') {
+      const section = document.getElementById("recruitment-overview");
+      if (section) {
+        const yOffset = -80;
+        const y = section.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+    }
+  });
+</script>
 </body>
 </html>
