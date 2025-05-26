@@ -18,7 +18,7 @@ $id        = $user["id"];
 $role      = $user["role"] ?? '';
 
 // … your existing SELECT/DB‐fetch logic …
-$stmt = $conn->prepare("SELECT username, full_name, email, …, phone, dob, country, city, address FROM users WHERE id = ?");
+$stmt = $conn->prepare("SELECT username, full_name, email, role, phone, dob, country, city, address FROM users WHERE id = ?");
 $stmt->bind_param("i", $id);
 $stmt->execute();
 $result     = $stmt->get_result();
