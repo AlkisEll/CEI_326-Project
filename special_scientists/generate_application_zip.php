@@ -132,10 +132,14 @@ if (!empty($application['project_highlights'])) {
 // Save PDF
 $pdf_path = __DIR__ . "/temp/application_summary.pdf";
 $pdf->Output('F', $pdf_path);
+if (!file_exists($pdf_path)) {
+    die("PDF generation failed.");
+}
+
 
 // Create ZIP with PDF and uploaded files
 $today = date("Ymd");
-$username_part = explode("@", $application['email'])[0]; // "nikoscy100"
+$username_part = explode("@", $application['submitted_email'])[0] ?? 'user';
 $filename = "{$username_part}_application_{$today}_id{$application_id}.zip";
 $zip_path = $temp_dir . '/' . $filename;
 $zip = new ZipArchive();
@@ -156,6 +160,7 @@ if ($zip->open($zip_path, ZipArchive::CREATE | ZipArchive::OVERWRITE)) {
             $zip->addFile($filepath, "documents/" . $cleaned);
         }
     }
+
     $files->close();
     $zip->close();
 }
@@ -163,6 +168,8 @@ if ($zip->open($zip_path, ZipArchive::CREATE | ZipArchive::OVERWRITE)) {
 header("Content-Type: application/zip");
 header("Content-Disposition: attachment; filename=$filename");
 header("Content-Length: " . filesize($zip_path));
+ob_clean();
+flush();
 readfile($zip_path);
 exit;
 ?>
