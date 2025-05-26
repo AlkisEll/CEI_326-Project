@@ -461,8 +461,14 @@ $postal_code = $user_data['postcode'];
           oninvalid="this.setCustomValidity('Please select a period.')"
           oninput="this.setCustomValidity('')">
             <option value="">-- Select Period --</option>
+            <small class="form-text text-muted">Only currently open application periods are shown.</small>
             <?php
-            $periods = mysqli_query($conn, "SELECT id, name FROM application_periods ORDER BY id DESC");
+            $periods = mysqli_query($conn, "
+  SELECT id, name 
+  FROM application_periods 
+  WHERE CURDATE() BETWEEN start_date AND end_date
+  ORDER BY id DESC
+");
             while ($period = mysqli_fetch_assoc($periods)):
             ?>
               <option value="<?= $period['id'] ?>"><?= htmlspecialchars($period['name']) ?></option>
