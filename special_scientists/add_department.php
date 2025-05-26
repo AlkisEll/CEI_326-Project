@@ -22,6 +22,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // Fetch schools for dropdown
 $schools = mysqli_query($conn, "SELECT id, name FROM schools ORDER BY name ASC");
+$onlySchoolId = null;
+if (mysqli_num_rows($schools) === 1) {
+    $onlySchool = mysqli_fetch_assoc($schools);
+    $onlySchoolId = $onlySchool['id'];
+    mysqli_data_seek($schools, 0); // Reset pointer for looping below
+}
 $showBack = true;
 $backLink = "manage_departments.php";
 ?>
@@ -57,8 +63,10 @@ $backLink = "manage_departments.php";
         <select name="school_id" class="form-select" required>
           <option value="">-- Select School --</option>
           <?php while ($school = mysqli_fetch_assoc($schools)): ?>
-            <option value="<?= $school['id'] ?>"><?= htmlspecialchars($school['name']) ?></option>
-          <?php endwhile; ?>
+  <option value="<?= $school['id'] ?>" <?= $school['id'] == $onlySchoolId ? 'selected' : '' ?>>
+    <?= htmlspecialchars($school['name']) ?>
+  </option>
+<?php endwhile; ?>
         </select>
       </div>
 
