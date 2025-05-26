@@ -337,7 +337,6 @@ if (!preg_match('/^\d+$/', $postcode)) {
             name="phone"
             value="<?= htmlspecialchars($_POST['phone'] ?? '') ?>"
             required
-            oninput="this.value = this.value.replace(/[^\d+]/g, '')"
           >
         </div>
 
