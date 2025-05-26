@@ -1,12 +1,11 @@
 <?php
 session_start();
 require_once "database.php";
-require 'PHPMailer-master/src/Exception.php';
-require 'PHPMailer-master/src/PHPMailer.php';
-require 'PHPMailer-master/src/SMTP.php';
 
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
+// Twilio credentials
+$accountSid = 'ACed50809afda0163369b2505abc4354f7';
+$authToken = 'a0e8ced97d0ab07db55e20f99fa7121e';
+$twilioPhoneNumber = '+12182616825';
 
 // Check login
 if (!isset($_SESSION["user"])) {
@@ -15,8 +14,6 @@ if (!isset($_SESSION["user"])) {
 }
 
 $userId = $_SESSION["user"]["id"];
-$email = $_SESSION["user"]["email"];
-$fullName = $_SESSION["user"]["full_name"];
 $newPhone = trim($_POST["new_phone"] ?? '');
 
 // Fetch current phone from DB
@@ -40,28 +37,39 @@ $verificationCode = rand(100000, 999999);
 $_SESSION["phone_change_code"] = $verificationCode;
 $_SESSION["pending_phone"] = $newPhone;
 
-// Send email with the code
-$mail = new PHPMailer(true);
-try {
-    $mail->isSMTP();
-    $mail->Host = 'premium245.web-hosting.com';
-    $mail->SMTPAuth = true;
-    $mail->Username = 'admin@festival-web.com';
-    $mail->Password = '!g3$~8tYju*D';
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-    $mail->Port = 587;
+// Send SMS with the code
+$body = "To confirm your phone number change, enter this code: $verificationCode";
 
-    $mail->setFrom('admin@festival-web.com', 'CUT System');
-    $mail->addAddress($email, $fullName);
-    $mail->isHTML(true);
-    $mail->Subject = "Phone Number Change Verification";
-    $mail->Body = "<p>To confirm your phone number change, enter the following code:</p><h2>$verificationCode</h2>";
+$postData = http_build_query([
+    'From' => $twilioPhoneNumber,
+    'To' => $newPhone,
+    'Body' => $body,
+]);
 
-    $mail->send();
+$curl = curl_init();
+curl_setopt_array($curl, [
+    CURLOPT_URL => "https://api.twilio.com/2010-04-01/Accounts/$accountSid/Messages.json",
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_POST => true,
+    CURLOPT_POSTFIELDS => $postData,
+    CURLOPT_HTTPHEADER => [
+        'Content-Type: application/x-www-form-urlencoded',
+        'Authorization: Basic ' . base64_encode("$accountSid:$authToken"),
+    ],
+    CURLOPT_SSL_VERIFYPEER => false,
+    CURLOPT_SSL_VERIFYHOST => false,
+]);
 
+$response = curl_exec($curl);
+$httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+curl_close($curl);
+
+if ($httpCode === 201) {
     header("Location: verify_phone_change.php");
     exit();
-} catch (Exception $e) {
-    echo "<div class='alert alert-danger'>Failed to send email. Please try again later.</div>";
+} else {
+    $responseData = json_decode($response, true);
+    $errorMessage = $responseData['message'] ?? 'Failed to send SMS.';
+    echo "<div class='alert alert-danger'>" . htmlspecialchars($errorMessage) . "</div>";
 }
 ?>
