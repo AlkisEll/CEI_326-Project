@@ -321,11 +321,14 @@ $lastLogin  = $_SESSION["user"]["last_login"] ?? null;
     if (alertBox) alertBox.classList.remove('show');
   }, 4000);
 </script>
-<script
-  src="https://cdnjs.cloudflare.com/ajax/libs/country-select-js/2.1.0/js/countrySelect.min.js"
-></script>
-<script>
-  $("#country").countrySelect({ defaultCountry: "cy" });
-</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/country-select-js/2.1.0/js/countrySelect.min.js"></script>
+  <script>
+    $(function() {
+      $("#country").countrySelect({
+        defaultCountry: "cy",
+      });
+    });
+  </script>
 </body>
 </html>
