@@ -14,7 +14,7 @@ $role = $_SESSION["user"]["role"] ?? "Null";
 
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark">
-  <div class="container">
+  <div class="container-fluid px-4">
     <a class="navbar-brand d-flex align-items-center" href="https://www.cut.ac.cy" target="_blank">
       <?php if (!empty($logo_path) && file_exists($logo_path)): ?>
         <img src="<?= $logo_path ?>" alt="Logo" style="height: 40px; margin-right: 10px;">
@@ -215,4 +215,3 @@ darkMobile?.addEventListener('change', () => {
     cursor: pointer;
   }
 </style>
-
