@@ -2,6 +2,7 @@
 session_start();
 require_once "database.php";
 require_once "get_config.php";
+include "auth_check.php";
 
 $system_title = getSystemConfig("site_title");
 $logo_path = getSystemConfig("logo_path");
