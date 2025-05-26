@@ -119,6 +119,7 @@ $stmt = $conn->prepare("INSERT INTO applications (
     submitted_full_name, submitted_email, submitted_phone, submitted_dob,
     submitted_address, submitted_country, submitted_postcode
 ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
 $submitted_full_name = $_SESSION['user']['full_name'] ?? '';
 $submitted_email = $_SESSION['user']['email'] ?? '';
 $submitted_phone = $_SESSION['user']['phone'] ?? '';
@@ -126,6 +127,7 @@ $submitted_dob = $_SESSION['user']['dob'] ?? null;
 $submitted_address = $_SESSION['user']['address'] ?? '';
 $submitted_country = $_SESSION['user']['country'] ?? '';
 $submitted_postcode = $_SESSION['user']['postcode'] ?? '';
+
 $stmt->bind_param("iissssssssssssssssssssssssss",
     $user_id, $period_id, $id_card, $gender, $nationality,
     $current_position, $current_employer, $professional_experience,
