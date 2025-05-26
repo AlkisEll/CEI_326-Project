@@ -313,8 +313,12 @@ if ($result) {
   <?php if ($role === 'hr'): ?>
   <td>
     <?php if ($row['reviewer_name']): ?>
-      <?= htmlspecialchars($row['reviewer_name']) ?><br>
-      <small class="text-muted"><?= date("M d, Y H:i", strtotime($row['reviewed_at'])) ?></small>
+      <?php
+$status = strtolower($row['status']);
+$actionLabel = $status === 'accepted' ? 'Accepted by:' : ($status === 'rejected' ? 'Rejected by:' : '');
+?>
+<strong><?= $actionLabel ?></strong> <?= htmlspecialchars($row['reviewer_name']) ?><br>
+<small class="text-muted"><?= date("M d, Y H:i", strtotime($row['reviewed_at'])) ?></small>
     <?php else: ?><span class="text-muted">—</span><?php endif; ?>
   </td>
   <?php endif; ?>
