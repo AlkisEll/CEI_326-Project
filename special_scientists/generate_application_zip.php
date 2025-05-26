@@ -14,17 +14,14 @@ if (!isset($_GET['application_id'])) {
 $application_id = intval($_GET['application_id']);
 
 // Fetch application data
-$app_query = $conn->prepare("SELECT a.*, 
-       u.full_name, u.email, u.phone, u.address, u.country, u.postcode,
-       a.id_card, a.gender, u.dob, a.nationality,
-       a.current_position, a.current_employer, a.professional_experience, a.expertise_area, a.project_highlights,
-       a.degree_level, a.degree_title, a.institution, a.education_start_date, a.education_end_date,
-       a.institution_country, a.degree_grade, a.thesis_title, a.additional_qualifications,
-       p.name AS period_name
+$app_query = $conn->prepare("
+    SELECT 
+        a.*, 
+        p.name AS period_name
     FROM applications a
-    JOIN users u ON a.user_id = u.id
     LEFT JOIN application_periods p ON a.period_id = p.id
-    WHERE a.id = ?");
+    WHERE a.id = ?
+");
 $app_query->bind_param("i", $application_id);
 $app_query->execute();
 $app_result = $app_query->get_result();
@@ -67,16 +64,16 @@ $pdf->SetFont('Arial', '', 12);
 $nationality = $application['nationality'] ?? 'N/A';
 
 $step1 = [
-    "Full Name" => $application['full_name'],
-    "Email" => $application['email'],
-    "Phone" => $application['phone'],
+    "Full Name" => $application['submitted_full_name'],
+    "Email" => $application['submitted_email'],
+    "Phone" => $application['submitted_phone'],
     "ID/Passport No." => $application['id_card'],
     "Gender" => $application['gender'],
     "Nationality" => $nationality,
-    "Date of Birth" => $application['dob'],
-    "Address" => $application['address'],
-    "Country" => $application['country'],
-    "Postal Code" => $application['postcode']
+    "Date of Birth" => $application['submitted_dob'],
+    "Address" => $application['submitted_address'],
+    "Country" => $application['submitted_country'],
+    "Postal Code" => $application['submitted_postcode']
 ];
 foreach ($step1 as $label => $value) {
     $pdf->Cell(0, 10, "$label: $value", 0, 1);
