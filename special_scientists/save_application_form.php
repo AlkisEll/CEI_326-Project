@@ -128,7 +128,7 @@ $submitted_address = $_SESSION['user']['address'] ?? '';
 $submitted_country = $_SESSION['user']['country'] ?? '';
 $submitted_postcode = $_SESSION['user']['postcode'] ?? '';
 
-$stmt->bind_param("iissssssssssssssssssssssssss",
+$stmt->bind_param("iissssssssssssssssssssssssssss",
     $user_id, $period_id, $id_card, $gender, $nationality,
     $current_position, $current_employer, $professional_experience,
     $expertise_area, $project_highlights,
