@@ -54,7 +54,7 @@ if (isset($_POST["verify"])) {
 <body>
     <div class="container py-5">
         <h2 class="mb-4">Verify Phone Change</h2>
-        <p>Enter the 6-digit code sent to your email to confirm your phone number update.</p>
+        <p>Enter the 6-digit code sent to your phone to confirm your phone number update.</p>
         <form method="post" action="verify_phone_change.php">
             <div class="form-group mb-3">
                 <label for="verification_code">Verification Code</label>
