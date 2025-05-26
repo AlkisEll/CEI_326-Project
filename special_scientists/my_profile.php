@@ -44,6 +44,18 @@ $address = $info["address"];
 
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["save_profile"])) {
     $newUsername = trim($_POST["username"]);
+    $newFullName = trim($_POST["full_name"]);
+    $newCity     = trim($_POST["city"]);
+    $newCountry  = trim($_POST["country"]);
+    $newDob      = trim($_POST["dob"]);
+    $newAddress  = trim($_POST["address"]);
+
+    // Validate
+    if (!preg_match('/^[\p{L}\s]+$/u', $newFullName) || !preg_match('/^[\p{L}\s]+$/u', $newCity)) {
+        $_SESSION["profile_success"] = "Full Name and City can only contain letters and spaces.";
+        header("Location: my_profile.php");
+        exit();
+    }
 
     $checkStmt = $conn->prepare("SELECT id FROM users WHERE username = ? AND id != ?");
     $checkStmt->bind_param("si", $newUsername, $id);
@@ -53,18 +65,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["save_profile"])) {
     if ($checkStmt->num_rows > 0) {
         $_SESSION["profile_success"] = "Username already taken. Please choose another.";
     } else {
-        $newFullName = trim($_POST["full_name"]);
-        $updateStmt = $conn->prepare("UPDATE users SET username = ?, full_name = ? WHERE id = ?");
-        $updateStmt->bind_param("ssi", $newUsername, $newFullName, $id);
-        $_SESSION["user"]["full_name"] = $newFullName;
-       
+        $updateStmt = $conn->prepare("UPDATE users SET username = ?, full_name = ?, dob = ?, city = ?, country = ?, address = ? WHERE id = ?");
+        $updateStmt->bind_param("ssssssi", $newUsername, $newFullName, $newDob, $newCity, $newCountry, $newAddress, $id);
         $updateStmt->execute();
+
+        $_SESSION["user"]["full_name"] = $newFullName;
         $_SESSION["profile_success"] = "Changes saved successfully!";
     }
 
     header("Location: my_profile.php");
     exit();
 }
+
 $result = $conn->query("SELECT last_login FROM users WHERE id = $id");
 $row = $result->fetch_assoc();
 $lastLogin = $_SESSION["user"]["last_login"] ?? null;
@@ -80,6 +92,7 @@ $lastLogin = $_SESSION["user"]["last_login"] ?? null;
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/country-select-js/2.1.0/css/countrySelect.min.css">
   <link rel="stylesheet" href="indexstyle.css">
   <link rel="stylesheet" href="darkmode.css">
 </head>
@@ -113,7 +126,7 @@ echo "<p class='text-muted text-end'>Last updated on: " . date("F j, Y", strtoti
       <div class="row mb-3">
         <div class="col-md-6">
           <label class="form-label">Full Name</label>
-          <input type="text" name="full_name" class="form-control" value="<?= htmlspecialchars($fullName); ?>" required>
+          <input type="text" name="full_name" class="form-control" value="<?= htmlspecialchars($fullName); ?>" required oninput="this.value = this.value.replace(/[^\p{L}\s]/gu, '')">
         </div>
         <div class="col-md-6">
           <label class="form-label">Username</label>
@@ -128,7 +141,7 @@ echo "<p class='text-muted text-end'>Last updated on: " . date("F j, Y", strtoti
       <div class="row mb-3">
         <div class="col-md-6">
           <label class="form-label">Email Address</label>
-          <input type="email" class="form-control" value="<?= htmlspecialchars($email); ?>" disabled>
+          <input type="email" name="new_email" class="form-control" value="<?= htmlspecialchars($email); ?>" required>
         </div>
         <div class="col-md-6">
           <label class="form-label">Phone Number</label>
@@ -141,18 +154,18 @@ echo "<p class='text-muted text-end'>Last updated on: " . date("F j, Y", strtoti
       <div class="row mb-3">
         <div class="col-md-6">
           <label class="form-label">Date of Birth</label>
-          <input type="text" class="form-control" value="<?= htmlspecialchars($dob); ?>" disabled>
+          <input type="date" name="dob" class="form-control" value="<?= htmlspecialchars($dob); ?>" required>
         </div>
         <div class="col-md-6">
           <label class="form-label">Country</label>
-          <input type="text" class="form-control" value="<?= htmlspecialchars($country); ?>" disabled>
+          <input type="text" name="country" id="country" class="form-control country_input" value="<?= htmlspecialchars($country); ?>" required>
         </div>
       </div>
 
       <div class="row mb-3">
         <div class="col-md-6">
           <label class="form-label">City</label>
-          <input type="text" class="form-control" value="<?= htmlspecialchars($city); ?>" disabled>
+          <input type="text" name="city" class="form-control" value="<?= htmlspecialchars($city); ?>" required oninput="this.value = this.value.replace(/[^\p{L}\s]/gu, '')">
         </div>
         <div class="col-md-6">
           <label class="form-label">Address</label>
@@ -167,10 +180,14 @@ echo "<p class='text-muted text-end'>Last updated on: " . date("F j, Y", strtoti
             <a href="admin_dashboard.php" class="btn btn-warning">Admin Mode</a>
           <?php endif; ?>
         </div>
-        <div class="d-flex gap-2">
-          <button type="submit" name="save_profile" class="btn btn-primary">Save Changes</button>
-          <button type="submit" form="phone-form" class="btn btn-success">Request Phone Change</button>
-        </div>
+        <div class="d-flex gap-2 flex-wrap">
+  <button type="submit" name="save_profile" class="btn btn-primary">Save Changes</button>
+  <button type="submit" form="phone-form" class="btn btn-success">Request Phone Change</button>
+  <form action="request_email_change.php" method="post" class="d-inline">
+    <input type="hidden" name="new_email" value="<?= htmlspecialchars($email); ?>">
+    <button type="submit" class="btn btn-warning">Request Email Address Change</button>
+  </form>
+</div>
       </div>
       
     </form>
@@ -190,6 +207,10 @@ echo "<p class='text-muted text-end'>Last updated on: " . date("F j, Y", strtoti
     const alertBox = document.querySelector('.alert');
     if (alertBox) alertBox.classList.remove('show');
   }, 4000);
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/country-select-js/2.1.0/js/countrySelect.min.js"></script>
+<script>
+  $("#country").countrySelect({ defaultCountry: "cy" });
 </script>
 </body>
 </html>
