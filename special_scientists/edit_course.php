@@ -11,7 +11,9 @@ if (!isset($_GET["id"])) {
   exit();
 }
 
-// Fetch departments
+$id = intval($_GET["id"]); // ✅ define the ID safely
+
+// Fetch departments early (you’ll use this in both GET and POST)
 $departments = mysqli_query($conn, "
     SELECT departments.id, departments.name, schools.name AS school_name 
     FROM departments 
@@ -19,7 +21,12 @@ $departments = mysqli_query($conn, "
     ORDER BY schools.name, departments.name
 ");
 
-// Handle update
+// Initialize variables
+$code = "";
+$name = "";
+$department_id = "";
+
+// Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $code = trim($_POST['course_code']);
     $name = trim($_POST['course_name']);
@@ -38,63 +45,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->execute();
     $stmt->bind_result($code, $name, $department_id);
     $stmt->fetch();
+    $stmt->close(); // Optional but good practice
 }
+
 $showBack = true;
 $backLink = "manage_courses.php";
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Edit Course - CUT</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="indexstyle.css">
-  <link rel="stylesheet" href="darkmode.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
-</head>
-<body>
-
-<!-- Navbar -->
-<?php include "navbar.php"; ?>
-
-<!-- Main Content -->
-<div class="container py-5">
-  <h2 class="mb-4"><i class="bi bi-pencil-square me-2"></i>Edit Course</h2>
-  <div class="my-apps-card">
-    <form method="post">
-      <div class="mb-3">
-        <label class="form-label"><strong>Course Code:</strong></label>
-        <input type="text" name="course_code" class="form-control" value="<?= htmlspecialchars($code) ?>" required>
-      </div>
-
-      <div class="mb-3">
-        <label class="form-label"><strong>Course Name:</strong></label>
-        <input type="text" name="course_name" class="form-control" value="<?= htmlspecialchars($name) ?>" required>
-      </div>
-
-      <div class="mb-4">
-        <label class="form-label"><strong>Department:</strong></label>
-        <select name="department_id" class="form-select" required>
-          <option value="">-- Select Department --</option>
-          <?php while ($dept = mysqli_fetch_assoc($departments)): ?>
-            <option value="<?= $dept['id'] ?>" <?= $dept['id'] == $department_id ? 'selected' : '' ?>>
-              <?= htmlspecialchars($dept['school_name'] . ' - ' . $dept['name']) ?>
-            </option>
-          <?php endwhile; ?>
-        </select>
-      </div>
-
-      <button type="submit" class="btn btn-primary w-100">Update Course</button>
-    </form>
-  </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-  const saved = localStorage.getItem('dark-mode');
-  if (saved === 'true') document.body.classList.add('dark-mode');
-</script>
-</body>
-</html>
