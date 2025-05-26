@@ -203,7 +203,7 @@ $lastLogin  = $_SESSION["user"]["last_login"] ?? null;
             form="phone-form"
           >
           <small class="text-muted">
-            To change your phone number, submit and check your email for verification.
+            To change your phone number, submit and check your phone for verification.
           </small>
         </div>
       </div>
