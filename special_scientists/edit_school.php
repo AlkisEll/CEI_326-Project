@@ -3,35 +3,60 @@ session_start();
 include 'database.php';
 require_once "get_config.php";
 
+// Enable error reporting during development
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 $system_title = getSystemConfig("site_title");
 $logo_path = getSystemConfig("logo_path");
 
+// Verify user role
 if (!isset($_SESSION["user"]) || !in_array($_SESSION["user"]["role"], ['admin', 'owner'])) {
     header("Location: index.php");
     exit();
 }
-if (!isset($_GET["id"])) {
-  header("Location: manage_schools.php");
-  exit();
+
+// Check for valid school ID
+if (!isset($_GET["id"]) || !is_numeric($_GET["id"])) {
+    header("Location: manage_schools.php");
+    exit();
 }
 
+$id = intval($_GET["id"]);
+
+// Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = trim($_POST['name']);
+
     if (!empty($name)) {
-        $stmt = $conn->prepare("UPDATE schools SET name=? WHERE id=?");
+        $stmt = $conn->prepare("UPDATE schools SET name = ? WHERE id = ?");
+        if (!$stmt) {
+            die("Prepare failed: " . $conn->error);
+        }
         $stmt->bind_param("si", $name, $id);
         $stmt->execute();
+        $stmt->close();
+
         header("Location: manage_schools.php");
         exit();
     }
-} else {
-    $stmt = $conn->prepare("SELECT name FROM schools WHERE id=?");
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
-    $stmt->bind_result($name);
-    $stmt->fetch();
 }
+
+// Fetch current school name
+$stmt = $conn->prepare("SELECT name FROM schools WHERE id = ?");
+if (!$stmt) {
+    die("Prepare failed: " . $conn->error);
+}
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$stmt->bind_result($name);
+if (!$stmt->fetch()) {
+    $stmt->close();
+    die("School not found.");
+}
+$stmt->close();
+
 $showBack = true;
 $backLink = "manage_schools.php";
 ?>
