@@ -220,17 +220,17 @@ $lastLogin  = $_SESSION["user"]["last_login"] ?? null;
             required
           >
         </div>
-        <div class="col-md-6">
-          <label class="form-label">Country</label>
-          <input
-            type="text"
-            name="country"
-            id="country"
-            class="form-control country_input"
-            value="<?= htmlspecialchars($country); ?>"
-            required
-          >
-        </div>
+        <div class="col-md-6 d-flex flex-column">
+  <label class="form-label mb-1">Country</label>
+  <input
+    type="text"
+    name="country"
+    id="country"
+    class="form-control country_input"
+    value="<?= htmlspecialchars($country); ?>"
+    required
+  >
+</div>
       </div>
 
       <div class="row mb-3">
