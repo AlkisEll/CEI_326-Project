@@ -115,15 +115,26 @@ $stmt = $conn->prepare("INSERT INTO applications (
     expertise_area, project_highlights,
     degree_level, degree_title, institution, education_start_date, education_end_date, institution_country,
     degree_grade, thesis_title, additional_qualifications, expected_graduation_date,
-    experience_start_date, experience_end_date, part_or_full_time
-) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-$stmt->bind_param("iisssssssssssssssssssss",
+    experience_start_date, experience_end_date, part_or_full_time,
+    submitted_full_name, submitted_email, submitted_phone, submitted_dob,
+    submitted_address, submitted_country, submitted_postcode
+) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+$submitted_full_name = $_SESSION['user']['full_name'] ?? '';
+$submitted_email = $_SESSION['user']['email'] ?? '';
+$submitted_phone = $_SESSION['user']['phone'] ?? '';
+$submitted_dob = $_SESSION['user']['dob'] ?? null;
+$submitted_address = $_SESSION['user']['address'] ?? '';
+$submitted_country = $_SESSION['user']['country'] ?? '';
+$submitted_postcode = $_SESSION['user']['postcode'] ?? '';
+$stmt->bind_param("iisssssssssssssssssssssssssss",
     $user_id, $period_id, $id_card, $gender, $nationality,
     $current_position, $current_employer, $professional_experience,
     $expertise_area, $project_highlights,
     $degree_level, $degree_title, $institution, $education_start_date, $education_end_date, $institution_country,
     $degree_grade, $thesis_title, $additional_qualifications, $expected_graduation_date,
-    $experience_start_date, $experience_end_date, $part_or_full_time
+    $experience_start_date, $experience_end_date, $part_or_full_time,
+    $submitted_full_name, $submitted_email, $submitted_phone, $submitted_dob,
+    $submitted_address, $submitted_country, $submitted_postcode
 );
 $stmt->execute();
 $application_id = $stmt->insert_id;
