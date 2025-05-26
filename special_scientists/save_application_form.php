@@ -126,7 +126,7 @@ $submitted_dob = $_SESSION['user']['dob'] ?? null;
 $submitted_address = $_SESSION['user']['address'] ?? '';
 $submitted_country = $_SESSION['user']['country'] ?? '';
 $submitted_postcode = $_SESSION['user']['postcode'] ?? '';
-$stmt->bind_param("iisssssssssssssssssssssssssss",
+$stmt->bind_param("iissssssssssssssssssssssssss",
     $user_id, $period_id, $id_card, $gender, $nationality,
     $current_position, $current_employer, $professional_experience,
     $expertise_area, $project_highlights,
