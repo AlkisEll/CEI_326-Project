@@ -303,3 +303,32 @@ span.input-group-text.toggle-password {
     display: block;
     font-size: 0.875rem;
 }
+
+/* Improve alignment and sizing of the flag dropdown inside phone field */
+.iti {
+  width: 100%;
+}
+
+.iti--allow-dropdown input,
+.iti--allow-dropdown input[type=tel] {
+  padding-left: 58px !important; /* aligns text nicely after the flag */
+  height: 45px;
+  line-height: 1.5;
+}
+
+.iti__flag-container {
+  height: 100%;
+}
+
+.iti__selected-flag {
+  height: 100%;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  background-color: #f8f9fa; /* Optional: Bootstrap light background */
+  border-right: 1px solid #ccc;
+}
+
+.iti__country-list {
+  z-index: 9999; /* ensures dropdown appears above all */
+}
