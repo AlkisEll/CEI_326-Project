@@ -8,22 +8,20 @@ require_once __DIR__ . '/PHPMailer-master/src/SMTP.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-
 function sendEmail(string $to, string $subject, string $htmlBody): bool
 {
     $mail = new PHPMailer(true);
-
     try {
-        // ← Change these to your SMTP credentials
+        // ———– Use the exact same working settings as in login.php ———–
         $mail->isSMTP();
-        $mail->Host       = 'smtp.example.com';
+        $mail->Host       = 'premium245.web-hosting.com';
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'you@example.com';
-        $mail->Password   = 'your_password';
+        $mail->Username   = 'admin@festival-web.com';
+        $mail->Password   = '!g3$~8tYju*D';
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = 587;
 
-        $mail->setFrom('you@example.com', 'Special Scientists');
+        $mail->setFrom('admin@festival-web.com', 'Special Scientists');
         $mail->addAddress($to);
 
         $mail->isHTML(true);
@@ -32,7 +30,8 @@ function sendEmail(string $to, string $subject, string $htmlBody): bool
 
         return $mail->send();
     } catch (Exception $e) {
-        // you can log $e->getMessage() if you like
+        // Optional: log $mail->ErrorInfo to your error log
+        error_log('sendEmail failure: ' . $mail->ErrorInfo);
         return false;
     }
 }
