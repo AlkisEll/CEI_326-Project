@@ -279,13 +279,14 @@ if ($result) {
             <tr class="status-<?= strtolower($row['status']) ?> year-<?= date('Y', strtotime($row['created_at'])) ?>">
   <td><?= $row['id'] ?></td>
   <td class="applicant-name"><?= htmlspecialchars($row['applicant']) ?></td>
-  <td>
+  <td class="course-names">
   <?php foreach (explode(',', $row['course_list'] ?? '') as $course): ?>
-  <?php if (trim($course)): ?>
-    <span class="badge bg-info text-dark me-1"><?= htmlspecialchars(trim($course)) ?></span>
-  <?php endif; ?>
-<?php endforeach; ?>
+    <?php if (trim($course)): ?>
+      <span class="badge bg-info text-dark me-1"><?= htmlspecialchars(trim($course)) ?></span>
+    <?php endif; ?>
+  <?php endforeach; ?>
 </td>
+
   <td><?= htmlspecialchars($row['period_name']) ?></td>
 
   <td>
@@ -354,7 +355,7 @@ function applyFilters() {
   document.querySelectorAll("tbody tr").forEach(row => {
     const matchStatus = status === "all" || row.classList.contains("status-" + status);
     const matchYear = year === "all" || row.classList.contains("year-" + year);
-    const courseCell = row.querySelector(".course-name");
+    const courseCell = row.querySelector(".course-names");
     const applicantCell = row.querySelector(".applicant-name");
     const matchCourse = courseCell && courseCell.textContent.toLowerCase().includes(courseText);
     const matchApplicant = applicantCell && applicantCell.textContent.toLowerCase().includes(applicantText);
@@ -362,6 +363,7 @@ function applyFilters() {
     row.style.display = matchStatus && matchYear && matchCourse && matchApplicant ? "" : "none";
   });
 }
+
 </script>
 <script>
   const toggleBtn = document.getElementById('burgerToggle');
