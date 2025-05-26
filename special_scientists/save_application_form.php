@@ -135,7 +135,7 @@ $submitted_address = $user_data['address'] ?? '';
 $submitted_country = $user_data['country'] ?? '';
 $submitted_postcode = $user_data['postcode'] ?? '';
 
-$stmt->bind_param("iisssssssssssssssssssssssssssss",
+$stmt->bind_param("iissssssssssssssssssssssssssss",
     $user_id, $period_id, $id_card, $gender, $nationality,
     $current_position, $current_employer, $professional_experience,
     $expertise_area, $project_highlights,
