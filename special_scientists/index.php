@@ -450,7 +450,7 @@ $periodInfo = $nextPeriod->fetch_assoc();
       <div class="modal-body" id="confirmModalBody">Are you sure?</div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-danger" id="confirmModalYes">Yes, Confirm</button>
+        <button type="button" class="btn btn-success" id="confirmModalYes">Yes, Confirm</button>
       </div>
     </div>
   </div>
