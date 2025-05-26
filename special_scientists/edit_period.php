@@ -1,16 +1,25 @@
 <?php
-include 'database.php';
 session_start();
+include 'database.php';
 require_once "get_config.php";
+
+// Enable error reporting during development (disable in production)
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 $system_title = getSystemConfig("site_title");
 $logo_path = getSystemConfig("logo_path");
 
-if (!isset($_GET["id"])) {
+// Validate ID
+if (!isset($_GET["id"]) || !is_numeric($_GET["id"])) {
   header("Location: manage_periods.php");
   exit();
 }
 
+$id = intval($_GET["id"]);
+
+// Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = trim($_POST['name']);
     $start_date = $_POST['start_date'];
@@ -18,18 +27,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!empty($name) && !empty($start_date) && !empty($end_date)) {
         $stmt = $conn->prepare("UPDATE application_periods SET name = ?, start_date = ?, end_date = ? WHERE id = ?");
+        if (!$stmt) {
+            die("Error: " . $conn->error);
+        }
         $stmt->bind_param("sssi", $name, $start_date, $end_date, $id);
         $stmt->execute();
+        $stmt->close();
+
         header("Location: manage_periods.php");
         exit();
     }
-} else {
-    $stmt = $conn->prepare("SELECT name, start_date, end_date FROM application_periods WHERE id = ?");
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
-    $stmt->bind_result($name, $start_date, $end_date);
-    $stmt->fetch();
 }
+
+// Fetch period info
+$stmt = $conn->prepare("SELECT name, start_date, end_date FROM application_periods WHERE id = ?");
+if (!$stmt) {
+    die("Error: " . $conn->error);
+}
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$stmt->bind_result($name, $start_date, $end_date);
+if (!$stmt->fetch()) {
+    $stmt->close();
+    die("Period not found.");
+}
+$stmt->close();
+
 $showBack = true;
 $backLink = "manage_periods.php";
 ?>
