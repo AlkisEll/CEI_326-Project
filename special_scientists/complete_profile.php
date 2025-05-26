@@ -553,6 +553,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <!-- 11) Your initialization & wizard logic -->
 <script>
 $(document).ready(function () {
+      // Set max date for DOB to today (prevents future date selection)
+  const today = new Date().toISOString().split("T")[0];
+  $("#dob").attr("max", today);
+
   // Country selector
   $("#country").countrySelect({ defaultCountry: "cy" });
 
