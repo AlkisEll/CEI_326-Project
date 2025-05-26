@@ -120,13 +120,20 @@ $stmt = $conn->prepare("INSERT INTO applications (
     submitted_address, submitted_country, submitted_postcode
 ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-$submitted_full_name = $_SESSION['user']['full_name'] ?? '';
-$submitted_email = $_SESSION['user']['email'] ?? '';
-$submitted_phone = $_SESSION['user']['phone'] ?? '';
-$submitted_dob = $_SESSION['user']['dob'] ?? null;
-$submitted_address = $_SESSION['user']['address'] ?? '';
-$submitted_country = $_SESSION['user']['country'] ?? '';
-$submitted_postcode = $_SESSION['user']['postcode'] ?? '';
+$user_stmt = $conn->prepare("SELECT full_name, email, phone, dob, address, country, postcode FROM users WHERE id = ?");
+$user_stmt->bind_param("i", $user_id);
+$user_stmt->execute();
+$user_result = $user_stmt->get_result();
+$user_data = $user_result->fetch_assoc();
+$user_stmt->close();
+
+$submitted_full_name = $user_data['full_name'] ?? '';
+$submitted_email = $user_data['email'] ?? '';
+$submitted_phone = $user_data['phone'] ?? '';
+$submitted_dob = $user_data['dob'] ?? null;
+$submitted_address = $user_data['address'] ?? '';
+$submitted_country = $user_data['country'] ?? '';
+$submitted_postcode = $user_data['postcode'] ?? '';
 
 $stmt->bind_param("iisssssssssssssssssssssssssssss",
     $user_id, $period_id, $id_card, $gender, $nationality,
