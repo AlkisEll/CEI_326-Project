@@ -11,8 +11,6 @@ if (!isset($_GET["id"])) {
   exit();
 }
 
-$id = intval($_GET["id"]);
-
 // Fetch departments
 $departments = mysqli_query($conn, "
     SELECT departments.id, departments.name, schools.name AS school_name 
