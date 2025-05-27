@@ -54,14 +54,48 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["save_profile"])) {
     $newCountry  = trim($_POST["country"]);
     $newDob      = trim($_POST["dob"]);
     $newAddress  = trim($_POST["address"]);
+    $newEmail    = $email; // taken from session
 
-    // Validate
+    // === BACKEND VALIDATION START ===
+
+    // Full Name and City: only letters and spaces
     if (!preg_match('/^[\p{L}\s]+$/u', $newFullName) || !preg_match('/^[\p{L}\s]+$/u', $newCity)) {
         $_SESSION["profile_success"] = "Full Name and City can only contain letters and spaces.";
         header("Location: my_profile.php");
         exit();
     }
 
+    // Username: only letters, digits, underscores
+    if (!preg_match('/^[a-zA-Z0-9_]+$/', $newUsername)) {
+        $_SESSION["profile_success"] = "Username must contain only letters, numbers, or underscores.";
+        header("Location: my_profile.php");
+        exit();
+    }
+
+    // Email (from session) - valid format check (in case of tampering)
+    if (!filter_var($newEmail, FILTER_VALIDATE_EMAIL)) {
+        $_SESSION["profile_success"] = "Email is not valid.";
+        header("Location: my_profile.php");
+        exit();
+    }
+
+    // Address: letters, numbers, spaces, commas, hyphens, periods
+    if (!preg_match('/^[\p{L}\p{N}\s,\-\.]+$/u', $newAddress)) {
+        $_SESSION["profile_success"] = "Address can only contain letters, numbers, spaces, commas, hyphens, and periods.";
+        header("Location: my_profile.php");
+        exit();
+    }
+
+    // Date of Birth: must not be in the future
+    if ($newDob && strtotime($newDob) > time()) {
+        $_SESSION["profile_success"] = "Date of Birth cannot be in the future.";
+        header("Location: my_profile.php");
+        exit();
+    }
+
+    // === BACKEND VALIDATION END ===
+
+    // Check duplicate username
     $checkStmt = $conn->prepare("SELECT id FROM users WHERE username = ? AND id != ?");
     $checkStmt->bind_param("si", $newUsername, $id);
     $checkStmt->execute();
@@ -170,7 +204,8 @@ $lastLogin  = $_SESSION["user"]["last_login"] ?? null;
             maxlength="20"
             value="<?= htmlspecialchars($username); ?>"
             required
-          >
+            oninput="this.value = this.value.replace(/[^a-zA-Z0-9_]/g, '')"
+          />
           <div class="mt-2">
             <span class="badge bg-primary">Role: <?= ucfirst($role) ?></span>
           </div>
@@ -190,7 +225,8 @@ $lastLogin  = $_SESSION["user"]["last_login"] ?? null;
             class="form-control"
             value="<?= htmlspecialchars($email); ?>"
             required
-          >
+            oninput="this.value = this.value.replace(/[^\w@\.-]/g, '')"
+          />
         </div>
         <div class="col-md-6">
           <label class="form-label">Phone Number</label>
@@ -217,6 +253,7 @@ $lastLogin  = $_SESSION["user"]["last_login"] ?? null;
             name="dob"
             class="form-control"
             value="<?= htmlspecialchars($dob); ?>"
+            max="<?= date('Y-m-d') ?>"
             required
           >
         </div>
@@ -253,7 +290,8 @@ $lastLogin  = $_SESSION["user"]["last_login"] ?? null;
             class="form-control"
             value="<?= htmlspecialchars($address); ?>"
             required
-          >
+            oninput="this.value = this.value.replace(/[^\p{L}\p{N}\s,\-\.]/gu, '')"
+          />
         </div>
       </div>
 
